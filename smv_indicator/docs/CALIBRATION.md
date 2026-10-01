@@ -1,5 +1,7 @@
 # CALIBRATION.md : réponses aux questions Q-01 à Q-16, mesures et provenance
 
+> **Errata après audit (voir §6 et `CLAUDE_REVIEW_OF_GPT_AUDIT.md`).** Les chiffres des sections 2 et 4 sont ceux de la v0.2, avant les corrections de l'audit. Les valeurs recalculées sont au §6. Les réponses sont des choix de formalisation argumentés, pas la reconstitution certaine des règles de la formation.
+
 Ce document répond aux seize questions ouvertes de `STRATEGY_SPEC.md` §13. Le responsable de la stratégie a tranché une seule question : la plateforme cible est MetaTrader 5. Les quinze autres réponses viennent de trois sources, toujours signalées :
 
 | Étiquette | Sens |
@@ -227,3 +229,19 @@ Les valeurs ci-dessous sont celles de `smv/config.py` et des entrées de `SMV_In
 | 3 | Comparaison avec des setups tracés par le formateur sur les mêmes dates | mesurer l'écart entre la formalisation et la pratique |
 | 4 | Données à ticks pour l'ordre intra-bougie | lever les deux hypothèses prudentes du backtest |
 | 5 | Correction pour comparaisons multiples (par exemple Benjamini-Hochberg) et probabilité de surapprentissage (Bailey et al.) dès que des paramètres sont optimisés | éviter de retenir un sous-groupe chanceux |
+
+---
+
+## 6. Errata et valeurs recalculées après l'audit indépendant
+
+Les études ont été relancées sur les mêmes données (`research/DATA_MANIFEST.json`) avec le moteur et les scripts corrigés. Détail et lecture : `CLAUDE_REVIEW_OF_GPT_AUDIT.md` §4.
+
+| Question | Valeur v0.2 | Valeur recalculée | Effet sur la réponse |
+|---|---|---|---|
+| Q-04 | excès +0,11 réel, +0,09 à +0,11 mélangé | +0,10 à +0,12 réel, +0,08 à +0,09 mélangé (nul avec gaps) | réponse inchangée ; écart résiduel de 2 à 3 points à confirmer |
+| Q-07 | EQ pris moins souvent (0,913 contre 0,954) | EQ pris aussi souvent (0,952 contre 0,948 EURUSD ; 0,941 contre 0,946 XAUUSD) | « les EQ sautent toujours » reste non vérifié ; l'ancien écart était un artefact |
+| Q-08 | « marqueur seulement » | aucun marqueur n'existe dans le moteur | **la rotation n'est pas implémentée** ; `rotation_legs` n'est consommé par aucun module |
+| Q-09 | 0,899 contre 0,872 | 0,853 contre 0,813 | excès de 4 points, dépendances non traitées ; toujours aucun biais |
+| Q-12 | 2,5 ATR « reproduit » 16 pips | inchangé | la correspondance porte sur une médiane ; elle ne prouve pas que la règle du formateur est en ATR |
+| Q-16 | « structure indépendante de N » | faux | la structure majeure dépend de N par la référence de continuation et le fail |
+| §4 | EURUSD M15 -0,02 R brut ; CONCEPT +0,52 R | EURUSD M15 -0,05 R brut ; CONCEPT +0,52 R mais +0,72 R sur une série mélangée | aucune piste positive retenue |

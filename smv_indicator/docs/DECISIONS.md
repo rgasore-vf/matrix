@@ -34,7 +34,7 @@ Format : contexte, options, décision, conséquences, statut. Version 0.2 : le r
 
 - **Contexte** : le dépôt ne définit pas un « high » ou un « low » (R-ST-02).
 - **Options** : pivot fractal à N bougies ; ZigZag à seuil (pourcentage ou ATR) ; swings définis uniquement par les cassures.
-- **Décision** : pivot fractal (défaut 2/2) pour les swings de base, et automate de cassures pour la structure majeure, qui ne dépend pas de N.
+- **Décision** : pivot fractal (défaut 2/2) pour les swings de base, et automate de cassures pour la structure majeure. **Erratum (audit F23)** : la structure majeure dépend de N, car la référence de continuation et le fail sont des pivots.
 - **Raisons** : définition objective, connue, sans repaint ; un ZigZag à seuil repeint tant que le seuil n'est pas atteint et ajoute un paramètre d'échelle.
 - **Conséquence** : la sensibilité dépend de N.
 - **Statut** : acté en v0.2 : N = 2 sur toutes les UT ; les jambes mesurées en ATR ont la même distribution de M15 à D1 (`CALIBRATION.md` Q-16).
@@ -139,3 +139,10 @@ Format : contexte, options, décision, conséquences, statut. Version 0.2 : le r
 - **Contexte** : les heures de tir et la fenêtre mensuelle exigent l'heure UTC des bougies ; MQL5 ne donne que l'heure serveur et le décalage courant. Les courtiers suivent des conventions différentes (UTC+2/+3 selon l'heure d'été européenne ou américaine, ou décalage fixe). La donnée de calibrage s'est révélée suivre l'heure d'été européenne alors que l'hypothèse initiale était « New York + 7 ».
 - **Décision** : paramètre `InpServerTz` explicite (EET/UE, New York + 7, fixe) et script `SMV_ServerTimeCheck.mq5` qui détermine la convention à partir de la dernière bougie du vendredi pendant les semaines désynchronisées.
 - **Statut** : acté.
+
+## D-21 Intégration de l'audit indépendant
+
+- **Contexte** : audit externe (GPT, 1 octobre 2026), 28 constats, 42 cas de test adverses, corrections Python et MQL5.
+- **Décision** : corrections intégrées sans modification après reproduction des échecs et relecture (commit séparé) ; études recalculées sur les données réelles ; erreurs reconnues (indépendance de N, rotation annoncée, ton des conclusions de calibrage). Changement de définition accepté : le fail est le premier pivot étiqueté LH/HL selon R-ST-03 (F05).
+- **Conséquences** : 103 tests ; conclusions de fond inchangées ; statut des réponses Q-01 à Q-16 ramené à des choix de formalisation.
+- **Statut** : acté. Ouverts : exemples annotés du formateur, validation MT5 native, validation statistique hors échantillon.

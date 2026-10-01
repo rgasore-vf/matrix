@@ -1,19 +1,11 @@
-# smv_indicator
-
-**Audit indépendant du 1 octobre 2026 :** lire d'abord [GPT_AUDIT.md](GPT_AUDIT.md),
-[GPT_STRATEGY_REVIEW.md](GPT_STRATEGY_REVIEW.md), [GPT_RESEARCH.md](GPT_RESEARCH.md)
-et [GPT_TEST_REPORT.md](GPT_TEST_REPORT.md). Des contre-exemples ont conduit à des corrections.
-Les chiffres `research/results_*.json` et les conclusions de calibrage ci-dessous sont conservés
-comme état antérieur et doivent être recalculés. La formation originale `../Strategie/` n'est pas
-dans l'archive reçue ; la fidélité à SMV reste non vérifiée. Le portage MT5 corrigé reste à compiler
-et à comparer avec un export natif. L'historique MT5 est désormais complet par défaut (`InpMaxBars=0`).
+**Audit indépendant du 1 octobre 2026** : lire [GPT_AUDIT.md](GPT_AUDIT.md) (28 constats) et la réponse [CLAUDE_REVIEW_OF_GPT_AUDIT.md](CLAUDE_REVIEW_OF_GPT_AUDIT.md). Les corrections de l'audit sont intégrées (103 tests). Les études ont été **recalculées** sur les mêmes données avec le moteur corrigé (`research/results_*.json` ; anciens résultats dans `research/archive_v0.2/` ; provenance des données dans `research/DATA_MANIFEST.json`). Les réponses Q-01 à Q-16 sont des choix de formalisation argumentés, pas la reconstitution certaine de la formation. Le portage MT5 reste à compiler et à valider par un export natif.
 
 Reconstruction formelle, calibrage et implémentation de référence de la stratégie « Smart Money Vision » (UltraFX) décrite dans `../Strategie/`, avec un portage pour MetaTrader 5.
 
 **État : v0.2.**
-- Couches Structure, Bougies, Offre/Demande, Liquidité, Outils, Multi-UT et Setups implémentées et testées en Python (61 tests).
+- Couches Structure, Bougies, Offre/Demande, Liquidité, Outils, Multi-UT et Setups implémentées et testées en Python (103 tests, dont 42 cas adverses de l'audit).
 - Couche Cause/Wyckoff expérimentale.
-- Questions Q-01 à Q-16 tranchées par la recherche et par des mesures sur sept ans de données réelles (`docs/CALIBRATION.md`).
+- Questions Q-01 à Q-16 : choix de formalisation argumentés par le dépôt, la recherche et des mesures sur sept ans de données réelles (`docs/CALIBRATION.md`, errata §6).
 - Indicateur MetaTrader 5 écrit (`mt5/`) mais **non compilé ici** ; outil de parité fourni.
 - **Aucune performance n'est revendiquée** : le backtest des setups ne montre pas d'espérance positive après coûts (`docs/CALIBRATION.md` §4).
 
@@ -30,7 +22,7 @@ Reconstruction formelle, calibrage et implémentation de référence de la strat
 
 ```bash
 cd smv_indicator
-python -m pytest -q tests                      # 61 tests (pytest requis)
+python -m pytest -q tests                      # 103 tests (pytest requis)
 python tools/run_smv.py --synthetic 1500 --seed 1 --out out/demo
 python tools/run_smv.py --csv eurusd_m15.csv --tf 15 --out out/eurusd --from 500 --to 900
 python tools/mt5_parity.py MQL5/Files/SMV/EURUSD_M15     # comparaison avec un export MT5

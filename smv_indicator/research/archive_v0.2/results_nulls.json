@@ -1,0 +1,278 @@
+{
+ "EURUSD": {
+  "seed1": {
+   "structure_A": {
+    "bos_change": 643,
+    "bos_cont": 1266,
+    "follow_through": 0.728,
+    "follow_ci95": [
+     0.692,
+     0.761
+    ],
+    "median_trend_bars": 44,
+    "mean_fwd20_atr": 0.071,
+    "n_fwd": 643
+   },
+   "zones_bosorigin": {
+    "all": {
+     "n": 1763,
+     "success": 0.716,
+     "ci95": [
+      0.695,
+      0.737
+     ],
+     "null_expected": 0.615,
+     "excess": 0.101
+    },
+    "source=BOS_CHANGE": {
+     "n": 590,
+     "success": 0.7,
+     "ci95": [
+      0.662,
+      0.736
+     ],
+     "null_expected": 0.625,
+     "excess": 0.075
+    },
+    "source=BOS_CONTINUATION": {
+     "n": 1173,
+     "success": 0.725,
+     "ci95": [
+      0.698,
+      0.749
+     ],
+     "null_expected": 0.611,
+     "excess": 0.114
+    }
+   },
+   "zones_allpivots": {
+    "all": {
+     "n": 12838,
+     "success": 0.584,
+     "ci95": [
+      0.575,
+      0.592
+     ],
+     "null_expected": 0.584,
+     "excess": -0.001
+    },
+    "source=PIVOT": {
+     "n": 11195,
+     "success": 0.563,
+     "ci95": [
+      0.554,
+      0.572
+     ],
+     "null_expected": 0.579,
+     "excess": -0.016
+    }
+   }
+  },
+  "seed2": {
+   "structure_A": {
+    "bos_change": 714,
+    "bos_cont": 1326,
+    "follow_through": 0.724,
+    "follow_ci95": [
+     0.69,
+     0.756
+    ],
+    "median_trend_bars": 41,
+    "mean_fwd20_atr": -0.009,
+    "n_fwd": 714
+   },
+   "zones_bosorigin": {
+    "all": {
+     "n": 1873,
+     "success": 0.697,
+     "ci95": [
+      0.676,
+      0.717
+     ],
+     "null_expected": 0.612,
+     "excess": 0.085
+    },
+    "source=BOS_CHANGE": {
+     "n": 652,
+     "success": 0.729,
+     "ci95": [
+      0.693,
+      0.761
+     ],
+     "null_expected": 0.612,
+     "excess": 0.117
+    },
+    "source=BOS_CONTINUATION": {
+     "n": 1221,
+     "success": 0.68,
+     "ci95": [
+      0.653,
+      0.705
+     ],
+     "null_expected": 0.612,
+     "excess": 0.067
+    }
+   },
+   "zones_allpivots": {
+    "all": {
+     "n": 12935,
+     "success": 0.573,
+     "ci95": [
+      0.565,
+      0.582
+     ],
+     "null_expected": 0.584,
+     "excess": -0.011
+    },
+    "source=PIVOT": {
+     "n": 11199,
+     "success": 0.554,
+     "ci95": [
+      0.545,
+      0.563
+     ],
+     "null_expected": 0.579,
+     "excess": -0.025
+    }
+   }
+  }
+ },
+ "XAUUSD": {
+  "seed1": {
+   "structure_A": {
+    "bos_change": 582,
+    "bos_cont": 1195,
+    "follow_through": 0.735,
+    "follow_ci95": [
+     0.698,
+     0.77
+    ],
+    "median_trend_bars": 47,
+    "mean_fwd20_atr": 0.049,
+    "n_fwd": 582
+   },
+   "zones_bosorigin": {
+    "all": {
+     "n": 1625,
+     "success": 0.737,
+     "ci95": [
+      0.715,
+      0.757
+     ],
+     "null_expected": 0.626,
+     "excess": 0.111
+    },
+    "source=BOS_CHANGE": {
+     "n": 528,
+     "success": 0.752,
+     "ci95": [
+      0.713,
+      0.787
+     ],
+     "null_expected": 0.635,
+     "excess": 0.117
+    },
+    "source=BOS_CONTINUATION": {
+     "n": 1097,
+     "success": 0.729,
+     "ci95": [
+      0.702,
+      0.755
+     ],
+     "null_expected": 0.621,
+     "excess": 0.108
+    }
+   },
+   "zones_allpivots": {
+    "all": {
+     "n": 12438,
+     "success": 0.582,
+     "ci95": [
+      0.574,
+      0.591
+     ],
+     "null_expected": 0.589,
+     "excess": -0.007
+    },
+    "source=PIVOT": {
+     "n": 10911,
+     "success": 0.561,
+     "ci95": [
+      0.551,
+      0.57
+     ],
+     "null_expected": 0.583,
+     "excess": -0.022
+    }
+   }
+  },
+  "seed2": {
+   "structure_A": {
+    "bos_change": 585,
+    "bos_cont": 1214,
+    "follow_through": 0.732,
+    "follow_ci95": [
+     0.694,
+     0.766
+    ],
+    "median_trend_bars": 46,
+    "mean_fwd20_atr": 0.135,
+    "n_fwd": 585
+   },
+   "zones_bosorigin": {
+    "all": {
+     "n": 1631,
+     "success": 0.718,
+     "ci95": [
+      0.696,
+      0.739
+     ],
+     "null_expected": 0.627,
+     "excess": 0.091
+    },
+    "source=BOS_CHANGE": {
+     "n": 514,
+     "success": 0.722,
+     "ci95": [
+      0.682,
+      0.759
+     ],
+     "null_expected": 0.635,
+     "excess": 0.087
+    },
+    "source=BOS_CONTINUATION": {
+     "n": 1117,
+     "success": 0.716,
+     "ci95": [
+      0.689,
+      0.742
+     ],
+     "null_expected": 0.623,
+     "excess": 0.093
+    }
+   },
+   "zones_allpivots": {
+    "all": {
+     "n": 12356,
+     "success": 0.577,
+     "ci95": [
+      0.568,
+      0.585
+     ],
+     "null_expected": 0.592,
+     "excess": -0.015
+    },
+    "source=PIVOT": {
+     "n": 10838,
+     "success": 0.557,
+     "ci95": [
+      0.547,
+      0.566
+     ],
+     "null_expected": 0.586,
+     "excess": -0.029
+    }
+   }
+  }
+ }
+}

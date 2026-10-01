@@ -1,0 +1,250 @@
+{
+ "source": "https://github.com/ejtraderLabs/historical-data",
+ "commit": "fbd29b3cd85c0eea4f6e8b81c053f98fb3de22fd",
+ "server_timezone_assumption": "Europe/Athens (EET/EEST), D1 dates kept as UTC dates",
+ "price_scaling": "EURUSD x1e5, XAUUSD x100, *JPY x1e3, others x1e5",
+ "period_used": "2015-01-01 to 2022-01-01 (D1: all available for the monthly study)",
+ "repairs": "none (research/marketdata.py rejects invalid OHLC since the audit, F17)",
+ "files": {
+  "EURUSD/EURUSDd1.csv": {
+   "sha256": "0a59b41a5e08472aa95aae35c2e06750adefe84f8d2775d88562e302aedeebf2",
+   "bytes": 158784
+  },
+  "EURUSD/EURUSDh1.csv": {
+   "sha256": "1b29ca23bdc7b2645ae48a0ccb06108263b69e586bdc7d0ba40e66d1e5966eb9",
+   "bytes": 4246269
+  },
+  "EURUSD/EURUSDh4.csv": {
+   "sha256": "47ba339ec14222912b5b2ea43a86944272d09b54162198ceba4c5dd1a8e12f96",
+   "bytes": 1071974
+  },
+  "EURUSD/EURUSDm15.csv": {
+   "sha256": "8f9a8d0f7fe483cdede1f19dade91b79928f63678c7a199f990ee555be10faf1",
+   "bytes": 16831438
+  },
+  "EURUSD/EURUSDm30.csv": {
+   "sha256": "1aecb20c70a0b9e885163b8aee031856a598f5349772a62adfea9b655755f3bd",
+   "bytes": 8457845
+  },
+  "USDCHF/USDCHFd1.csv": {
+   "sha256": "8b0c9fc9d0bbc094373d4757b28f3692f1f33021e0cbc2d5e1da9c3cf7d12519",
+   "bytes": 124488
+  },
+  "USDCHF/USDCHFh1.csv": {
+   "sha256": "82e3f4cb1106d52e686bfb7c15ea085098f2c79196eac2531c3fe343fe8acd3d",
+   "bytes": 3428948
+  },
+  "USDCHF/USDCHFh4.csv": {
+   "sha256": "35174b9a78d9312aab20fcff44c5732d4ff84aa73b5fe9f56e2692a6e72c8efa",
+   "bytes": 866479
+  },
+  "USDCHF/USDCHFm15.csv": {
+   "sha256": "60776846feb4bfab65aa2f5413b9a4402b82cb668072c8f7c7b521cfca0eb435",
+   "bytes": 13570385
+  },
+  "USDCHF/USDCHFm30.csv": {
+   "sha256": "b85944e47c650444f4878e275dffdafdd6f5b53c8177b27142a31ef6e995154d",
+   "bytes": 6823751
+  },
+  "GBPJPY/GBPJPYd1.csv": {
+   "sha256": "668c8e1e7e84ef69b255ef50f170eb85d591da583da3dc491805a425dd52f22c",
+   "bytes": 132015
+  },
+  "GBPJPY/GBPJPYh1.csv": {
+   "sha256": "394d4eefa962dc51cc826af7999d714297a1da83da0a7d6062b19119463d0dcd",
+   "bytes": 3601717
+  },
+  "GBPJPY/GBPJPYh4.csv": {
+   "sha256": "3055079d727b126c2d758349acf641c002efc757e97b3af3b73be7255d864c86",
+   "bytes": 910408
+  },
+  "GBPJPY/GBPJPYm15.csv": {
+   "sha256": "d2c10afa689afabd826802d52b059ffa13fd6fc0c6baf99a90f3dba8bff2c0a2",
+   "bytes": 14280237
+  },
+  "GBPJPY/GBPJPYm30.csv": {
+   "sha256": "f0a8958faeefc532beb97e127bf2c18a62002cfd1b93c05874ba71810f40fe36",
+   "bytes": 7177889
+  },
+  "USDJPY/USDJPYd1.csv": {
+   "sha256": "3e9faca2f5f63d23e25dbe0b0e4e0e9c7ba2a457081f1d99ba46411bcbf6cefe",
+   "bytes": 129545
+  },
+  "USDJPY/USDJPYh1.csv": {
+   "sha256": "4bdca353ee0403727fc0eae621ff8206f5c06d7323b0126923d2a456abc21dbe",
+   "bytes": 3545887
+  },
+  "USDJPY/USDJPYh4.csv": {
+   "sha256": "d3c4f5e0a946ca004bb921f59557928e7d0b6141628fec39d0239dea6e23f1c3",
+   "bytes": 895706
+  },
+  "USDJPY/USDJPYm15.csv": {
+   "sha256": "9ef8b25861892eff84c3c1e90dd646fafc7cdd7d2dcf94d60b7089ac876a4690",
+   "bytes": 14039248
+  },
+  "USDJPY/USDJPYm30.csv": {
+   "sha256": "b845ca544b1eaef950a0b75c6617e7d750457c2f929d0f800e79fe876daf178c",
+   "bytes": 7057942
+  },
+  "EURCHF/EURCHFd1.csv": {
+   "sha256": "7e385d5545d006afbbe5bcad2b6bbe9d9385f081cd939575cec8726b2d414fc4",
+   "bytes": 163063
+  },
+  "EURCHF/EURCHFh1.csv": {
+   "sha256": "9e6b6f2aab09f973a200ceb998225340505c787f3c047b5ab15772a25368e717",
+   "bytes": 4351618
+  },
+  "EURCHF/EURCHFh4.csv": {
+   "sha256": "d947ef11cf5c5cad550a5a2e028bcb4a349933d4b9e8550b3559d31d3fdbf4a9",
+   "bytes": 1097557
+  },
+  "EURCHF/EURCHFm15.csv": {
+   "sha256": "32c0e0a2316670d6134fe7b3aba713af6aad60994dec8fd7bf4869b5518639b7",
+   "bytes": 17262042
+  },
+  "EURCHF/EURCHFm30.csv": {
+   "sha256": "e5a5610dfd539f100b016ac9619a21ea877801784f09d1b31dcfa814e574eb55",
+   "bytes": 8667251
+  },
+  "AUDJPY/AUDJPYd1.csv": {
+   "sha256": "0c581c86669059cdf7540aed41566caea144430b7ab84d7ac45cd1bab4f936f9",
+   "bytes": 121304
+  },
+  "AUDJPY/AUDJPYh1.csv": {
+   "sha256": "3fdb70d48fff81cbdf4ddb280b8b26635a3e8854eabe2c14032eb255155698a2",
+   "bytes": 3349846
+  },
+  "AUDJPY/AUDJPYh4.csv": {
+   "sha256": "7b6403c4e037074f0421af478e664f7cc5ef17bd7a5e9a7bb5c8f10f753ff529",
+   "bytes": 847934
+  },
+  "AUDJPY/AUDJPYm15.csv": {
+   "sha256": "2b83aa1face2958e0ade7c59f1cd7ce6a8068c48e27cb01b29c00ac2d5294e76",
+   "bytes": 13260166
+  },
+  "AUDJPY/AUDJPYm30.csv": {
+   "sha256": "9ffff4f6b43ace0b06667bded23504d56b68bea0bb69b53852abe12571f9c8b1",
+   "bytes": 6673815
+  },
+  "GBPUSD/GBPUSDd1.csv": {
+   "sha256": "4262953cabb6246fd3d2526ba020601fb24e6d8b3aae6e918ed2583bebbcbca4",
+   "bytes": 143678
+  },
+  "GBPUSD/GBPUSDh1.csv": {
+   "sha256": "affda7b6e6f4ea505e46f714de37a51bf5d466efb78c3247c5900a0f0a85d3d7",
+   "bytes": 3892643
+  },
+  "GBPUSD/GBPUSDh4.csv": {
+   "sha256": "5d6d3f4c30b45e272d8729ed3d98c3e9d49df089a4b503d912e2c11965efd0d9",
+   "bytes": 983080
+  },
+  "GBPUSD/GBPUSDm15.csv": {
+   "sha256": "da6050723516e16e8ae829628497e07f936f5f19f3a0fe15d61761e13381bdf9",
+   "bytes": 15437381
+  },
+  "GBPUSD/GBPUSDm30.csv": {
+   "sha256": "2207384f952e3f06b6cc70de327068c6be156973f83f805f36df426b15779374",
+   "bytes": 7757358
+  },
+  "USDCAD/USDCADd1.csv": {
+   "sha256": "1a5de7b3991bd78c4e4a8ebc8e0e4e78618790752b37dcfdf9a6ca317030c359",
+   "bytes": 150395
+  },
+  "USDCAD/USDCADh1.csv": {
+   "sha256": "ef4ff565e11a471b8bda76538433cde0e7d740c7b2b78ccb346cd9a0a4748461",
+   "bytes": 4050465
+  },
+  "USDCAD/USDCADh4.csv": {
+   "sha256": "5a9019735c677b5887f299ccba16482d4602c1a4416feffca4efaa9bd0636a30",
+   "bytes": 1021278
+  },
+  "USDCAD/USDCADm15.csv": {
+   "sha256": "26876cb6123cdab5e0d41bd55af589ae94a7c865eef5fa488b3293b9cbc23c2a",
+   "bytes": 16058554
+  },
+  "USDCAD/USDCADm30.csv": {
+   "sha256": "3bd0e1a34e3cb5b7faf6afe626d02dfdeca6113f2514327ba3d92a46a8e42f7b",
+   "bytes": 8067935
+  },
+  "AUDUSD/AUDUSDd1.csv": {
+   "sha256": "c769b8a5aba55565b1a0059bb8bc4db4f0570a35af4e03eb8da3d9f2ae161c1d",
+   "bytes": 123296
+  },
+  "AUDUSD/AUDUSDh1.csv": {
+   "sha256": "8ee709c37e12fe6963be93196047a48a4e96f4f8ea0018be55bf50da550f47df",
+   "bytes": 3405012
+  },
+  "AUDUSD/AUDUSDh4.csv": {
+   "sha256": "f58832e72cb35c4bab6a711a65ad1212243619cf28c60a077e735490947c910b",
+   "bytes": 859265
+  },
+  "AUDUSD/AUDUSDm15.csv": {
+   "sha256": "a39ec870609792cbc97bd6cf6cbb65c2560dbadb7643390ca30d2d4073d850af",
+   "bytes": 13464733
+  },
+  "AUDUSD/AUDUSDm30.csv": {
+   "sha256": "6d530200daba805e7654463f36d70aa779bada9d2e5bf7c00a7c190d2006921a",
+   "bytes": 6774677
+  },
+  "EURJPY/EURJPYd1.csv": {
+   "sha256": "08306ba1075861b4dc131829778e5865e20c1f98b97d95bf13dbdfd14ffcc66d",
+   "bytes": 140578
+  },
+  "EURJPY/EURJPYh1.csv": {
+   "sha256": "8ab8bad6b587bea8e36cf43ca5057b55c02d0213fd2b064ec1558587118e8b61",
+   "bytes": 3806571
+  },
+  "EURJPY/EURJPYh4.csv": {
+   "sha256": "8492fb723c3ce6bd40ed75af62c0054dacb56f4d6adfaea9bbb9e23aa2b28835",
+   "bytes": 961056
+  },
+  "EURJPY/EURJPYm15.csv": {
+   "sha256": "cf7d462f3c36063ab07d9f0010ca386a20e2c695f71f69ac92d5aea476dd7222",
+   "bytes": 15087514
+  },
+  "EURJPY/EURJPYm30.csv": {
+   "sha256": "0d894574fef9cc66aad2cdf4292c75cd7449d4330e8875142b911e309f59b9a5",
+   "bytes": 7581633
+  },
+  "XAUUSD/XAUUSDd1.csv": {
+   "sha256": "d3da2122fded57f0c78afb38db580565052cd85cff30581e5f812fa5b0b0a305",
+   "bytes": 146169
+  },
+  "XAUUSD/XAUUSDh1.csv": {
+   "sha256": "4c9ff7b1e7b3381f60444eb84b3a4f4524c8ec82af46d11fe8dd15e37eb83c1a",
+   "bytes": 3925147
+  },
+  "XAUUSD/XAUUSDh4.csv": {
+   "sha256": "db5a98c6a1f3c37cc63a18dfc1a9f15e134dc28e352e57ab44a86ceb0b9bc454",
+   "bytes": 994832
+  },
+  "XAUUSD/XAUUSDm15.csv": {
+   "sha256": "4a179fd47494169508165ae74e5d7c642647ace83cb048947193770927621d9e",
+   "bytes": 15559071
+  },
+  "XAUUSD/XAUUSDm30.csv": {
+   "sha256": "9262c055f667bea87092088831d27dd4d8f0a0416f7db842a5fa656333884401",
+   "bytes": 7818974
+  },
+  "EURGBP/EURGBPd1.csv": {
+   "sha256": "008ceaec377ba7981a7209082c1f5c589a4ad29b845ad3aff1f616c08ff5be17",
+   "bytes": 120769
+  },
+  "EURGBP/EURGBPh1.csv": {
+   "sha256": "ce6e493a1749b898a9bf43f2e37809d7d64620a81177a35a8e3c8597cb19c0e7",
+   "bytes": 3334628
+  },
+  "EURGBP/EURGBPh4.csv": {
+   "sha256": "89c69b67a2c14de74d42d353c169b2ae55c9a413698c95db616071fafae5789a",
+   "bytes": 843366
+  },
+  "EURGBP/EURGBPm15.csv": {
+   "sha256": "16dd5e96d76d0ff30b6351b3f901e695ed170d3355c25281270140d2f3128c9d",
+   "bytes": 13202371
+  },
+  "EURGBP/EURGBPm30.csv": {
+   "sha256": "e4f20cc60d644e0d6068f83173e358b4499e34e646876514374e2b6f4c84e14d",
+   "bytes": 6639019
+  }
+ }
+}
