@@ -1,0 +1,1400 @@
+{
+ "signals": [
+  {
+   "tf": "h1",
+   "k_atr": 1,
+   "concept": "M1 BOS changement (suivre)",
+   "n": 9879,
+   "win_real": 0.4932,
+   "ci95": 0.0099,
+   "win_shuffled": 0.4992,
+   "instruments_above_50": "4/12"
+  },
+  {
+   "tf": "h1",
+   "k_atr": 1,
+   "concept": "M1 BOS continuation (suivre)",
+   "n": 18302,
+   "win_real": 0.4834,
+   "ci95": 0.0072,
+   "win_shuffled": 0.4957,
+   "instruments_above_50": "2/12"
+  },
+  {
+   "tf": "h1",
+   "k_atr": 1,
+   "concept": "M1 init tendance (suivre)",
+   "n": 12,
+   "win_real": 0.5,
+   "ci95": 0.2829,
+   "win_shuffled": 0.6667,
+   "instruments_above_50": "6/12"
+  },
+  {
+   "tf": "h1",
+   "k_atr": 1,
+   "concept": "M1/M5 prise du niveau protégé (reprise tendance)",
+   "n": 5576,
+   "win_real": 0.5034,
+   "ci95": 0.0131,
+   "win_shuffled": 0.5031,
+   "instruments_above_50": "7/12"
+  },
+  {
+   "tf": "h1",
+   "k_atr": 1,
+   "concept": "M2 signature de liquidité (vers la mèche)",
+   "n": 119482,
+   "win_real": 0.5069,
+   "ci95": 0.0028,
+   "win_shuffled": 0.5024,
+   "instruments_above_50": "11/12"
+  },
+  {
+   "tf": "h1",
+   "k_atr": 1,
+   "concept": "M2 zone avec BM",
+   "n": 6475,
+   "win_real": 0.5087,
+   "ci95": 0.0122,
+   "win_shuffled": 0.4938,
+   "instruments_above_50": "8/12"
+  },
+  {
+   "tf": "h1",
+   "k_atr": 1,
+   "concept": "M2 zone avec doji signature",
+   "n": 6911,
+   "win_real": 0.498,
+   "ci95": 0.0118,
+   "win_shuffled": 0.5016,
+   "instruments_above_50": "4/12"
+  },
+  {
+   "tf": "h1",
+   "k_atr": 1,
+   "concept": "M2 zone sans BM",
+   "n": 17218,
+   "win_real": 0.4963,
+   "ci95": 0.0075,
+   "win_shuffled": 0.5021,
+   "instruments_above_50": "4/12"
+  },
+  {
+   "tf": "h1",
+   "k_atr": 1,
+   "concept": "M2 zone sans doji signature",
+   "n": 16782,
+   "win_real": 0.5004,
+   "ci95": 0.0076,
+   "win_shuffled": 0.4998,
+   "instruments_above_50": "6/12"
+  },
+  {
+   "tf": "h1",
+   "k_atr": 1,
+   "concept": "M3 1re touche zone de continuation",
+   "n": 15218,
+   "win_real": 0.4964,
+   "ci95": 0.0079,
+   "win_shuffled": 0.5008,
+   "instruments_above_50": "5/12"
+  },
+  {
+   "tf": "h1",
+   "k_atr": 1,
+   "concept": "M3 1re touche zone décisionnelle (BOS chgt)",
+   "n": 8475,
+   "win_real": 0.5057,
+   "ci95": 0.0106,
+   "win_shuffled": 0.4994,
+   "instruments_above_50": "9/12"
+  },
+  {
+   "tf": "h1",
+   "k_atr": 1,
+   "concept": "M3 1re touche zone sans BOS",
+   "n": 173483,
+   "win_real": 0.5006,
+   "ci95": 0.0024,
+   "win_shuffled": 0.5008,
+   "instruments_above_50": "7/12"
+  },
+  {
+   "tf": "h1",
+   "k_atr": 1,
+   "concept": "M3 breaker créé (polarité inversée)",
+   "n": 215091,
+   "win_real": 0.4961,
+   "ci95": 0.0021,
+   "win_shuffled": 0.4974,
+   "instruments_above_50": "5/12"
+  },
+  {
+   "tf": "h1",
+   "k_atr": 1,
+   "concept": "M3 order flow (nouvelle zone liée)",
+   "n": 158081,
+   "win_real": 0.4971,
+   "ci95": 0.0025,
+   "win_shuffled": 0.4982,
+   "instruments_above_50": "4/12"
+  },
+  {
+   "tf": "h1",
+   "k_atr": 1,
+   "concept": "M3 réaction sur breaker",
+   "n": 165584,
+   "win_real": 0.4912,
+   "ci95": 0.0024,
+   "win_shuffled": 0.4958,
+   "instruments_above_50": "4/12"
+  },
+  {
+   "tf": "h1",
+   "k_atr": 1,
+   "concept": "M4 cause complète (sens de l'intention)",
+   "n": 7357,
+   "win_real": 0.4916,
+   "ci95": 0.0114,
+   "win_shuffled": 0.4882,
+   "instruments_above_50": "5/12"
+  },
+  {
+   "tf": "h1",
+   "k_atr": 1,
+   "concept": "M4 fail = changement de caractère (retournement)",
+   "n": 14441,
+   "win_real": 0.494,
+   "ci95": 0.0082,
+   "win_shuffled": 0.4911,
+   "instruments_above_50": "5/12"
+  },
+  {
+   "tf": "h1",
+   "k_atr": 1,
+   "concept": "M4 intact cassé en clôture (continuation)",
+   "n": 150354,
+   "win_real": 0.4899,
+   "ci95": 0.0025,
+   "win_shuffled": 0.4974,
+   "instruments_above_50": "3/12"
+  },
+  {
+   "tf": "h1",
+   "k_atr": 1,
+   "concept": "M4 sortie de cause confirmée (suivre la sortie)",
+   "n": 8569,
+   "win_real": 0.4832,
+   "ci95": 0.0106,
+   "win_shuffled": 0.4957,
+   "instruments_above_50": "1/12"
+  },
+  {
+   "tf": "h1",
+   "k_atr": 1,
+   "concept": "M4 sortie de cause infirmée (suivre la sortie)",
+   "n": 4858,
+   "win_real": 0.495,
+   "ci95": 0.0141,
+   "win_shuffled": 0.5022,
+   "instruments_above_50": "5/12"
+  },
+  {
+   "tf": "h1",
+   "k_atr": 1,
+   "concept": "M5 liquidité prise en mèche (retournement)",
+   "n": 157476,
+   "win_real": 0.5009,
+   "ci95": 0.0025,
+   "win_shuffled": 0.5011,
+   "instruments_above_50": "6/12"
+  },
+  {
+   "tf": "h1",
+   "k_atr": 1,
+   "concept": "M7 imbalance / FVG (sens du déséquilibre)",
+   "n": 126006,
+   "win_real": 0.4926,
+   "ci95": 0.0028,
+   "win_shuffled": 0.4997,
+   "instruments_above_50": "3/12"
+  },
+  {
+   "tf": "h1",
+   "k_atr": 1,
+   "concept": "M7 prise de borne MSO (retournement)",
+   "n": 5799,
+   "win_real": 0.5114,
+   "ci95": 0.0129,
+   "win_shuffled": 0.5052,
+   "instruments_above_50": "7/12"
+  },
+  {
+   "tf": "h1",
+   "k_atr": 1,
+   "concept": "M7 prise de borne SPRING (retournement)",
+   "n": 1171,
+   "win_real": 0.4949,
+   "ci95": 0.0286,
+   "win_shuffled": 0.52,
+   "instruments_above_50": "7/12"
+  },
+  {
+   "tf": "h1",
+   "k_atr": 1,
+   "concept": "M7 prise de borne STB (retournement)",
+   "n": 2466,
+   "win_real": 0.5059,
+   "ci95": 0.0197,
+   "win_shuffled": 0.4937,
+   "instruments_above_50": "7/12"
+  },
+  {
+   "tf": "h1",
+   "k_atr": 1,
+   "concept": "M7 prise de borne UA (retournement)",
+   "n": 5968,
+   "win_real": 0.5075,
+   "ci95": 0.0127,
+   "win_shuffled": 0.5137,
+   "instruments_above_50": "7/12"
+  },
+  {
+   "tf": "h1",
+   "k_atr": 1,
+   "concept": "M7 prise de borne UT (retournement)",
+   "n": 2414,
+   "win_real": 0.5159,
+   "ci95": 0.0199,
+   "win_shuffled": 0.5183,
+   "instruments_above_50": "7/12"
+  },
+  {
+   "tf": "h1",
+   "k_atr": 1,
+   "concept": "M7 prise de borne UTAD (retournement)",
+   "n": 1074,
+   "win_real": 0.5214,
+   "ci95": 0.0299,
+   "win_shuffled": 0.5056,
+   "instruments_above_50": "8/12"
+  },
+  {
+   "tf": "h1",
+   "k_atr": 1,
+   "concept": "M7/M9 setup CONCEPT déclenché",
+   "n": 265,
+   "win_real": 0.5,
+   "ci95": 0.0602,
+   "win_shuffled": 0.5128,
+   "instruments_above_50": "6/12"
+  },
+  {
+   "tf": "h1",
+   "k_atr": 1,
+   "concept": "M7/M9 setup GOLDEN déclenché",
+   "n": 1253,
+   "win_real": 0.4888,
+   "ci95": 0.0277,
+   "win_shuffled": 0.5152,
+   "instruments_above_50": "6/12"
+  },
+  {
+   "tf": "h1",
+   "k_atr": 2,
+   "concept": "M1 BOS changement (suivre)",
+   "n": 9878,
+   "win_real": 0.5016,
+   "ci95": 0.0099,
+   "win_shuffled": 0.4984,
+   "instruments_above_50": "7/12"
+  },
+  {
+   "tf": "h1",
+   "k_atr": 2,
+   "concept": "M1 BOS continuation (suivre)",
+   "n": 18302,
+   "win_real": 0.4931,
+   "ci95": 0.0072,
+   "win_shuffled": 0.499,
+   "instruments_above_50": "6/12"
+  },
+  {
+   "tf": "h1",
+   "k_atr": 2,
+   "concept": "M1 init tendance (suivre)",
+   "n": 12,
+   "win_real": 0.5,
+   "ci95": 0.2829,
+   "win_shuffled": 0.5833,
+   "instruments_above_50": "6/12"
+  },
+  {
+   "tf": "h1",
+   "k_atr": 2,
+   "concept": "M1/M5 prise du niveau protégé (reprise tendance)",
+   "n": 5576,
+   "win_real": 0.4999,
+   "ci95": 0.0131,
+   "win_shuffled": 0.5024,
+   "instruments_above_50": "6/12"
+  },
+  {
+   "tf": "h1",
+   "k_atr": 2,
+   "concept": "M2 signature de liquidité (vers la mèche)",
+   "n": 119475,
+   "win_real": 0.506,
+   "ci95": 0.0028,
+   "win_shuffled": 0.5,
+   "instruments_above_50": "11/12"
+  },
+  {
+   "tf": "h1",
+   "k_atr": 2,
+   "concept": "M2 zone avec BM",
+   "n": 6473,
+   "win_real": 0.4979,
+   "ci95": 0.0122,
+   "win_shuffled": 0.5021,
+   "instruments_above_50": "5/12"
+  },
+  {
+   "tf": "h1",
+   "k_atr": 2,
+   "concept": "M2 zone avec doji signature",
+   "n": 6909,
+   "win_real": 0.501,
+   "ci95": 0.0118,
+   "win_shuffled": 0.4952,
+   "instruments_above_50": "6/12"
+  },
+  {
+   "tf": "h1",
+   "k_atr": 2,
+   "concept": "M2 zone sans BM",
+   "n": 17215,
+   "win_real": 0.4969,
+   "ci95": 0.0075,
+   "win_shuffled": 0.4989,
+   "instruments_above_50": "5/12"
+  },
+  {
+   "tf": "h1",
+   "k_atr": 2,
+   "concept": "M2 zone sans doji signature",
+   "n": 16779,
+   "win_real": 0.4956,
+   "ci95": 0.0076,
+   "win_shuffled": 0.5015,
+   "instruments_above_50": "5/12"
+  },
+  {
+   "tf": "h1",
+   "k_atr": 2,
+   "concept": "M3 1re touche zone de continuation",
+   "n": 15215,
+   "win_real": 0.4948,
+   "ci95": 0.0079,
+   "win_shuffled": 0.4998,
+   "instruments_above_50": "4/12"
+  },
+  {
+   "tf": "h1",
+   "k_atr": 2,
+   "concept": "M3 1re touche zone décisionnelle (BOS chgt)",
+   "n": 8473,
+   "win_real": 0.5015,
+   "ci95": 0.0106,
+   "win_shuffled": 0.4992,
+   "instruments_above_50": "8/12"
+  },
+  {
+   "tf": "h1",
+   "k_atr": 2,
+   "concept": "M3 1re touche zone sans BOS",
+   "n": 173474,
+   "win_real": 0.4974,
+   "ci95": 0.0024,
+   "win_shuffled": 0.5001,
+   "instruments_above_50": "3/12"
+  },
+  {
+   "tf": "h1",
+   "k_atr": 2,
+   "concept": "M3 breaker créé (polarité inversée)",
+   "n": 215062,
+   "win_real": 0.5026,
+   "ci95": 0.0021,
+   "win_shuffled": 0.5002,
+   "instruments_above_50": "10/12"
+  },
+  {
+   "tf": "h1",
+   "k_atr": 2,
+   "concept": "M3 order flow (nouvelle zone liée)",
+   "n": 158074,
+   "win_real": 0.4981,
+   "ci95": 0.0025,
+   "win_shuffled": 0.4995,
+   "instruments_above_50": "2/12"
+  },
+  {
+   "tf": "h1",
+   "k_atr": 2,
+   "concept": "M3 réaction sur breaker",
+   "n": 165562,
+   "win_real": 0.4966,
+   "ci95": 0.0024,
+   "win_shuffled": 0.4972,
+   "instruments_above_50": "6/12"
+  },
+  {
+   "tf": "h1",
+   "k_atr": 2,
+   "concept": "M4 cause complète (sens de l'intention)",
+   "n": 7356,
+   "win_real": 0.4934,
+   "ci95": 0.0114,
+   "win_shuffled": 0.4964,
+   "instruments_above_50": "4/12"
+  },
+  {
+   "tf": "h1",
+   "k_atr": 2,
+   "concept": "M4 fail = changement de caractère (retournement)",
+   "n": 14441,
+   "win_real": 0.5017,
+   "ci95": 0.0082,
+   "win_shuffled": 0.4959,
+   "instruments_above_50": "6/12"
+  },
+  {
+   "tf": "h1",
+   "k_atr": 2,
+   "concept": "M4 intact cassé en clôture (continuation)",
+   "n": 150335,
+   "win_real": 0.4977,
+   "ci95": 0.0025,
+   "win_shuffled": 0.5013,
+   "instruments_above_50": "8/12"
+  },
+  {
+   "tf": "h1",
+   "k_atr": 2,
+   "concept": "M4 sortie de cause confirmée (suivre la sortie)",
+   "n": 8569,
+   "win_real": 0.4903,
+   "ci95": 0.0106,
+   "win_shuffled": 0.4925,
+   "instruments_above_50": "4/12"
+  },
+  {
+   "tf": "h1",
+   "k_atr": 2,
+   "concept": "M4 sortie de cause infirmée (suivre la sortie)",
+   "n": 4857,
+   "win_real": 0.4963,
+   "ci95": 0.0141,
+   "win_shuffled": 0.4996,
+   "instruments_above_50": "6/12"
+  },
+  {
+   "tf": "h1",
+   "k_atr": 2,
+   "concept": "M5 liquidité prise en mèche (retournement)",
+   "n": 157466,
+   "win_real": 0.4959,
+   "ci95": 0.0025,
+   "win_shuffled": 0.5006,
+   "instruments_above_50": "1/12"
+  },
+  {
+   "tf": "h1",
+   "k_atr": 2,
+   "concept": "M7 imbalance / FVG (sens du déséquilibre)",
+   "n": 125989,
+   "win_real": 0.5017,
+   "ci95": 0.0028,
+   "win_shuffled": 0.4993,
+   "instruments_above_50": "9/12"
+  },
+  {
+   "tf": "h1",
+   "k_atr": 2,
+   "concept": "M7 prise de borne MSO (retournement)",
+   "n": 5799,
+   "win_real": 0.5068,
+   "ci95": 0.0129,
+   "win_shuffled": 0.5102,
+   "instruments_above_50": "8/12"
+  },
+  {
+   "tf": "h1",
+   "k_atr": 2,
+   "concept": "M7 prise de borne SPRING (retournement)",
+   "n": 1171,
+   "win_real": 0.4898,
+   "ci95": 0.0286,
+   "win_shuffled": 0.4972,
+   "instruments_above_50": "5/12"
+  },
+  {
+   "tf": "h1",
+   "k_atr": 2,
+   "concept": "M7 prise de borne STB (retournement)",
+   "n": 2466,
+   "win_real": 0.4951,
+   "ci95": 0.0197,
+   "win_shuffled": 0.5018,
+   "instruments_above_50": "6/12"
+  },
+  {
+   "tf": "h1",
+   "k_atr": 2,
+   "concept": "M7 prise de borne UA (retournement)",
+   "n": 5968,
+   "win_real": 0.5129,
+   "ci95": 0.0127,
+   "win_shuffled": 0.5113,
+   "instruments_above_50": "7/12"
+  },
+  {
+   "tf": "h1",
+   "k_atr": 2,
+   "concept": "M7 prise de borne UT (retournement)",
+   "n": 2414,
+   "win_real": 0.5178,
+   "ci95": 0.0199,
+   "win_shuffled": 0.5012,
+   "instruments_above_50": "7/12"
+  },
+  {
+   "tf": "h1",
+   "k_atr": 2,
+   "concept": "M7 prise de borne UTAD (retournement)",
+   "n": 1074,
+   "win_real": 0.5023,
+   "ci95": 0.0299,
+   "win_shuffled": 0.4952,
+   "instruments_above_50": "6/12"
+  },
+  {
+   "tf": "h1",
+   "k_atr": 2,
+   "concept": "M7/M9 setup CONCEPT déclenché",
+   "n": 265,
+   "win_real": 0.5208,
+   "ci95": 0.0602,
+   "win_shuffled": 0.5,
+   "instruments_above_50": "6/12"
+  },
+  {
+   "tf": "h1",
+   "k_atr": 2,
+   "concept": "M7/M9 setup GOLDEN déclenché",
+   "n": 1253,
+   "win_real": 0.4669,
+   "ci95": 0.0277,
+   "win_shuffled": 0.5177,
+   "instruments_above_50": "3/12"
+  },
+  {
+   "tf": "m15",
+   "k_atr": 1,
+   "concept": "M1 BOS changement (suivre)",
+   "n": 33488,
+   "win_real": 0.4761,
+   "ci95": 0.0054,
+   "win_shuffled": 0.4998,
+   "instruments_above_50": "1/12"
+  },
+  {
+   "tf": "m15",
+   "k_atr": 1,
+   "concept": "M1 BOS continuation (suivre)",
+   "n": 60364,
+   "win_real": 0.4744,
+   "ci95": 0.004,
+   "win_shuffled": 0.4974,
+   "instruments_above_50": "0/12"
+  },
+  {
+   "tf": "m15",
+   "k_atr": 1,
+   "concept": "M1 init tendance (suivre)",
+   "n": 12,
+   "win_real": 0.4167,
+   "ci95": 0.2829,
+   "win_shuffled": 0.5833,
+   "instruments_above_50": "5/12"
+  },
+  {
+   "tf": "m15",
+   "k_atr": 1,
+   "concept": "M1/M5 prise du niveau protégé (reprise tendance)",
+   "n": 18947,
+   "win_real": 0.4982,
+   "ci95": 0.0071,
+   "win_shuffled": 0.505,
+   "instruments_above_50": "5/12"
+  },
+  {
+   "tf": "m15",
+   "k_atr": 1,
+   "concept": "M2 signature de liquidité (vers la mèche)",
+   "n": 468826,
+   "win_real": 0.5072,
+   "ci95": 0.0014,
+   "win_shuffled": 0.4996,
+   "instruments_above_50": "11/12"
+  },
+  {
+   "tf": "m15",
+   "k_atr": 1,
+   "concept": "M2 zone avec BM",
+   "n": 25056,
+   "win_real": 0.5095,
+   "ci95": 0.0062,
+   "win_shuffled": 0.502,
+   "instruments_above_50": "10/12"
+  },
+  {
+   "tf": "m15",
+   "k_atr": 1,
+   "concept": "M2 zone avec doji signature",
+   "n": 22849,
+   "win_real": 0.5064,
+   "ci95": 0.0065,
+   "win_shuffled": 0.5048,
+   "instruments_above_50": "9/12"
+  },
+  {
+   "tf": "m15",
+   "k_atr": 1,
+   "concept": "M2 zone sans BM",
+   "n": 54878,
+   "win_real": 0.503,
+   "ci95": 0.0042,
+   "win_shuffled": 0.5028,
+   "instruments_above_50": "8/12"
+  },
+  {
+   "tf": "m15",
+   "k_atr": 1,
+   "concept": "M2 zone sans doji signature",
+   "n": 57085,
+   "win_real": 0.5045,
+   "ci95": 0.0041,
+   "win_shuffled": 0.5018,
+   "instruments_above_50": "8/12"
+  },
+  {
+   "tf": "m15",
+   "k_atr": 1,
+   "concept": "M3 1re touche zone de continuation",
+   "n": 50614,
+   "win_real": 0.4978,
+   "ci95": 0.0044,
+   "win_shuffled": 0.503,
+   "instruments_above_50": "3/12"
+  },
+  {
+   "tf": "m15",
+   "k_atr": 1,
+   "concept": "M3 1re touche zone décisionnelle (BOS chgt)",
+   "n": 29320,
+   "win_real": 0.5176,
+   "ci95": 0.0057,
+   "win_shuffled": 0.502,
+   "instruments_above_50": "11/12"
+  },
+  {
+   "tf": "m15",
+   "k_atr": 1,
+   "concept": "M3 1re touche zone sans BOS",
+   "n": 689987,
+   "win_real": 0.5042,
+   "ci95": 0.0012,
+   "win_shuffled": 0.5006,
+   "instruments_above_50": "12/12"
+  },
+  {
+   "tf": "m15",
+   "k_atr": 1,
+   "concept": "M3 breaker créé (polarité inversée)",
+   "n": 845869,
+   "win_real": 0.4821,
+   "ci95": 0.0011,
+   "win_shuffled": 0.5,
+   "instruments_above_50": "1/12"
+  },
+  {
+   "tf": "m15",
+   "k_atr": 1,
+   "concept": "M3 order flow (nouvelle zone liée)",
+   "n": 616754,
+   "win_real": 0.499,
+   "ci95": 0.0012,
+   "win_shuffled": 0.5003,
+   "instruments_above_50": "3/12"
+  },
+  {
+   "tf": "m15",
+   "k_atr": 1,
+   "concept": "M3 réaction sur breaker",
+   "n": 650460,
+   "win_real": 0.4829,
+   "ci95": 0.0012,
+   "win_shuffled": 0.5003,
+   "instruments_above_50": "0/12"
+  },
+  {
+   "tf": "m15",
+   "k_atr": 1,
+   "concept": "M4 cause complète (sens de l'intention)",
+   "n": 23460,
+   "win_real": 0.4747,
+   "ci95": 0.0064,
+   "win_shuffled": 0.4971,
+   "instruments_above_50": "1/12"
+  },
+  {
+   "tf": "m15",
+   "k_atr": 1,
+   "concept": "M4 fail = changement de caractère (retournement)",
+   "n": 48088,
+   "win_real": 0.4986,
+   "ci95": 0.0045,
+   "win_shuffled": 0.5003,
+   "instruments_above_50": "4/12"
+  },
+  {
+   "tf": "m15",
+   "k_atr": 1,
+   "concept": "M4 intact cassé en clôture (continuation)",
+   "n": 595228,
+   "win_real": 0.4788,
+   "ci95": 0.0013,
+   "win_shuffled": 0.5001,
+   "instruments_above_50": "0/12"
+  },
+  {
+   "tf": "m15",
+   "k_atr": 1,
+   "concept": "M4 sortie de cause confirmée (suivre la sortie)",
+   "n": 29065,
+   "win_real": 0.4806,
+   "ci95": 0.0057,
+   "win_shuffled": 0.4976,
+   "instruments_above_50": "1/12"
+  },
+  {
+   "tf": "m15",
+   "k_atr": 1,
+   "concept": "M4 sortie de cause infirmée (suivre la sortie)",
+   "n": 15361,
+   "win_real": 0.4777,
+   "ci95": 0.0079,
+   "win_shuffled": 0.4998,
+   "instruments_above_50": "2/12"
+  },
+  {
+   "tf": "m15",
+   "k_atr": 1,
+   "concept": "M5 liquidité prise en mèche (retournement)",
+   "n": 628258,
+   "win_real": 0.4991,
+   "ci95": 0.0012,
+   "win_shuffled": 0.499,
+   "instruments_above_50": "3/12"
+  },
+  {
+   "tf": "m15",
+   "k_atr": 1,
+   "concept": "M7 imbalance / FVG (sens du déséquilibre)",
+   "n": 527899,
+   "win_real": 0.4817,
+   "ci95": 0.0013,
+   "win_shuffled": 0.501,
+   "instruments_above_50": "0/12"
+  },
+  {
+   "tf": "m15",
+   "k_atr": 1,
+   "concept": "M7 prise de borne MSO (retournement)",
+   "n": 20889,
+   "win_real": 0.4968,
+   "ci95": 0.0068,
+   "win_shuffled": 0.5022,
+   "instruments_above_50": "6/12"
+  },
+  {
+   "tf": "m15",
+   "k_atr": 1,
+   "concept": "M7 prise de borne SPRING (retournement)",
+   "n": 4103,
+   "win_real": 0.5033,
+   "ci95": 0.0153,
+   "win_shuffled": 0.4955,
+   "instruments_above_50": "6/12"
+  },
+  {
+   "tf": "m15",
+   "k_atr": 1,
+   "concept": "M7 prise de borne STB (retournement)",
+   "n": 7682,
+   "win_real": 0.5221,
+   "ci95": 0.0112,
+   "win_shuffled": 0.4977,
+   "instruments_above_50": "11/12"
+  },
+  {
+   "tf": "m15",
+   "k_atr": 1,
+   "concept": "M7 prise de borne UA (retournement)",
+   "n": 21000,
+   "win_real": 0.5089,
+   "ci95": 0.0068,
+   "win_shuffled": 0.4917,
+   "instruments_above_50": "10/12"
+  },
+  {
+   "tf": "m15",
+   "k_atr": 1,
+   "concept": "M7 prise de borne UT (retournement)",
+   "n": 7979,
+   "win_real": 0.5018,
+   "ci95": 0.011,
+   "win_shuffled": 0.5114,
+   "instruments_above_50": "7/12"
+  },
+  {
+   "tf": "m15",
+   "k_atr": 1,
+   "concept": "M7 prise de borne UTAD (retournement)",
+   "n": 3970,
+   "win_real": 0.5146,
+   "ci95": 0.0156,
+   "win_shuffled": 0.5007,
+   "instruments_above_50": "7/12"
+  },
+  {
+   "tf": "m15",
+   "k_atr": 1,
+   "concept": "M7/M9 setup CONCEPT déclenché",
+   "n": 984,
+   "win_real": 0.5218,
+   "ci95": 0.0312,
+   "win_shuffled": 0.4982,
+   "instruments_above_50": "7/12"
+  },
+  {
+   "tf": "m15",
+   "k_atr": 1,
+   "concept": "M7/M9 setup GOLDEN déclenché",
+   "n": 4032,
+   "win_real": 0.5015,
+   "ci95": 0.0154,
+   "win_shuffled": 0.4896,
+   "instruments_above_50": "5/12"
+  },
+  {
+   "tf": "m15",
+   "k_atr": 2,
+   "concept": "M1 BOS changement (suivre)",
+   "n": 33483,
+   "win_real": 0.4906,
+   "ci95": 0.0054,
+   "win_shuffled": 0.5009,
+   "instruments_above_50": "2/12"
+  },
+  {
+   "tf": "m15",
+   "k_atr": 2,
+   "concept": "M1 BOS continuation (suivre)",
+   "n": 60351,
+   "win_real": 0.4751,
+   "ci95": 0.004,
+   "win_shuffled": 0.4992,
+   "instruments_above_50": "0/12"
+  },
+  {
+   "tf": "m15",
+   "k_atr": 2,
+   "concept": "M1 init tendance (suivre)",
+   "n": 12,
+   "win_real": 0.25,
+   "ci95": 0.2829,
+   "win_shuffled": 0.6667,
+   "instruments_above_50": "3/12"
+  },
+  {
+   "tf": "m15",
+   "k_atr": 2,
+   "concept": "M1/M5 prise du niveau protégé (reprise tendance)",
+   "n": 18946,
+   "win_real": 0.4996,
+   "ci95": 0.0071,
+   "win_shuffled": 0.5072,
+   "instruments_above_50": "4/12"
+  },
+  {
+   "tf": "m15",
+   "k_atr": 2,
+   "concept": "M2 signature de liquidité (vers la mèche)",
+   "n": 468755,
+   "win_real": 0.505,
+   "ci95": 0.0014,
+   "win_shuffled": 0.4999,
+   "instruments_above_50": "12/12"
+  },
+  {
+   "tf": "m15",
+   "k_atr": 2,
+   "concept": "M2 zone avec BM",
+   "n": 25048,
+   "win_real": 0.5067,
+   "ci95": 0.0062,
+   "win_shuffled": 0.4998,
+   "instruments_above_50": "9/12"
+  },
+  {
+   "tf": "m15",
+   "k_atr": 2,
+   "concept": "M2 zone avec doji signature",
+   "n": 22841,
+   "win_real": 0.5021,
+   "ci95": 0.0065,
+   "win_shuffled": 0.5054,
+   "instruments_above_50": "5/12"
+  },
+  {
+   "tf": "m15",
+   "k_atr": 2,
+   "concept": "M2 zone sans BM",
+   "n": 54862,
+   "win_real": 0.4983,
+   "ci95": 0.0042,
+   "win_shuffled": 0.5028,
+   "instruments_above_50": "5/12"
+  },
+  {
+   "tf": "m15",
+   "k_atr": 2,
+   "concept": "M2 zone sans doji signature",
+   "n": 57069,
+   "win_real": 0.5005,
+   "ci95": 0.0041,
+   "win_shuffled": 0.5008,
+   "instruments_above_50": "5/12"
+  },
+  {
+   "tf": "m15",
+   "k_atr": 2,
+   "concept": "M3 1re touche zone de continuation",
+   "n": 50600,
+   "win_real": 0.4964,
+   "ci95": 0.0044,
+   "win_shuffled": 0.5042,
+   "instruments_above_50": "2/12"
+  },
+  {
+   "tf": "m15",
+   "k_atr": 2,
+   "concept": "M3 1re touche zone décisionnelle (BOS chgt)",
+   "n": 29310,
+   "win_real": 0.5089,
+   "ci95": 0.0057,
+   "win_shuffled": 0.4982,
+   "instruments_above_50": "7/12"
+  },
+  {
+   "tf": "m15",
+   "k_atr": 2,
+   "concept": "M3 1re touche zone sans BOS",
+   "n": 689883,
+   "win_real": 0.502,
+   "ci95": 0.0012,
+   "win_shuffled": 0.5001,
+   "instruments_above_50": "10/12"
+  },
+  {
+   "tf": "m15",
+   "k_atr": 2,
+   "concept": "M3 breaker créé (polarité inversée)",
+   "n": 845651,
+   "win_real": 0.4913,
+   "ci95": 0.0011,
+   "win_shuffled": 0.4996,
+   "instruments_above_50": "3/12"
+  },
+  {
+   "tf": "m15",
+   "k_atr": 2,
+   "concept": "M3 order flow (nouvelle zone liée)",
+   "n": 616679,
+   "win_real": 0.4989,
+   "ci95": 0.0012,
+   "win_shuffled": 0.5007,
+   "instruments_above_50": "5/12"
+  },
+  {
+   "tf": "m15",
+   "k_atr": 2,
+   "concept": "M3 réaction sur breaker",
+   "n": 650292,
+   "win_real": 0.4893,
+   "ci95": 0.0012,
+   "win_shuffled": 0.5005,
+   "instruments_above_50": "1/12"
+  },
+  {
+   "tf": "m15",
+   "k_atr": 2,
+   "concept": "M4 cause complète (sens de l'intention)",
+   "n": 23456,
+   "win_real": 0.4795,
+   "ci95": 0.0064,
+   "win_shuffled": 0.5001,
+   "instruments_above_50": "0/12"
+  },
+  {
+   "tf": "m15",
+   "k_atr": 2,
+   "concept": "M4 fail = changement de caractère (retournement)",
+   "n": 48081,
+   "win_real": 0.4976,
+   "ci95": 0.0045,
+   "win_shuffled": 0.5016,
+   "instruments_above_50": "5/12"
+  },
+  {
+   "tf": "m15",
+   "k_atr": 2,
+   "concept": "M4 intact cassé en clôture (continuation)",
+   "n": 595119,
+   "win_real": 0.4891,
+   "ci95": 0.0013,
+   "win_shuffled": 0.5,
+   "instruments_above_50": "1/12"
+  },
+  {
+   "tf": "m15",
+   "k_atr": 2,
+   "concept": "M4 sortie de cause confirmée (suivre la sortie)",
+   "n": 29063,
+   "win_real": 0.4852,
+   "ci95": 0.0057,
+   "win_shuffled": 0.5001,
+   "instruments_above_50": "0/12"
+  },
+  {
+   "tf": "m15",
+   "k_atr": 2,
+   "concept": "M4 sortie de cause infirmée (suivre la sortie)",
+   "n": 15360,
+   "win_real": 0.4811,
+   "ci95": 0.0079,
+   "win_shuffled": 0.4999,
+   "instruments_above_50": "2/12"
+  },
+  {
+   "tf": "m15",
+   "k_atr": 2,
+   "concept": "M5 liquidité prise en mèche (retournement)",
+   "n": 628146,
+   "win_real": 0.499,
+   "ci95": 0.0012,
+   "win_shuffled": 0.4991,
+   "instruments_above_50": "4/12"
+  },
+  {
+   "tf": "m15",
+   "k_atr": 2,
+   "concept": "M7 imbalance / FVG (sens du déséquilibre)",
+   "n": 527838,
+   "win_real": 0.4911,
+   "ci95": 0.0013,
+   "win_shuffled": 0.5004,
+   "instruments_above_50": "0/12"
+  },
+  {
+   "tf": "m15",
+   "k_atr": 2,
+   "concept": "M7 prise de borne MSO (retournement)",
+   "n": 20888,
+   "win_real": 0.508,
+   "ci95": 0.0068,
+   "win_shuffled": 0.5055,
+   "instruments_above_50": "7/12"
+  },
+  {
+   "tf": "m15",
+   "k_atr": 2,
+   "concept": "M7 prise de borne SPRING (retournement)",
+   "n": 4103,
+   "win_real": 0.5297,
+   "ci95": 0.0153,
+   "win_shuffled": 0.5004,
+   "instruments_above_50": "10/12"
+  },
+  {
+   "tf": "m15",
+   "k_atr": 2,
+   "concept": "M7 prise de borne STB (retournement)",
+   "n": 7682,
+   "win_real": 0.5263,
+   "ci95": 0.0112,
+   "win_shuffled": 0.5002,
+   "instruments_above_50": "9/12"
+  },
+  {
+   "tf": "m15",
+   "k_atr": 2,
+   "concept": "M7 prise de borne UA (retournement)",
+   "n": 20998,
+   "win_real": 0.5106,
+   "ci95": 0.0068,
+   "win_shuffled": 0.5004,
+   "instruments_above_50": "9/12"
+  },
+  {
+   "tf": "m15",
+   "k_atr": 2,
+   "concept": "M7 prise de borne UT (retournement)",
+   "n": 7977,
+   "win_real": 0.5048,
+   "ci95": 0.011,
+   "win_shuffled": 0.5084,
+   "instruments_above_50": "8/12"
+  },
+  {
+   "tf": "m15",
+   "k_atr": 2,
+   "concept": "M7 prise de borne UTAD (retournement)",
+   "n": 3969,
+   "win_real": 0.5,
+   "ci95": 0.0156,
+   "win_shuffled": 0.503,
+   "instruments_above_50": "6/12"
+  },
+  {
+   "tf": "m15",
+   "k_atr": 2,
+   "concept": "M7/M9 setup CONCEPT déclenché",
+   "n": 984,
+   "win_real": 0.5193,
+   "ci95": 0.0312,
+   "win_shuffled": 0.4868,
+   "instruments_above_50": "6/12"
+  },
+  {
+   "tf": "m15",
+   "k_atr": 2,
+   "concept": "M7/M9 setup GOLDEN déclenché",
+   "n": 4032,
+   "win_real": 0.5021,
+   "ci95": 0.0154,
+   "win_shuffled": 0.4931,
+   "instruments_above_50": "6/12"
+  }
+ ],
+ "liquidity": [
+  {
+   "tf": "h1",
+   "group": "M2 signature de liquidité|d1-3",
+   "n": 8753,
+   "taken_real": 0.8917,
+   "taken_shuffled": 0.895
+  },
+  {
+   "tf": "h1",
+   "group": "M2 signature de liquidité|d<1",
+   "n": 110284,
+   "taken_real": 0.9601,
+   "taken_shuffled": 0.9662
+  },
+  {
+   "tf": "h1",
+   "group": "M2 signature de liquidité|d>=3",
+   "n": 73,
+   "taken_real": 0.5343,
+   "taken_shuffled": 0.5
+  },
+  {
+   "tf": "h1",
+   "group": "M5 EQH/EQL|d1-3",
+   "n": 7175,
+   "taken_real": 0.867,
+   "taken_shuffled": 0.8849
+  },
+  {
+   "tf": "h1",
+   "group": "M5 EQH/EQL|d<1",
+   "n": 6578,
+   "taken_real": 0.9504,
+   "taken_shuffled": 0.958
+  },
+  {
+   "tf": "h1",
+   "group": "M5 EQH/EQL|d>=3",
+   "n": 542,
+   "taken_real": 0.6439,
+   "taken_shuffled": 0.6801
+  },
+  {
+   "tf": "h1",
+   "group": "M5 inducement|d1-3",
+   "n": 3541,
+   "taken_real": 0.8221,
+   "taken_shuffled": 0.8362
+  },
+  {
+   "tf": "h1",
+   "group": "M5 inducement|d<1",
+   "n": 16,
+   "taken_real": 0.9375,
+   "taken_shuffled": 0.9643
+  },
+  {
+   "tf": "h1",
+   "group": "M5 inducement|d>=3",
+   "n": 5544,
+   "taken_real": 0.6201,
+   "taken_shuffled": 0.6382
+  },
+  {
+   "tf": "h1",
+   "group": "pivot ordinaire|d1-3",
+   "n": 91643,
+   "taken_real": 0.8606,
+   "taken_shuffled": 0.8758
+  },
+  {
+   "tf": "h1",
+   "group": "pivot ordinaire|d<1",
+   "n": 92635,
+   "taken_real": 0.9491,
+   "taken_shuffled": 0.9551
+  },
+  {
+   "tf": "h1",
+   "group": "pivot ordinaire|d>=3",
+   "n": 6286,
+   "taken_real": 0.6558,
+   "taken_shuffled": 0.6781
+  },
+  {
+   "tf": "m15",
+   "group": "M2 signature de liquidité|d1-3",
+   "n": 35246,
+   "taken_real": 0.892,
+   "taken_shuffled": 0.8934
+  },
+  {
+   "tf": "m15",
+   "group": "M2 signature de liquidité|d<1",
+   "n": 432796,
+   "taken_real": 0.9596,
+   "taken_shuffled": 0.9653
+  },
+  {
+   "tf": "m15",
+   "group": "M2 signature de liquidité|d>=3",
+   "n": 395,
+   "taken_real": 0.638,
+   "taken_shuffled": 0.6203
+  },
+  {
+   "tf": "m15",
+   "group": "M5 EQH/EQL|d1-3",
+   "n": 32075,
+   "taken_real": 0.8744,
+   "taken_shuffled": 0.8804
+  },
+  {
+   "tf": "m15",
+   "group": "M5 EQH/EQL|d<1",
+   "n": 28886,
+   "taken_real": 0.955,
+   "taken_shuffled": 0.9567
+  },
+  {
+   "tf": "m15",
+   "group": "M5 EQH/EQL|d>=3",
+   "n": 1778,
+   "taken_real": 0.6805,
+   "taken_shuffled": 0.6984
+  },
+  {
+   "tf": "m15",
+   "group": "M5 inducement|d1-3",
+   "n": 11055,
+   "taken_real": 0.8258,
+   "taken_shuffled": 0.8372
+  },
+  {
+   "tf": "m15",
+   "group": "M5 inducement|d<1",
+   "n": 56,
+   "taken_real": 0.9286,
+   "taken_shuffled": 0.9286
+  },
+  {
+   "tf": "m15",
+   "group": "M5 inducement|d>=3",
+   "n": 24009,
+   "taken_real": 0.6101,
+   "taken_shuffled": 0.6373
+  },
+  {
+   "tf": "m15",
+   "group": "pivot ordinaire|d1-3",
+   "n": 375193,
+   "taken_real": 0.8654,
+   "taken_shuffled": 0.876
+  },
+  {
+   "tf": "m15",
+   "group": "pivot ordinaire|d<1",
+   "n": 363873,
+   "taken_real": 0.9501,
+   "taken_shuffled": 0.9546
+  },
+  {
+   "tf": "m15",
+   "group": "pivot ordinaire|d>=3",
+   "n": 20417,
+   "taken_real": 0.6598,
+   "taken_shuffled": 0.6829
+  }
+ ],
+ "cause_effect": {
+  "m15_real": {
+   "n": 44412,
+   "spearman_mean": 0.0658,
+   "effect_short": 3.52,
+   "effect_long": 4.451
+  },
+  "m15_shuf": {
+   "n": 53896,
+   "spearman_mean": -0.007,
+   "effect_short": 4.255,
+   "effect_long": 4.426
+  },
+  "h1_real": {
+   "n": 13416,
+   "spearman_mean": -0.0124,
+   "effect_short": 3.795,
+   "effect_long": 3.968
+  },
+  "h1_shuf": {
+   "n": 13891,
+   "spearman_mean": -0.0023,
+   "effect_short": 4.082,
+   "effect_long": 4.239
+  }
+ }
+}

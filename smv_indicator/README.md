@@ -8,6 +8,7 @@ Reconstruction formelle, calibrage et implémentation de référence de la strat
 - Questions Q-01 à Q-16 : choix de formalisation argumentés par le dépôt, la recherche et des mesures sur sept ans de données réelles (`docs/CALIBRATION.md`, errata §6).
 - Indicateur MetaTrader 5 écrit (`mt5/`) mais **non compilé ici** ; outil de parité fourni.
 - Ajustement de la stratégie fondé sur les pertes, avec validation sur dix paires jamais vues (`docs/CALIBRATION.md` §7) : pertes réduites de -0,21 à -0,09 R par trade, sans espérance positive démontrée.
+- Chaque concept des modules testé séparément sur 12 instruments (`docs/MODULES_TEST.md`) : suivre une cassure est contredit par les données en M15 ; seuls les retours sur zone décisionnelle, le STB et la signature de liquidité montrent un effet faible.
 - **Aucune performance n'est revendiquée** : le backtest des setups ne montre pas d'espérance positive après coûts (`docs/CALIBRATION.md` §4).
 
 ## Lire dans cet ordre
