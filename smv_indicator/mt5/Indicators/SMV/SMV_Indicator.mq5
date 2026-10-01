@@ -62,6 +62,9 @@ input int              InpTestMaxBars     = 10;               // Golden entry : 
 input double           InpSlMaxAtr        = 2.5;              // Stop maximal en ATR (Q-12)
 input int              InpSetupExpiry     = 100;              // Concept entry : durée de vie de l'ordre limite
 input bool             InpEnableSetups    = true;             // Setups (repères, sans espérance démontrée)
+input bool             InpGoldenSchemaOnly = false;           // Golden seulement dans le sens du schéma (CALIBRATION §7)
+input bool             InpFilterPD        = false;            // Signal seulement en discount (achat) / premium (vente) de la jambe UT sup. (exige InpHtf)
+input double           InpBeAtR           = 0.0;              // Break-even après N R (0 = désactivé ; non retenu, §7)
 input bool             InpEnableImbalance = false;            // FVG ICT (définition externe)
 input bool             InpEnableSessions  = true;             // Heures de tir et fenêtre 26-9
 input ENUM_SMV_SESSION InpSessionMode     = SMV_SES_MEASURED; // Heures : mesurées ou heures du dépôt (Q-10)
@@ -153,6 +156,8 @@ int OnInit()
    g_cfg.sl_max_atr = InpSlMaxAtr;
    g_cfg.setup_expiry_bars = InpSetupExpiry;
    g_cfg.enable_setups = InpEnableSetups;
+   g_cfg.golden_schema_only = InpGoldenSchemaOnly;
+   g_cfg.be_at_r = InpBeAtR;
    g_cfg.enable_imbalance = InpEnableImbalance;
    g_cfg.enable_sessions = InpEnableSessions;
    g_cfg.session_mode = InpSessionMode == SMV_SES_MEASURED ? "measured" : "repo";
@@ -165,6 +170,8 @@ int OnInit()
    g_use_htf = InpHtf != PERIOD_CURRENT && PeriodSeconds(InpHtf) > PeriodSeconds(_Period) && InpHtf != PERIOD_MN1;
    if(InpHtf != PERIOD_CURRENT && !g_use_htf)
       Print("SMV: UT supérieure ignorée (doit être supérieure à l'UT du graphique, hors MN1)");
+   if(InpFilterPD && !g_use_htf)
+      Print("SMV: InpFilterPD exige une UT supérieure (InpHtf, H4 dans l'étude) ; aucun signal ne passera le filtre");
 
    SetIndexBuffer(SMV_BUF_TREND, BufTrend, INDICATOR_DATA);
    SetIndexBuffer(SMV_BUF_PROT, BufProt, INDICATOR_DATA);
@@ -280,6 +287,21 @@ bool HtfFeedUntil(const datetime t_srv_close)
    return true;
   }
 
+//--- Filtre premium/discount (CALIBRATION §7) : position de l'entrée dans la jambe de l'UT
+//--- supérieure, du niveau protégé à l'extrême courant ; achat sous 50 %, vente au-dessus.
+//--- Sans état d'UT supérieure, le filtre refuse (il n'invente pas de contexte).
+bool PdOk(const SmvEvent &e)
+  {
+   if(!InpFilterPD) return true;
+   if(!g_use_htf || g_htf.structure.trend == SMV_NONE || !g_htf.structure.has_prot || !g_htf.structure.has_leg)
+      return false;
+   double lo = MathMin(g_htf.structure.prot_p, g_htf.structure.leg_p);
+   double hi = MathMax(g_htf.structure.prot_p, g_htf.structure.leg_p);
+   if(hi <= lo) return false;
+   double pd = (e.price - lo) / (hi - lo);
+   return e.dir == SMV_BULL ? pd < 0.5 : pd > 0.5;
+  }
+
 //--- R-MTF-03 (PROPOSITION) : BOS de continuation contraire à l'UT haute, sous son niveau protégé
 bool BosTrapRisk(const SmvEvent &e)
   {
@@ -336,7 +358,7 @@ int OnCalculate(const int rates_total, const int prev_calculated, const datetime
       BufTrap[idx] = 0;
       for(int k = g_eng.bar_from; k < g_eng.log.count; k++)
         {
-         if(g_eng.log.ev[k].kind == K_SETUP && g_eng.log.ev[k].s2 == "")
+         if(g_eng.log.ev[k].kind == K_SETUP && g_eng.log.ev[k].s2 == "" && PdOk(g_eng.log.ev[k]))
            {
             BufSDir[idx] = g_eng.log.ev[k].dir;
             BufSEntry[idx] = g_eng.log.ev[k].price;

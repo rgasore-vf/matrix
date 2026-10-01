@@ -37,6 +37,9 @@ Reporter la valeur dans l'entrée `InpServerTz` de l'indicateur. Une erreur d'un
 | | `InpSlMaxAtr` | 2,5 | Q-12 |
 | | `InpEnableSetups` | oui | §4 de CALIBRATION : repères sans espérance démontrée |
 | | `InpSessionMode` | mesurées | Q-10 |
+| Ajustement (§7) | `InpGoldenSchemaOnly` | non | golden seulement dans le sens du schéma |
+| | `InpFilterPD` | non | signal (tampons) seulement en discount à l'achat / premium à la vente de la jambe `InpHtf` ; l'étude utilise H4 |
+| | `InpBeAtR` | 0 | break-even après N R ; testé, non retenu |
 | Historique | `InpMaxBars` | 20 000 | bougies recalculées au chargement |
 | | `InpHtf` | désactivée | UT supérieure pour le biais et le BOS trap |
 | Affichage | couches, couleurs, police | | Lora si installée sous Windows, sinon substitution par le système |
@@ -80,3 +83,9 @@ Points sensibles à vérifier en priorité en cas d'écart : ordre des événeme
 - L'UT supérieure utilise les bougies du courtier (`CopyRates`), alors que le moteur Python agrège les bougies de l'UT de base ; la parité ne couvre pas l'UT supérieure.
 - MN1 n'est pas accepté comme UT supérieure (durée variable).
 - Le recalcul complet est déclenché par tout changement d'historique ; sur 20 000 bougies, il doit rester bref, mais n'a pas été mesuré sur terminal.
+
+## 7. Backtest de la version ajustée
+
+Configuration étudiée dans `docs/CALIBRATION.md` §7 : `InpGoldenSchemaOnly = true`, `InpFilterPD = true`, `InpHtf = PERIOD_H4`, M15. Les tampons 2 à 5 ne portent alors que les setups qui passent les deux filtres ; les setups dessinés sur le graphique ne sont pas filtrés par le premium/discount.
+
+Différences attendues avec l'étude Python : les bougies H4 du courtier sont alignées sur l'heure serveur, alors que l'étude agrège des H4 alignées sur UTC ; les coûts et l'exécution sont ceux du testeur. Pour une validation honnête, utiliser de préférence la période **postérieure à mars 2022**, jamais utilisée dans l'étude, et fixer les réglages avant de lancer le test.

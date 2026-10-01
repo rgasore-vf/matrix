@@ -12,6 +12,7 @@ from smv.data import synthetic
 CONFIGS = [
     Config(),
     Config(major_mode="B"),
+    Config(golden_schema_only=True, be_at_r=1.0),
     Config(pivot_left=1, pivot_right=1, zones_on="all_pivots", zone_proximal="wick"),
     Config(pivot_left=3, pivot_right=3, enable_imbalance=True, enable_sessions=True,
            range_accept_bars=1, bm_range_atr=1.0),

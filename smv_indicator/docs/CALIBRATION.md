@@ -245,3 +245,54 @@ Les études ont été relancées sur les mêmes données (`research/DATA_MANIFES
 | Q-12 | 2,5 ATR « reproduit » 16 pips | inchangé | la correspondance porte sur une médiane ; elle ne prouve pas que la règle du formateur est en ATR |
 | Q-16 | « structure indépendante de N » | faux | la structure majeure dépend de N par la référence de continuation et le fail |
 | §4 | EURUSD M15 -0,02 R brut ; CONCEPT +0,52 R | EURUSD M15 -0,05 R brut ; CONCEPT +0,52 R mais +0,72 R sur une série mélangée | aucune piste positive retenue |
+
+---
+
+## 7. Ajustement de la stratégie à partir des pertes (protocole avec validation)
+
+**Objectif.** Trouver où la formalisation perd et l'ajuster, sans fabriquer une stratégie qui ne gagne que sur l'historique (surapprentissage). Scripts : `research/setup_dataset.py` et `research/adjust/`.
+
+**Protocole, fixé avant les résultats.**
+1. Développement : EURUSD et XAUUSD M15, 2012 à 2018. Diagnostic, hypothèses, choix.
+2. Gel des règles.
+3. Validation 1 : EURUSD et XAUUSD, 2019 à mars 2022. Période partiellement vue, car ses résultats agrégés avaient été consultés en v0.2.
+4. Validation 2 : dix paires jamais regardées (GBPUSD, AUDUSD, USDCAD, USDCHF, EURGBP, EURCHF, USDJPY, EURJPY, GBPJPY, AUDJPY), 2012 à 2022, coûts hypothétiques de compte ECN (`setup_dataset.COST`).
+
+**Diagnostic (développement, 459 trades, -0,32 R net par trade).**
+- Les setups GOLDEN étiquetés UA (-0,77 R, 15 % de réussite pour 28 % attendus au hasard) et MSO (-0,17 R) sont des ventes dans une accumulation et des achats dans une distribution, **contraires au schéma** du dépôt (M7/1 : achat après STB/spring en accumulation, vente après UT/UTAD en distribution). C'était un écart de formalisation.
+- Achat dans la moitié haute de la jambe H4, ou vente dans la moitié basse : -0,51 R ; dans le bon sens : -0,03 R.
+- 25 % des perdants avaient atteint +1 R avant le stop.
+
+**Hypothèses testées en développement.**
+
+| Variante | Trades | R net par trade |
+|---|---|---|
+| base | 459 | -0,32 |
+| H1 golden selon le schéma | 183 | -0,01 |
+| H2 premium/discount H4 | 185 | -0,03 |
+| H3 break-even à +1 R | 459 | -0,25 |
+| H1 + H2 (**retenu**) | 90 | **+0,32 ± 0,51** |
+| H1 + H2 + H3 | 90 | +0,14 |
+
+Le break-even améliore la base mais dégrade la meilleure combinaison : il n'est pas retenu (option `be_at_r`, désactivée par défaut).
+
+**Validation.**
+
+| Jeu | Base : trades, R net | Ajusté : trades, R net | Ajusté, R brut |
+|---|---|---|---|
+| EURUSD + XAUUSD 2019-2022 | 303, -0,13 | 55, **-0,17 ± 0,50** | — |
+| 10 paires jamais vues | 4 254, -0,21 ± 0,06 | 796, **-0,09 ± 0,13** | +0,11 ± 0,13 |
+
+**Lecture.**
+- Le gain du développement (+0,32 R) **ne se confirme pas** : c'était en partie du surapprentissage, comme le protocole permettait de le détecter.
+- Les deux ajustements réduisent néanmoins les pertes de façon cohérente sur les dix paires jamais vues : -0,09 R au lieu de -0,21 R par trade, cinq fois moins de trades, perte totale de 74 R au lieu de 877 R.
+- Avant coûts, la version ajustée est légèrement positive (+0,11 R), mais pas significativement. Les coûts (environ 0,2 R par trade, car les stops M15 sont serrés) suffisent à la rendre perdante.
+
+**Capital de 500 $ à 1 % par trade (2012-2022)** : la version ajustée termine entre 331 $ et 650 $ selon l'instrument, contre 75 $ à 411 $ pour la base. Elle est au-dessus de 500 $ sur EURUSD (650 $, dans l'échantillon de développement), USDJPY (596 $), AUDJPY (545 $) et GBPUSD (513 $), en dessous ailleurs. La baisse maximale passe de 34 à 86 % à 9 à 34 %.
+
+**Conclusion.** L'ajustement est une amélioration réelle mais **pas une stratégie gagnante démontrée**. Options : `golden_schema_only` (moteur, Python et MQL5) et filtre premium/discount (`smv.mtf.premium_discount_ok`, entrée `InpFilterPD` de l'indicateur, exige une UT supérieure). Elles sont désactivées par défaut.
+
+**Prochaines hypothèses, à tester sur des données neuves (backtest MT5 de mars 2022 à aujourd'hui), pas sur celles-ci :**
+1. Réduire le poids des coûts : n'accepter que les setups dont le risque vaut au moins 8 à 10 fois le coût aller-retour, ou travailler en M30 et H1 avec le même filtre.
+2. Cible minimale de 1,5 R avant la première liquidité.
+3. Contexte de zone de l'UT supérieure (non concluant en développement, à reformuler avec le formateur).

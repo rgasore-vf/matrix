@@ -35,6 +35,8 @@ struct SmvSetup
    string label;
    int    triggered;   // -1 : non déclenché
    double mfe_r;
+   double init_stop;   // stop initial : le R reste mesuré sur lui après un break-even
+   bool   be_armed;
   };
 
 class CSmvSetups
@@ -46,6 +48,7 @@ public:
    int               idm_dir[];
    int               nidm;
    int               idm_taken_dir;
+   double            be_at_r;     // 0 = break-even désactivé (fixé par le moteur)
    string            sw_rid[2];   // dernière prise par côté : [0] = H, [1] = L
    int               sw_at[2];
 
@@ -69,7 +72,7 @@ public:
          if(act[a].created < i)
            {
             int d = act[a].dir;
-            double risk = MathAbs(act[a].entry - act[a].stop);
+            double risk = MathAbs(act[a].entry - act[a].init_stop);
             bool skip_rest = false;
             if(act[a].triggered < 0)
               {
@@ -97,7 +100,8 @@ public:
                  {
                   bool gap = act[a].triggered < i && (d == SMV_BULL ? bar.open < act[a].stop : bar.open > act[a].stop);
                   double fill = gap ? bar.open : act[a].stop;
-                  Close(i, act[a], d * (fill - act[a].entry) / risk, gap ? "stop_gap" : "stop", fill, log);
+                  string why = gap ? "stop_gap" : (act[a].stop == act[a].entry ? "breakeven" : "stop");
+                  Close(i, act[a], d * (fill - act[a].entry) / risk, why, fill, log);
                   keep = false;
                  }
                else if(act[a].triggered != i)
@@ -107,6 +111,9 @@ public:
                   bool hit = d == SMV_BULL ? bar.high >= act[a].t1 : bar.low <= act[a].t1;
                   if(hit)
                     { Close(i, act[a], MathAbs(act[a].t1 - act[a].entry) / risk, "target1", act[a].t1, log); keep = false; }
+                  // break-even optionnel : armé à la clôture, actif à partir de la bougie suivante
+                  else if(be_at_r > 0 && !act[a].be_armed && act[a].mfe_r >= be_at_r)
+                    { act[a].be_armed = true; act[a].stop = act[a].entry; }
                  }
               }
            }
@@ -212,6 +219,7 @@ public:
             act[nact].entry = entry; act[nact].stop = stop; act[nact].t1 = liq.lv[tg[0]].price;
             act[nact].created = i; act[nact].deadline = deadline; act[nact].zone = zref;
             act[nact].label = label; act[nact].triggered = -1; act[nact].mfe_r = 0.0;
+            act[nact].init_stop = stop; act[nact].be_armed = false;
             nact++;
             if(skind == "CONCEPT") idm_taken_dir = 0;
            }
@@ -231,7 +239,9 @@ private:
             int sd = side == "H" ? 0 : 1;
             bool swept = sw_rid[sd] == rng.r[k].rid && sw_at[sd] >= 0 && sw_at[sd] <= i;
             bool open_or_just_closed = !rng.r[k].closed || rng.r[k].exit_index == i;
-            if(swept && open_or_just_closed)
+            // option golden_schema_only : seulement dans le sens du schéma Wyckoff
+            bool schema_ok = !cfg.golden_schema_only || d == -rng.r[k].prior_trend;
+            if(swept && open_or_just_closed && schema_ok)
               {
                int n = side == "H" ? rng.r[k].sweeps_h : rng.r[k].sweeps_l;
                skind = "GOLDEN";

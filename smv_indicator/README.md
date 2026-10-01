@@ -3,10 +3,11 @@
 Reconstruction formelle, calibrage et implémentation de référence de la stratégie « Smart Money Vision » (UltraFX) décrite dans `../Strategie/`, avec un portage pour MetaTrader 5.
 
 **État : v0.2.**
-- Couches Structure, Bougies, Offre/Demande, Liquidité, Outils, Multi-UT et Setups implémentées et testées en Python (103 tests, dont 42 cas adverses de l'audit).
+- Couches Structure, Bougies, Offre/Demande, Liquidité, Outils, Multi-UT et Setups implémentées et testées en Python (109 tests, dont 42 cas adverses de l'audit).
 - Couche Cause/Wyckoff expérimentale.
 - Questions Q-01 à Q-16 : choix de formalisation argumentés par le dépôt, la recherche et des mesures sur sept ans de données réelles (`docs/CALIBRATION.md`, errata §6).
 - Indicateur MetaTrader 5 écrit (`mt5/`) mais **non compilé ici** ; outil de parité fourni.
+- Ajustement de la stratégie fondé sur les pertes, avec validation sur dix paires jamais vues (`docs/CALIBRATION.md` §7) : pertes réduites de -0,21 à -0,09 R par trade, sans espérance positive démontrée.
 - **Aucune performance n'est revendiquée** : le backtest des setups ne montre pas d'espérance positive après coûts (`docs/CALIBRATION.md` §4).
 
 ## Lire dans cet ordre
@@ -22,7 +23,7 @@ Reconstruction formelle, calibrage et implémentation de référence de la strat
 
 ```bash
 cd smv_indicator
-python -m pytest -q tests                      # 103 tests (pytest requis)
+python -m pytest -q tests                      # 109 tests (pytest requis)
 python tools/run_smv.py --synthetic 1500 --seed 1 --out out/demo
 python tools/run_smv.py --csv eurusd_m15.csv --tf 15 --out out/eurusd --from 500 --to 900
 python tools/mt5_parity.py MQL5/Files/SMV/EURUSD_M15     # comparaison avec un export MT5

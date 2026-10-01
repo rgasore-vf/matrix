@@ -146,3 +146,10 @@ Format : contexte, options, décision, conséquences, statut. Version 0.2 : le r
 - **Décision** : corrections intégrées sans modification après reproduction des échecs et relecture (commit séparé) ; études recalculées sur les données réelles ; erreurs reconnues (indépendance de N, rotation annoncée, ton des conclusions de calibrage). Changement de définition accepté : le fail est le premier pivot étiqueté LH/HL selon R-ST-03 (F05).
 - **Conséquences** : 103 tests ; conclusions de fond inchangées ; statut des réponses Q-01 à Q-16 ramené à des choix de formalisation.
 - **Statut** : acté. Ouverts : exemples annotés du formateur, validation MT5 native, validation statistique hors échantillon.
+
+## D-22 Ajustement fondé sur les pertes, avec validation hors échantillon
+
+- **Contexte** : demande d'ajuster la stratégie là où elle perd, sur les données disponibles.
+- **Décision** : protocole développement / gel / validation (CALIBRATION §7). Deux options ajoutées, désactivées par défaut : `golden_schema_only` (correction de fidélité au schéma Wyckoff du dépôt) et filtre premium/discount de l'UT supérieure (définition externe). Break-even `be_at_r` disponible mais non retenu.
+- **Résultat** : sur dix paires jamais vues, les pertes passent de -0,21 à -0,09 R net par trade ; le gain mesuré en développement ne se confirme pas ; pas d'espérance positive démontrée.
+- **Statut** : acté. La validation suivante se fera sur des données postérieures à mars 2022 (backtest MT5 de l'utilisateur), avec des hypothèses fixées avant.

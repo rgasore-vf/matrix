@@ -170,3 +170,51 @@ def test_target_not_counted_on_trigger_bar():
     assert [e.kind for e in t.update(20)] == ["SETUP_TRIGGERED"]
     out = t.update(21)
     assert out[0].data["reason"] == "target1" and out[0].data["bars_in_trade"] == 1
+
+
+def test_golden_schema_only_rejects_counter_schema_trades():
+    # Consolidation après une tendance baissière (accumulation attendue) : un achat après une
+    # prise basse est dans le schéma ; une vente après une prise haute (UA) ne l'est pas.
+    rng = Range("R:5", BEAR, 9.0, 11.0, 5, "PL:3")
+    rng.sweeps["H"] = 1
+    rng.sweeps["L"] = 1
+    for schema_only, expected in ((False, ["GOLDEN", "GOLDEN"]), (True, ["GOLDEN"])):
+        t = tracker([FLAT] * 20, rng=rng, liq=FakeLiquidity(highs=(11.0,), lows=(8.0,)),
+                    golden_schema_only=schema_only)
+        t.on_events(15, [Event(Kind.RANGE_SWEEP, 15, 15, BULL, 11.1, "RS", {"range": "R:5", "side": "H"}),
+                         Event(Kind.RANGE_SWEEP, 15, 15, BEAR, 8.9, "RS", {"range": "R:5", "side": "L"})])
+        got = kinds(t.on_events(19, [zone(19, BULL, 10.1, 9.9, Kind.BOS_CHANGE),
+                                     zone(19, BEAR, 9.9, 10.1, Kind.BOS_CHANGE)]), "SETUP")
+        assert [e.data["type"] for e in got] == expected
+        if schema_only:
+            assert got[0].direction == BULL and got[0].data["label"] == "STB"
+
+
+def test_breakeven_armed_at_close_and_active_next_bar():
+    # entrée 10,1 ; stop 9,9 (risque 0,2) ; be_at_r = 1 -> armé quand le plus haut atteint 10,3
+    rows = [FLAT] * 20 + [(10.3, 10.4, 10.05, 10.2),   # 20 : déclenchement
+                          (10.2, 10.35, 10.15, 10.3),  # 21 : MFE 1,25 R -> break-even armé
+                          (10.3, 10.3, 10.0, 10.05)]   # 22 : retour sous l'entrée -> sortie à 0 R
+    t = tracker(rows, be_at_r=1.0)
+    concept_ready(t, 19)
+    t.on_events(19, [zone(19, BULL, 10.1, 9.9)])
+    assert [e.kind for e in t.update(20)] == ["SETUP_TRIGGERED"]
+    assert t.update(21) == []
+    out = t.update(22)
+    assert out[0].data["reason"] == "breakeven" and out[0].data["r"] == 0.0
+    # sans l'option, la même bougie 22 ne touche pas le stop initial : le trade reste ouvert
+    t2 = tracker(rows)
+    concept_ready(t2, 19)
+    t2.on_events(19, [zone(19, BULL, 10.1, 9.9)])
+    t2.update(20); t2.update(21)
+    assert t2.update(22) == [] and len(t2.active) == 1
+
+
+def test_premium_discount_filter():
+    from smv.mtf import premium_discount_ok
+    up = {"trend": BULL, "prot": (100.0, 3), "leg_ext": (120.0, 9)}
+    assert premium_discount_ok({"structure": up}, 105.0, BULL)
+    assert not premium_discount_ok({"structure": up}, 115.0, BULL)
+    assert premium_discount_ok({"structure": up}, 115.0, BEAR)
+    assert not premium_discount_ok(None, 105.0, BULL)
+    assert not premium_discount_ok({"structure": {"trend": 0, "prot": None, "leg_ext": None}}, 105.0, BULL)

@@ -100,3 +100,21 @@ def bos_trap_risk(ltf_event: Event, htf_state: dict | None) -> bool:
     if ltf_event.direction == BEAR and s["trend"] == BULL:
         return ltf_event.price > prot
     return False
+
+
+def premium_discount_ok(htf_state: dict | None, entry: float, direction: int) -> bool:
+    """Filtre premium/discount (CALIBRATION §7, définition externe ICT, RESEARCH §8.4).
+
+    Position de l'entrée dans la jambe de l'UT haute, du niveau protégé à l'extrême courant :
+    un achat passe sous 50 % (discount), une vente au-dessus (premium). Sans tendance, niveau
+    protégé ou extrême connus, le filtre refuse : il n'invente pas de contexte."""
+    if htf_state is None:
+        return False
+    s = htf_state["structure"] if "structure" in htf_state else htf_state
+    if s["trend"] == 0 or s["prot"] is None or s["leg_ext"] is None:
+        return False
+    lo, hi = sorted((s["prot"][0], s["leg_ext"][0]))
+    if hi <= lo:
+        return False
+    pd = (entry - lo) / (hi - lo)
+    return pd < 0.5 if direction == BULL else pd > 0.5

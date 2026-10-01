@@ -49,6 +49,7 @@ public:
       liquidity.Reset();
       ranges.Reset();
       setups.Reset();
+      setups.be_at_r = cfg.be_at_r;
       month.Reset();
       bar_from = 0;
      }

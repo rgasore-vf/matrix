@@ -33,6 +33,8 @@ PROVENANCE = {
     "test_max_bars": ("PROPOSITION", "R-GS-03", "délai du test non chiffré dans les sources ; 2 x la fenêtre de récupération (Q-11)"),
     "sl_max_atr": ("DEPOT+MESURE", "R-SE-02", "16 pips « dans la stratégie », 20 non ; ≈ 2,5 ATR M15 EURUSD (Q-12)"),
     "setup_expiry_bars": ("PROPOSITION", "R-SE-01", "durée de vie d'un ordre limite non déclenché"),
+    "golden_schema_only": ("DEPOT+MESURE", "R-GS-03", "golden seulement dans le sens du schéma (STB/spring achat, UT/UTAD vente) ; CALIBRATION §7"),
+    "be_at_r": ("DEPOT+MESURE", "R-SE-03", "break-even après une excursion de be_at_r R (None = désactivé) ; CALIBRATION §7"),
     "rotation_legs": ("PROPOSITION+MESURE", "R-ST-09", "impulsions décroissantes ; effet mesuré faible (Q-08)"),
     "enable_imbalance": ("RECHERCHE", "§15", "FVG ICT à 3 bougies, optionnel"),
     "enable_sessions": ("DEPOT", "R-OU-01", "heures de tir"),
@@ -81,6 +83,8 @@ class Config:
     test_max_bars: int = 10
     sl_max_atr: float = 2.5
     setup_expiry_bars: int = 100
+    golden_schema_only: bool = False
+    be_at_r: float | None = None
     rotation_legs: int = 3
     enable_setups: bool = True
     enable_imbalance: bool = False
@@ -127,7 +131,10 @@ class Config:
                 raise ValueError(f"{name} doit être dans [0, 1]")
         if self.sl_max_atr <= 0:
             raise ValueError("sl_max_atr doit être > 0")
-        for name in ("enable_setups", "enable_imbalance", "enable_sessions"):
+        if self.be_at_r is not None and (isinstance(self.be_at_r, bool) or
+                not isinstance(self.be_at_r, (int, float)) or not isfinite(self.be_at_r) or self.be_at_r <= 0):
+            raise ValueError("be_at_r doit être None ou un nombre fini > 0")
+        for name in ("enable_setups", "enable_imbalance", "enable_sessions", "golden_schema_only"):
             if type(getattr(self, name)) is not bool:
                 raise ValueError(f"{name} doit être booléen")
         try:

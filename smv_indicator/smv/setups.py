@@ -57,10 +57,12 @@ class Setup:
     closed: bool = False
     mfe_r: float = 0.0
     meta: dict = field(default_factory=dict)
+    init_stop: float | None = None   # stop initial : le R reste mesuré sur lui après un break-even
+    be_armed: int | None = None      # bougie dont la clôture a armé le break-even
 
     @property
     def risk(self) -> float:
-        return abs(self.entry - self.stop)
+        return abs(self.entry - (self.stop if self.init_stop is None else self.init_stop))
 
 
 class SetupTracker:
@@ -104,7 +106,8 @@ class SetupTracker:
                 gap = s.triggered < i and (bar.open < s.stop if d == BULL else bar.open > s.stop)
                 fill = bar.open if gap else s.stop
                 r = d * (fill - s.entry) / s.risk
-                out.append(self._close(i, s, r, "stop_gap" if gap else "stop", fill))
+                reason = "stop_gap" if gap else ("breakeven" if s.stop == s.entry else "stop")
+                out.append(self._close(i, s, r, reason, fill))
                 continue
             if s.triggered == i:
                 # Bougie de déclenchement : l'ordre intra-bougie est inconnu ; le plus haut
@@ -118,6 +121,12 @@ class SetupTracker:
             if (d == BULL and bar.high >= t1) or (d != BULL and bar.low <= t1):
                 out.append(self._close(i, s, abs(t1 - s.entry) / s.risk, "target1", t1))
                 continue
+            # Break-even optionnel (R-SE-03, PROPOSITION testée en CALIBRATION §7) : armé à la
+            # clôture d'une bougie dont l'excursion atteint be_at_r ; actif à partir de i + 1.
+            if self.cfg.be_at_r is not None and s.be_armed is None and s.mfe_r >= self.cfg.be_at_r:
+                s.be_armed = i
+                s.init_stop = s.stop
+                s.stop = s.entry
             keep.append(s)
         self.active = keep
         return out
@@ -190,7 +199,10 @@ class SetupTracker:
         if r is not None and r.open_index < i:
             swept = self.range_sweep_at.get((r.rid, side))
             open_or_just_closed = (not r.closed) or r.exit_index == i
-            if swept is not None and swept <= i and open_or_just_closed:
+            # Option golden_schema_only : seulement dans le sens du schéma Wyckoff (achat après
+            # STB/spring en accumulation, vente après UT/UTAD en distribution ; M7/1).
+            schema_ok = (not self.cfg.golden_schema_only) or d == -r.prior_trend
+            if swept is not None and swept <= i and open_or_just_closed and schema_ok:
                 n = r.sweeps[side]
                 return "GOLDEN", self.ranges.label(r, side, n), i + self.cfg.test_max_bars
         if self.idm_taken_dir == d and zone_ev.data["source"] == Kind.BOS_CONTINUATION:

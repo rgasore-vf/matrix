@@ -31,6 +31,8 @@ struct SmvConfig
    int    test_max_bars;
    double sl_max_atr;
    int    setup_expiry_bars;
+   bool   golden_schema_only; // golden seulement dans le sens du schéma (CALIBRATION §7)
+   double be_at_r;            // break-even après be_at_r R ; 0 = désactivé (None en Python)
    bool   enable_setups;
    bool   enable_imbalance;
    bool   enable_sessions;
@@ -60,6 +62,8 @@ void SmvConfigDefaults(SmvConfig &c)
    c.test_max_bars      = 10;
    c.sl_max_atr         = 2.5;
    c.setup_expiry_bars  = 100;
+   c.golden_schema_only = false;
+   c.be_at_r            = 0.0;
    c.enable_setups      = true;
    c.enable_imbalance   = false;
    c.enable_sessions    = false;
@@ -88,6 +92,7 @@ bool SmvConfigValid(const SmvConfig &c, string &err)
    else if(c.range_accept_bars < 1 || c.test_max_bars < 1 || c.setup_expiry_bars < 1 || c.atr_len < 1)
       err = "range_accept_bars, test_max_bars, setup_expiry_bars, atr_len >= 1";
    else if(c.sl_max_atr <= 0) err = "sl_max_atr > 0";
+   else if(c.be_at_r < 0 || !MathIsValidNumber(c.be_at_r)) err = "be_at_r >= 0 (0 = désactivé)";
    return err == "";
   }
 
@@ -115,6 +120,8 @@ string SmvConfigHeader(const SmvConfig &c)
    KvI(s, "test_max_bars", c.test_max_bars);
    KvD(s, "sl_max_atr", c.sl_max_atr);
    KvI(s, "setup_expiry_bars", c.setup_expiry_bars);
+   KvB(s, "golden_schema_only", c.golden_schema_only);
+   if(c.be_at_r > 0) KvD(s, "be_at_r", c.be_at_r); else KvNone(s, "be_at_r");
    KvB(s, "enable_setups", c.enable_setups);
    KvB(s, "enable_imbalance", c.enable_imbalance);
    KvB(s, "enable_sessions", c.enable_sessions);
