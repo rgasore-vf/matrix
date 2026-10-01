@@ -1,0 +1,38 @@
+FF                                                                       [100%]
+=================================== FAILURES ===================================
+____________ test_htf_dst_fold_does_not_make_a_future_close_visible ____________
+
+    def test_htf_dst_fold_does_not_make_a_future_close_visible():
+        from zoneinfo import ZoneInfo
+        from smv.mtf import HtfView
+        ny = ZoneInfo('America/New_York')
+        opened = datetime(2026, 11, 1, 5, tzinfo=UTC)
+        b = Bar(0, opened.astimezone(ny), (opened + timedelta(hours=1)).astimezone(ny), 10, 11, 9, 10)
+        # 01:00 fold=0 (05:00 UTC) is before 01:00 fold=1 (06:00 UTC).
+        view = HtfView([b])
+>       assert view.at(opened.astimezone(ny)) is None
+E       AssertionError: assert {'index': 0, 'structure': {'trend': 0, 'prot': None, 'ref': None, 'leg_ext': None, ...}} is None
+E        +  where {'index': 0, 'structure': {'trend': 0, 'prot': None, 'ref': None, 'leg_ext': None, ...}} = at(datetime.datetime(2026, 11, 1, 1, 0, tzinfo=zoneinfo.ZoneInfo(key='America/New_York')))
+E        +    where at = <smv.mtf.HtfView object at 0x7fec06f3c8f0>.at
+E        +    and   datetime.datetime(2026, 11, 1, 1, 0, tzinfo=zoneinfo.ZoneInfo(key='America/New_York')) = <built-in method astimezone of datetime.datetime object at 0x7fec06f3c600>(zoneinfo.ZoneInfo(key='America/New_York'))
+E        +      where <built-in method astimezone of datetime.datetime object at 0x7fec06f3c600> = datetime.datetime(2026, 11, 1, 5, 0, tzinfo=datetime.timezone.utc).astimezone
+
+tests/test_gpt_adversarial.py:200: AssertionError
+_________ test_paris_session_at_dst_fold_is_marked_at_first_occurrence _________
+
+    def test_paris_session_at_dst_fold_is_marked_at_first_occurrence():
+        from zoneinfo import ZoneInfo
+        paris = ZoneInfo('Europe/Paris')
+        a = datetime(2026, 10, 25, 0, tzinfo=UTC)
+        b = Bar(0, a.astimezone(paris), (a + timedelta(hours=1)).astimezone(paris), 10, 11, 9, 10)
+        log = Engine(Config(enable_sessions=True, session_mode='repo')).run([b])
+        asia = [e for e in log if e.kind == Kind.SESSION and e.data['name'] == 'ASIA']
+>       assert len(asia) == 1
+E       assert 0 == 1
+E        +  where 0 = len([])
+
+tests/test_gpt_adversarial.py:211: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_gpt_adversarial.py::test_htf_dst_fold_does_not_make_a_future_close_visible
+FAILED tests/test_gpt_adversarial.py::test_paris_session_at_dst_fold_is_marked_at_first_occurrence
+2 failed, 34 deselected in 0.08s

@@ -37,10 +37,12 @@ public:
      {
       if(b.index != n)
         { PrintFormat("SMV: index attendu %d, reçu %d", n, b.index); return false; }
-      if(b.high < MathMax(b.open, b.close) || b.low > MathMin(b.open, b.close))
+      if(!MathIsValidNumber(b.open) || !MathIsValidNumber(b.high) || !MathIsValidNumber(b.low) ||
+         !MathIsValidNumber(b.close) ||
+         b.high < b.low || b.high < MathMax(b.open, b.close) || b.low > MathMin(b.open, b.close))
         { PrintFormat("SMV: bougie %d incohérente", b.index); return false; }
-      if(n > 0 && b.t_open < bars[n - 1].t_open)
-        { PrintFormat("SMV: bougie %d non chronologique", b.index); return false; }
+      if(b.t_close <= b.t_open || (n > 0 && b.t_open < bars[n - 1].t_close))
+        { PrintFormat("SMV: bougie %d intervalle invalide ou chevauchant", b.index); return false; }
       ArrayResize(bars, n + 1, 8192);
       ArrayResize(tr, n + 1, 8192);
       ArrayResize(atr, n + 1, 8192);

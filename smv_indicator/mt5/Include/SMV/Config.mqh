@@ -71,7 +71,14 @@ void SmvConfigDefaults(SmvConfig &c)
 bool SmvConfigValid(const SmvConfig &c, string &err)
   {
    err = "";
-   if(c.pivot_left < 1 || c.pivot_right < 1) err = "pivot_left et pivot_right doivent être >= 1";
+   if(!MathIsValidNumber(c.bos_eps) || !MathIsValidNumber(c.bm_body_min) ||
+      !MathIsValidNumber(c.bm_range_atr) || !MathIsValidNumber(c.doji_body_max) ||
+      !MathIsValidNumber(c.liqsig_wick_min) || !MathIsValidNumber(c.eq_tol_atr) ||
+      !MathIsValidNumber(c.sl_max_atr)) err = "paramètres numériques finis exigés";
+   else if(c.bos_eps < 0 || c.eq_tol_atr < 0 || c.bm_range_atr < 0) err = "marges >= 0";
+   else if(c.bm_search_back < 0 || c.doji_window < 0 || c.eq_max_gap < 0) err = "fenêtres >= 0";
+   else if(c.odf_min_len < 1 || c.session_window_min < 1) err = "odf_min_len, session_window_min >= 1";
+   else if(c.pivot_left < 1 || c.pivot_right < 1) err = "pivot_left et pivot_right doivent être >= 1";
    else if(c.major_mode != "A" && c.major_mode != "B") err = "major_mode doit valoir A ou B";
    else if(c.zone_proximal != "body" && c.zone_proximal != "wick") err = "zone_proximal: body ou wick";
    else if(c.zones_on != "bos_origin" && c.zones_on != "all_pivots") err = "zones_on: bos_origin ou all_pivots";

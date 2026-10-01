@@ -17,6 +17,43 @@ BEAR = -1
 NONE = 0
 
 
+def _immutable(*args, **kwargs):
+    raise TypeError("un événement confirmé est immuable")
+
+
+class _FrozenDict(dict):
+    """JSON-compatible payload snapshot; protects nested containers as well."""
+    def __init__(self, value=()):
+        dict.__init__(self, ((k, _freeze(v)) for k, v in dict(value).items()))
+
+    __setitem__ = __delitem__ = clear = pop = popitem = setdefault = update = __ior__ = _immutable
+
+    def __deepcopy__(self, memo):
+        return self
+
+
+class _FrozenList(list):
+    def __init__(self, value=()):
+        list.__init__(self, (_freeze(v) for v in value))
+
+    __setitem__ = __delitem__ = append = clear = extend = insert = pop = remove = reverse = sort = __iadd__ = __imul__ = _immutable
+
+    def __deepcopy__(self, memo):
+        return self
+
+
+def _freeze(value):
+    if isinstance(value, Mapping):
+        return _FrozenDict(value)
+    if isinstance(value, list):
+        return _FrozenList(value)
+    if isinstance(value, tuple):
+        return tuple(_freeze(v) for v in value)
+    if isinstance(value, set):
+        return frozenset(_freeze(v) for v in value)
+    return value
+
+
 @dataclass(frozen=True)
 class Bar:
     index: int
@@ -102,6 +139,7 @@ class Event:
                 f"{self.kind} {self.ref}: anchor_index {self.anchor_index} "
                 f"> confirm_index {self.confirm_index}"
             )
+        object.__setattr__(self, "data", _FrozenDict(self.data))
 
     def key(self) -> tuple:
         """Identité stable, utilisée par le test d'invariance par préfixe."""

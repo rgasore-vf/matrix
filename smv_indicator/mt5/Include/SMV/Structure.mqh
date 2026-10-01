@@ -124,6 +124,15 @@ private:
          StartLeg(-d, np, ni, ni, i, ctx);
          return;
         }
+      // Both facts use the old protected level, before a continuation updates it.
+      bool crossed = d == SMV_BULL ? bar.low < prot_p : bar.high > prot_p;
+      if(crossed && !prot_swept)
+        {
+         prot_swept = true;
+         string s = "";
+         KvI(s, "trend", d);
+         log.Add(K_PROTECTED_SWEEP, i, prot_i, -d, prot_p, "PSW:" + IntegerToString(i), s);
+        }
       //--- BOS de continuation : clôture au-delà du dernier extrême fixé
       if(has_ref && Beyond(bar.close, ref_p, d, cfg))
         {
@@ -139,7 +148,14 @@ private:
          //--- R-LQ-05 : pivots du retracement qui n'ont pas donné le BOS
          int side = d == SMV_BULL ? -1 : 1;
          int np = side < 0 ? piv.nl : piv.nh;
-         for(int k = 0; k < np; k++)
+         int begin = np;
+         while(begin > 0)
+           {
+            int anchor = side < 0 ? piv.lows[begin - 1].index : piv.highs[begin - 1].index;
+            if(anchor <= ri) break;
+            begin--;
+           }
+         for(int k = begin; k < np; k++)
            {
             SmvPivot p;
             if(side < 0) p = piv.lows[k]; else p = piv.highs[k];
@@ -161,15 +177,6 @@ private:
          has_last_leg = false;
          return;
         }
-      //--- R-ST-05 : prise du niveau protégé en mèche, sans clôture au-delà
-      bool crossed = d == SMV_BULL ? bar.low < prot_p : bar.high > prot_p;
-      if(crossed && !prot_swept)
-        {
-         prot_swept = true;
-         string s = "";
-         KvI(s, "trend", d);
-         log.Add(K_PROTECTED_SWEEP, i, prot_i, -d, prot_p, "PSW:" + IntegerToString(i), s);
-        }
      }
 
    void              IntegratePivot(const int i, const SmvPivot &pv, const CSmvContext &ctx, CSmvLog &log)
@@ -180,9 +187,9 @@ private:
       bool is_extreme = d == SMV_BULL ? pv.price >= leg_p : pv.price <= leg_p;
       if(is_extreme) { has_ref = true; ref_p = pv.price; ref_i = pv.index; }
       //--- R-ST-07 : premier sommet plus bas (creux plus haut) de la jambe
-      if(has_last_leg && !fail_done)
+      if(!fail_done)
         {
-         bool failed = d == SMV_BULL ? pv.price < last_leg.price : pv.price > last_leg.price;
+         bool failed = pv.label == (d == SMV_BULL ? "LH" : "HL");
          if(failed)
            {
             fail_done = true;

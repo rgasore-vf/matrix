@@ -75,7 +75,8 @@ def run(bars, symbol):
     log = Engine(Config()).run(bars)
     created, trig = {}, {}
     trades = []
-    counts = {"created": 0, "rejected": {}, "expired": {}}
+    counts = {"created": 0, "triggered": 0, "closed": 0, "rejected": {}, "expired": {}}
+    terminal = set()
     for e in log:
         if e.kind == "SETUP":
             r = e.data["rejected"]
@@ -85,9 +86,15 @@ def run(bars, symbol):
                 counts["created"] += 1
                 created[e.data["setup"]] = e
         elif e.kind == "SETUP_EXPIRED":
+            terminal.add(e.data["setup"])
             k = e.data["reason"]
             counts["expired"][k] = counts["expired"].get(k, 0) + 1
+        elif e.kind == "SETUP_TRIGGERED":
+            trig[e.data["setup"]] = e.confirm_index
+            counts["triggered"] += 1
         elif e.kind == "SETUP_CLOSED":
+            terminal.add(e.data["setup"])
+            counts["closed"] += 1
             s = created[e.data["setup"]]
             risk = s.data["risk"]
             trades.append({"type": s.data["type"], "label": s.data["label"], "dir": s.direction,
@@ -95,7 +102,11 @@ def run(bars, symbol):
                            "r": e.data["r"], "r_net": e.data["r"] - COST[symbol] / risk,
                            "rr1": s.data["rr"][0], "risk_atr": s.data["risk_atr"],
                            "bars": e.data["bars_in_trade"], "mfe_r": e.data["mfe_r"]})
-    out = {"counts": counts, "all": summarize(trades)}
+    unresolved = set(created) - terminal
+    counts["unresolved_pending"] = sum(s not in trig for s in unresolved)
+    counts["unresolved_open"] = sum(s in trig for s in unresolved)
+    out = {"counts": counts, "all": summarize(trades),
+           "inference": "descriptive only; overlapping trades, naive IID intervals, post-selection split"}
     for typ in ("GOLDEN", "CONCEPT"):
         sub = [t for t in trades if t["type"] == typ]
         out[typ] = summarize(sub)

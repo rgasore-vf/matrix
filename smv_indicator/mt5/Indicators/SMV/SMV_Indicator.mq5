@@ -71,7 +71,7 @@ input ENUM_SMV_SERVER_TZ InpServerTz      = SMV_SRV_EET_EU;   // Fuseau du serve
 input int              InpServerFixedHours = 2;               // Décalage fixe UTC+h (si mode fixe)
 
 input group "=== Historique ==="
-input int              InpMaxBars         = 20000;            // Bougies traitées au maximum
+input int              InpMaxBars         = 0;                // Historique initial (0 = tout ; cap >0 change le contexte au rechargement)
 input ENUM_TIMEFRAMES  InpHtf             = PERIOD_CURRENT;   // UT supérieure (PERIOD_CURRENT = désactivée)
 input int              InpHtfWarmup       = 300;              // Bougies d'UT supérieure avant la première bougie
 
@@ -125,11 +125,17 @@ datetime   g_start_time = 0;
 bool       g_use_htf = false;
 MqlRates   g_hr[];
 int        g_hfed = 0;
-string     g_prefix = "SMV_";
+string     g_prefix = "";
 
 //+------------------------------------------------------------------+
 int OnInit()
   {
+   if(InpMaxBars < 0 || InpDrawBars < 1 || InpHtfWarmup < 0 || InpFontSize < 1 ||
+      InpServerFixedHours < -14 || InpServerFixedHours > 14 || _Period == PERIOD_MN1)
+     {
+      Print("SMV: paramètres d'historique/affichage invalides ou MN1 non pris en charge");
+      return INIT_PARAMETERS_INCORRECT;
+     }
    SmvConfigDefaults(g_cfg);
    g_cfg.pivot_left = InpPivotLeft;
    g_cfg.pivot_right = InpPivotRight;
@@ -184,7 +190,10 @@ int OnInit()
    C.bull = InpColBull; C.bear = InpColBear; C.demand = InpColDemand; C.supply = InpColSupply;
    C.breaker = InpColBreaker; C.range = InpColRange; C.neutral = InpColNeutral; C.text = InpColNeutral;
    C.target = InpColTarget;
-   g_prefix = "SMV_" + IntegerToString(ChartID() % 100000) + "_";
+   string root = "SMV_" + IntegerToString(ChartID()) + "_";
+   int owner = 0;
+   do { g_prefix = root + IntegerToString(owner++) + "_"; }
+   while(ObjectFind(0, g_prefix + "OWNER") >= 0);
    g_draw.Init(g_prefix, L, C, InpFont, InpFontSize);
    IndicatorSetString(INDICATOR_SHORTNAME, "SMV");
    g_start = -1;
@@ -195,7 +204,7 @@ int OnInit()
 void OnDeinit(const int reason)
   {
    if(InpExport && g_start >= 0) Export();
-   ObjectsDeleteAll(0, g_prefix);
+   if(g_prefix != "") ObjectsDeleteAll(0, g_prefix);
    Comment("");
   }
 
@@ -206,7 +215,7 @@ void FullReset(const int rates_total, const datetime &time[])
   {
    g_eng.Init(g_cfg);
    g_draw.Reset();
-   g_start = rates_total - 1 - InpMaxBars > 0 ? rates_total - 1 - InpMaxBars : 0;
+   g_start = InpMaxBars > 0 && rates_total - 1 - InpMaxBars > 0 ? rates_total - 1 - InpMaxBars : 0;
    g_start_time = time[g_start];
    ArrayInitialize(BufTrend, EMPTY_VALUE);  ArrayInitialize(BufProt, EMPTY_VALUE);
    ArrayInitialize(BufSDir, EMPTY_VALUE);   ArrayInitialize(BufSEntry, EMPTY_VALUE);
@@ -235,20 +244,25 @@ bool HtfLoad(const datetime from_srv)
                                          : from_srv - (datetime)(PeriodSeconds(InpHtf) * (long)InpHtfWarmup);
    int n = CopyRates(_Symbol, InpHtf, start, TimeCurrent(), more);
    if(n < 0) return false;    // historique pas encore disponible : nouvel essai au prochain appel
+   // CopyRates must be called first so it can initiate a missing history load.
+   if(!SeriesInfoInteger(_Symbol, InpHtf, SERIES_SYNCHRONIZED)) return false;
+   datetime current_open = iTime(_Symbol, InpHtf, 0);
+   if(current_open <= 0) return false;
    // seules les bougies terminées sont conservées : la bougie en formation serait figée
    // avec des valeurs provisoires (elle sera relue une fois close)
    int ph = PeriodSeconds(InpHtf);
    int base = ArraySize(g_hr);
+   ArraySetAsSeries(more, false);
    for(int k = 0; k < n; k++)
      {
-      if(more[k].time + ph > TimeCurrent()) break;
+      if(more[k].time >= current_open || more[k].time + ph > TimeCurrent()) break;
       ArrayResize(g_hr, base + 1, 1024);
       g_hr[base++] = more[k];
      }
    return true;
   }
 
-void HtfFeedUntil(const datetime t_srv_close)
+bool HtfFeedUntil(const datetime t_srv_close)
   {
    int ph = PeriodSeconds(InpHtf);
    while(g_hfed < ArraySize(g_hr) && g_hr[g_hfed].time + ph <= t_srv_close)
@@ -257,12 +271,13 @@ void HtfFeedUntil(const datetime t_srv_close)
       b.index = g_htf.Count();
       b.t_srv = g_hr[g_hfed].time;
       b.t_open = ServerToUtc(b.t_srv, InpServerTz, InpServerFixedHours);
-      b.t_close = b.t_open + ph;
+      b.t_close = ServerToUtc(b.t_srv + ph, InpServerTz, InpServerFixedHours);
       b.open = g_hr[g_hfed].open; b.high = g_hr[g_hfed].high;
       b.low = g_hr[g_hfed].low;   b.close = g_hr[g_hfed].close;
-      g_htf.OnBar(b);
+      if(!g_htf.OnBar(b)) return false;
       g_hfed++;
      }
+   return true;
   }
 
 //--- R-MTF-03 (PROPOSITION) : BOS de continuation contraire à l'UT haute, sous son niveau protégé
@@ -309,9 +324,9 @@ int OnCalculate(const int rates_total, const int prev_calculated, const datetime
       b.index = idx - g_start;
       b.t_srv = time[idx];
       b.t_open = ServerToUtc(time[idx], InpServerTz, InpServerFixedHours);
-      b.t_close = b.t_open + ps;
+      b.t_close = ServerToUtc(time[idx] + ps, InpServerTz, InpServerFixedHours);
       b.open = open[idx]; b.high = high[idx]; b.low = low[idx]; b.close = close[idx];
-      if(g_use_htf) HtfFeedUntil(time[idx] + ps);
+      if(g_use_htf && !HtfFeedUntil(time[idx] + ps)) { g_start = -1; return 0; }
       if(!g_eng.OnBar(b)) { g_start = -1; return 0; }
       //--- tampons de la bougie close idx
       BufTrend[idx] = g_eng.structure.trend;

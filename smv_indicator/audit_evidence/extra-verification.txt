@@ -1,0 +1,7 @@
+Python compileall: passed
+CLI: 1500 synthetic bars, seed=1, sessions+imbalance; 3417 events, JSON/SVG exported
+Original/generated SVG: valid XML, rendered with Inkscape and inspected
+Synthetic setup study: created=21, triggered=9, closed=9, expired_not_triggered=10, expired_trend_change=2, unresolved_open=0, unresolved_pending=0
+Counts balance; no market-performance inference
+MQL source delimiter checks: 15 files; native compilation and execution NOT performed
+GitHub repository access: 404, no push

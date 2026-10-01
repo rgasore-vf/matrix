@@ -77,6 +77,7 @@ public:
       if(r[k].closed || r[k].open_index >= i) return;
       SmvBar bar = ctx.bars[i];
       int beyond = bar.close > r[k].high ? SMV_BULL : (bar.close < r[k].low ? SMV_BEAR : SMV_NONE);
+      string resolved = "";
       if(r[k].has_pending)
         {
          int d = r[k].pend_dir, start = r[k].pend_start;
@@ -85,32 +86,39 @@ public:
            {
             ext = d == SMV_BULL ? MathMax(ext, bar.high) : MathMin(ext, bar.low);
             r[k].pend_ext = ext;
-            if(i - start + 1 >= cfg.range_accept_bars) Exit(k, i, d, start, ctx, log);
-            return;
            }
-         r[k].has_pending = false;
-         string side = d == SMV_BULL ? "H" : "L";
-         bool outside = side == "H" ? r[k].outside_h : r[k].outside_l;
-         if(!outside) Sweep(k, i, side, start, ext, log);
-         if(side == "H") r[k].outside_h = false; else r[k].outside_l = false;
-         if(beyond == SMV_NONE) { CheckComplete(k, i, log); return; }
+         else
+           {
+            r[k].has_pending = false;
+            resolved = d == SMV_BULL ? "H" : "L";
+            bool outside = resolved == "H" ? r[k].outside_h : r[k].outside_l;
+            if(!outside) Sweep(k, i, resolved, start, ext, log);
+            if(resolved == "H") r[k].outside_h = bar.high > r[k].high;
+            else r[k].outside_l = bar.low < r[k].low;
+           }
         }
-      if(beyond != SMV_NONE)
+      if(beyond != SMV_NONE && !r[k].has_pending)
         {
          r[k].has_pending = true;
          r[k].pend_dir = beyond;
          r[k].pend_start = i;
          r[k].pend_ext = beyond == SMV_BULL ? bar.high : bar.low;
-         if(cfg.range_accept_bars == 1) Exit(k, i, beyond, i, ctx, log);
-         return;
         }
       // une prise = un épisode (première bougie qui dépasse la borne en mèche)
-      bool ch = bar.high > r[k].high;
-      if(ch && !r[k].outside_h) Sweep(k, i, "H", i, bar.high, log);
-      r[k].outside_h = ch;
-      bool cl = bar.low < r[k].low;
-      if(cl && !r[k].outside_l) Sweep(k, i, "L", i, bar.low, log);
-      r[k].outside_l = cl;
+      if(resolved != "H" && !(r[k].has_pending && beyond == SMV_BULL))
+        {
+         bool ch = bar.high > r[k].high;
+         if(ch && !r[k].outside_h) Sweep(k, i, "H", i, bar.high, log);
+         r[k].outside_h = ch;
+        }
+      if(resolved != "L" && !(r[k].has_pending && beyond == SMV_BEAR))
+        {
+         bool cl = bar.low < r[k].low;
+         if(cl && !r[k].outside_l) Sweep(k, i, "L", i, bar.low, log);
+         r[k].outside_l = cl;
+        }
+      if(r[k].has_pending && i - r[k].pend_start + 1 >= cfg.range_accept_bars)
+        { Exit(k, i, r[k].pend_dir, r[k].pend_start, ctx, log); return; }
       CheckComplete(k, i, log);
      }
 

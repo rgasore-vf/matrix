@@ -91,12 +91,14 @@ class LiquidityBook:
             tol = self.cfg.eq_tol_atr * self.ctx.atr[pv.index]
             match = None
             for lv in reversed(self._intact):
+                # Creation order is not anchor order when signatures and delayed
+                # pivots coexist. An old item cannot terminate this search.
+                if pv.index - lv.anchor_index > self.cfg.eq_max_gap:
+                    continue
                 if lv.side == pv.side and lv.source == "PIVOT" and lv.anchor_index < pv.index:
                     if abs(lv.price - pv.price) <= tol:
                         match = lv
                         break
-                if pv.index - lv.anchor_index > self.cfg.eq_max_gap:
-                    break
             out.append(self._add(Level(pv.ref, pv.side, pv.price, pv.index, i, "PIVOT")))
             if match is not None:
                 ext = max(match.price, pv.price) if pv.side == "H" else min(match.price, pv.price)

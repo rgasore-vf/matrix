@@ -83,6 +83,11 @@ public:
    void              Reset(void)
      {
       ObjectsDeleteAll(0, prefix);
+      // Reserve this instance's prefix even if all drawing layers are disabled.
+      ObjectCreate(0, prefix + "OWNER", OBJ_LABEL, 0, 0, 0);
+      ObjectSetString(0, prefix + "OWNER", OBJPROP_TEXT, "");
+      ObjectSetInteger(0, prefix + "OWNER", OBJPROP_HIDDEN, true);
+      ObjectSetInteger(0, prefix + "OWNER", OBJPROP_SELECTABLE, false);
       nopen = 0;
       ArrayResize(open, 0, 512);
       drawn = 0;
@@ -96,9 +101,29 @@ public:
          SmvEvent e = eng.log.ev[k];
          // les fermetures s'appliquent toujours (l'objet a pu être dessiné plus tôt)
          CloseFor(e, eng);
-         if(e.confirm >= min_confirm) DrawOne(e, eng);
+         if(e.confirm >= min_confirm) DrawOne(e, eng, k);
         }
       drawn = eng.log.count;
+      Prune(min_confirm);
+     }
+
+   // Remove graphics that have left the requested event window.
+   void              Prune(const int min_confirm)
+     {
+      for(int k = ObjectsTotal(0, -1, -1) - 1; k >= 0; k--)
+        {
+         string name = ObjectName(0, k, -1, -1);
+         if(StringFind(name, prefix) != 0 || name == prefix + "OWNER") continue;
+         int sep = StringFind(name, ":", StringLen(prefix));
+         if(sep < 0) continue;
+         int confirm = (int)StringToInteger(StringSubstr(name, StringLen(prefix), sep - StringLen(prefix)));
+         if(confirm < min_confirm) ObjectDelete(0, name);
+        }
+      int m = 0;
+      for(int k = 0; k < nopen; k++)
+         if(ObjectFind(0, open[k].name) >= 0) { if(m != k) open[m] = open[k]; m++; }
+      nopen = m;
+      ArrayResize(open, nopen, 512);
      }
 
    //--- prolonge les objets ouverts jusqu'au temps t
@@ -192,11 +217,14 @@ private:
          Close("S:" + DataGet(e.data, "setup"), t);
      }
 
-   void              DrawOne(const SmvEvent &e, CSmvEngine &eng)
+   void              DrawOne(const SmvEvent &e, CSmvEngine &eng, const int event_index)
      {
-      string nm = prefix + e.kind + ":" + e.ref;
+      // Object names are limited to 63 characters. The journal index is unique
+      // within this instance; full business identifiers remain in the tooltip.
+      string nm = prefix + IntegerToString(e.confirm) + ":" + IntegerToString(event_index);
       datetime ta = T(eng, e.anchor), tc = T(eng, e.confirm);
-      string tip = e.kind + " " + e.ref;
+      string tip = e.kind + " " + e.ref + " confirmé à " +
+                   TimeToString(eng.ctx.bars[e.confirm].t_close, TIME_DATE | TIME_SECONDS) + " UTC";
       //--- structure
       if(L.structure && (e.kind == K_BOS_CHANGE || e.kind == K_BOS_CONTINUATION || e.kind == K_TREND_INIT))
         {
@@ -312,6 +340,7 @@ private:
         }
       if(L.month && e.kind == K_MONTH_WINDOW)
         {
+         tip += " couverture=" + DataGet(e.data, "coverage");
          double hi = StringToDouble(DataGet(e.data, "high")), lo = StringToDouble(DataGet(e.data, "low"));
          datetime th = T(eng, (int)StringToInteger(DataGet(e.data, "high_index")));
          datetime tl = T(eng, (int)StringToInteger(DataGet(e.data, "low_index")));

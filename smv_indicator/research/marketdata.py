@@ -19,6 +19,7 @@ from zoneinfo import ZoneInfo
 
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), ".."))
 from smv.types import Bar  # noqa: E402
+from smv.context import Context  # noqa: E402
 
 ROOT = os.environ.get("SMV_DATA", "/home/user/mktdata/ej")
 SCALE = {"EURUSD": 1e5, "XAUUSD": 100.0}
@@ -35,6 +36,7 @@ def load(symbol: str, tf: str, start: str | None = None, end: str | None = None)
     sc = SCALE.get(symbol, 1e3 if symbol.endswith("JPY") else 1e5)
     step = timedelta(minutes=TF_MIN[tf])
     out: list[Bar] = []
+    validator = Context(14)
     with open(path) as f:
         rd = csv.reader(f)
         next(rd)
@@ -47,9 +49,9 @@ def load(symbol: str, tf: str, start: str | None = None, end: str | None = None)
             t = server_to_utc(ts) if tf != "d1" else ts.replace(tzinfo=timezone.utc)
             nd = 2 if symbol == "XAUUSD" else 3 if symbol.endswith("JPY") else 5
             o, h, l, c = (round(float(x) / sc, nd) for x in r[1:5])
-            h = max(h, o, c)
-            l = min(l, o, c)
-            out.append(Bar(len(out), t, t + step, o, h, l, c, float(r[5])))
+            b = Bar(len(out), t, t + step, o, h, l, c, float(r[5]))
+            validator.append(b)  # reject invalid/nonfinite/overlapping input, never repair silently
+            out.append(b)
     return out
 
 

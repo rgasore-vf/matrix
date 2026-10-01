@@ -99,7 +99,12 @@ class SetupTracker:
             # déclenché (éventuellement sur cette bougie) : stop puis cible
             stop_hit = bar.low <= s.stop if d == BULL else bar.high >= s.stop
             if stop_hit:
-                out.append(self._close(i, s, -1.0, "stop"))
+                # An already open position cannot guarantee a fill at its stop
+                # after the market opens beyond it. Use the open as a reference.
+                gap = s.triggered < i and (bar.open < s.stop if d == BULL else bar.open > s.stop)
+                fill = bar.open if gap else s.stop
+                r = d * (fill - s.entry) / s.risk
+                out.append(self._close(i, s, r, "stop_gap" if gap else "stop", fill))
                 continue
             if s.triggered == i:
                 # Bougie de déclenchement : l'ordre intra-bougie est inconnu ; le plus haut
@@ -111,16 +116,17 @@ class SetupTracker:
             s.mfe_r = max(s.mfe_r, fav / s.risk)
             t1 = s.targets[0][0]
             if (d == BULL and bar.high >= t1) or (d != BULL and bar.low <= t1):
-                out.append(self._close(i, s, abs(t1 - s.entry) / s.risk, "target1"))
+                out.append(self._close(i, s, abs(t1 - s.entry) / s.risk, "target1", t1))
                 continue
             keep.append(s)
         self.active = keep
         return out
 
-    def _close(self, i: int, s: Setup, r: float, reason: str) -> Event:
+    def _close(self, i: int, s: Setup, r: float, reason: str, execution_price: float) -> Event:
         s.closed = True
         return self._ev(SETUP_CLOSED, i, s, {"reason": reason, "r": round(r, 4),
-                                             "bars_in_trade": i - (s.triggered or i),
+                                             "execution_price": execution_price,
+                                             "bars_in_trade": i - (s.triggered if s.triggered is not None else i),
                                              "mfe_r": round(s.mfe_r, 4)})
 
     def _ev(self, kind: str, i: int, s: Setup, extra: dict) -> Event:
@@ -141,6 +147,7 @@ class SetupTracker:
                     self.idm_taken_dir = d
             elif ev.kind in (Kind.BOS_CHANGE, Kind.TREND_INIT):
                 self.idm_taken_dir = 0
+                self.idm_levels.clear()
                 # retournement : les setups non déclenchés dans l'autre sens expirent
                 for s in list(self.active):
                     if s.triggered is None and s.direction != ev.direction:

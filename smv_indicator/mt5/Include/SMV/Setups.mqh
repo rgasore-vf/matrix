@@ -94,14 +94,19 @@ public:
               {
                bool stop_hit = d == SMV_BULL ? bar.low <= act[a].stop : bar.high >= act[a].stop;
                if(stop_hit)
-                 { Close(i, act[a], -1.0, "stop", log); keep = false; }
+                 {
+                  bool gap = act[a].triggered < i && (d == SMV_BULL ? bar.open < act[a].stop : bar.open > act[a].stop);
+                  double fill = gap ? bar.open : act[a].stop;
+                  Close(i, act[a], d * (fill - act[a].entry) / risk, gap ? "stop_gap" : "stop", fill, log);
+                  keep = false;
+                 }
                else if(act[a].triggered != i)
                  {
                   double fav = d == SMV_BULL ? bar.high - act[a].entry : act[a].entry - bar.low;
                   act[a].mfe_r = MathMax(act[a].mfe_r, fav / risk);
                   bool hit = d == SMV_BULL ? bar.high >= act[a].t1 : bar.low <= act[a].t1;
                   if(hit)
-                    { Close(i, act[a], MathAbs(act[a].t1 - act[a].entry) / risk, "target1", log); keep = false; }
+                    { Close(i, act[a], MathAbs(act[a].t1 - act[a].entry) / risk, "target1", act[a].t1, log); keep = false; }
                  }
               }
            }
@@ -134,6 +139,8 @@ public:
          else if(kind == K_BOS_CHANGE || kind == K_TREND_INIT)
            {
             idm_taken_dir = 0;
+            nidm = 0;
+            ArrayResize(idm_ref, 0, 256); ArrayResize(idm_dir, 0, 256);
             // retournement : les setups non déclenchés dans l'autre sens expirent
             int m = 0;
             for(int a = 0; a < nact; a++)
@@ -251,11 +258,13 @@ private:
       log.Add(kind, i, s.created, s.dir, s.entry, kind + ":" + s.sid, d);
      }
 
-   void              Close(const int i, const SmvSetup &s, const double r, const string reason, CSmvLog &log)
+   void              Close(const int i, const SmvSetup &s, const double r, const string reason,
+                           const double execution_price, CSmvLog &log)
      {
       string x = "";
       KvS(x, "reason", reason);
       KvD(x, "r", NormalizeDouble(r, 4));
+      KvD(x, "execution_price", execution_price);
       KvI(x, "bars_in_trade", i - (s.triggered >= 0 ? s.triggered : i));
       KvD(x, "mfe_r", NormalizeDouble(s.mfe_r, 4));
       Ev(K_SETUP_CLOSED, i, s, x, log);

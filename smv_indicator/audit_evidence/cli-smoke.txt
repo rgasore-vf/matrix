@@ -1,0 +1,33 @@
+1500 bougies, 3417 événements
+  LIQ_LEVEL          600
+  ZONE_TOUCH         434
+  IMBALANCE          313
+  LIQ_CLEAN          306
+  LIQ_BOS            256
+  LIQ_SIGNATURE      206
+  PIVOT_LOW          203
+  PIVOT_HIGH         191
+  ZONE_BROKEN        143
+  ZONE               95
+  BREAKER            79
+  BOS_CONTINUATION   73
+  SESSION            63
+  BREAKER_REACTION   60
+  RANGE_SWEEP        55
+  FAIL               40
+  RANGE_OPEN         40
+  RANGE_EXIT         37
+  ODF_LINK           32
+  INDUCEMENT         30
+  RANGE_INTENTION    29
+  EQUAL_LEVELS       27
+  CAUSE_COMPLETE     27
+  BOS_CHANGE         22
+  PROTECTED_SWEEP    19
+  SETUP              18
+  SETUP_TRIGGERED    6
+  SETUP_CLOSED       6
+  SETUP_EXPIRED      5
+  TREND_INIT         1
+  MONTH_WINDOW       1
+écrit : /workspace/scratch/f77684aeb4ba/audit-work/cli/demo_events.json, /workspace/scratch/f77684aeb4ba/audit-work/cli/demo_chart.svg

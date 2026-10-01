@@ -7,9 +7,11 @@ au temps t (dernière bougie haute dont t_close <= t).
 from __future__ import annotations
 
 from bisect import bisect_right
+from copy import deepcopy
 from datetime import datetime, timedelta, timezone
 
 from .config import Config
+from .context import validate_bar
 from .engine import Engine
 from .types import BEAR, BULL, Bar, Event, Kind
 
@@ -17,30 +19,44 @@ from .types import BEAR, BULL, Bar, Event, Kind
 def resample(bars: list[Bar], minutes: int, origin: datetime | None = None) -> list[Bar]:
     """Agrège des bougies en UT de `minutes`, alignées sur `origin` (défaut : 1970-01-01 UTC).
 
-    Une bougie haute est émise seulement si la dernière bougie basse de sa période est
-    présente (t_close basse >= t_close haute) ; la dernière période incomplète est omise.
+    Only fully covered, contiguous intervals are emitted. A source candle straddling
+    a target boundary is rejected: its OHLC cannot be split without finer data.
     """
+    if type(minutes) is not int or minutes < 1:
+        raise ValueError("minutes doit être un entier >= 1")
     if not bars:
         return []
-    origin = origin or datetime(1970, 1, 1, tzinfo=bars[0].t_open.tzinfo or timezone.utc)
+    origin = origin or datetime(1970, 1, 1, tzinfo=timezone.utc)
+    if origin.utcoffset() is None:
+        raise ValueError("origin doit porter un fuseau")
+    origin = origin.astimezone(timezone.utc)
     step = timedelta(minutes=minutes)
     out: list[Bar] = []
     cur = None
+    previous_close = None
     for b in bars:
-        k = (b.t_open - origin) // step
+        validate_bar(b)
+        opened, closed = b.t_open.astimezone(timezone.utc), b.t_close.astimezone(timezone.utc)
+        if previous_close is not None and opened < previous_close:
+            raise ValueError("bougies dupliquées ou chevauchantes")
+        previous_close = closed
+        k = (opened - origin) // step
         start = origin + k * step
+        if closed > start + step:
+            raise ValueError("une bougie source chevauche une borne de l'UT cible")
         if cur is None or cur["start"] != start:
-            if cur is not None and cur["last_close"] >= cur["start"] + step:
+            if cur is not None and cur["complete"] and cur["last_close"] == cur["start"] + step:
                 out.append(_mk(len(out), cur, step))
             cur = {"start": start, "o": b.open, "h": b.high, "l": b.low, "c": b.close,
-                   "v": b.volume, "last_close": b.t_close}
+                   "v": b.volume, "last_close": closed, "complete": opened == start}
         else:
+            cur["complete"] = cur["complete"] and opened == cur["last_close"]
             cur["h"] = max(cur["h"], b.high)
             cur["l"] = min(cur["l"], b.low)
             cur["c"] = b.close
             cur["v"] += b.volume
-            cur["last_close"] = b.t_close
-    if cur is not None and cur["last_close"] >= cur["start"] + step:
+            cur["last_close"] = closed
+    if cur is not None and cur["complete"] and cur["last_close"] == cur["start"] + step:
         out.append(_mk(len(out), cur, step))
     return out
 
@@ -59,13 +75,15 @@ class HtfView:
         self.events: list[Event] = []
         for b in htf_bars:
             self.events += self.engine.on_bar(b)
-            self.times.append(b.t_close)
+            self.times.append(b.t_close.astimezone(timezone.utc))
             self.states.append(self.engine.snapshot())
 
     def at(self, t: datetime) -> dict | None:
         """État de l'UT haute connu à l'instant t (None si aucune bougie haute close)."""
-        k = bisect_right(self.times, t) - 1
-        return self.states[k] if k >= 0 else None
+        if t.utcoffset() is None:
+            raise ValueError("t doit porter un fuseau")
+        k = bisect_right(self.times, t.astimezone(timezone.utc)) - 1
+        return deepcopy(self.states[k]) if k >= 0 else None
 
 
 def bos_trap_risk(ltf_event: Event, htf_state: dict | None) -> bool:

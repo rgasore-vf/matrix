@@ -46,10 +46,12 @@ class Marker:
 
 
 def build(events: list[Event], last_index: int) -> dict[str, list]:
+    events = [e for e in events if e.confirm_index <= last_index]
     segs: list[Segment] = []
     boxes: list[Box] = []
     marks: list[Marker] = []
     end_of = {}
+    current_range = None
     for e in events:
         if e.kind in (Kind.LIQ_CLEAN, Kind.LIQ_BOS):
             end_of[e.data["level"]] = (e.confirm_index, "clean" if e.kind == Kind.LIQ_CLEAN else "taken")
@@ -57,6 +59,12 @@ def build(events: list[Event], last_index: int) -> dict[str, list]:
             end_of[e.data["zone"]] = (e.confirm_index, "broken")
         elif e.kind == Kind.RANGE_EXIT:
             end_of[e.data["range"]] = (e.confirm_index, e.data["outcome"])
+            if current_range == e.data["range"]:
+                current_range = None
+        elif e.kind == Kind.RANGE_OPEN:
+            if current_range is not None:
+                end_of[current_range] = (e.confirm_index, "replaced")
+            current_range = e.ref
     for e in events:
         k = e.kind
         if k == Kind.LIQ_LEVEL:

@@ -13,6 +13,7 @@ import os
 import random
 import sys
 from collections import defaultdict
+from datetime import datetime, timezone
 
 sys.path.insert(0, os.path.dirname(__file__))
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), ".."))
@@ -122,26 +123,38 @@ def study_liquidity(bars, horizon=200):
     for e in log:
         if e.kind in ("LIQ_CLEAN", "LIQ_BOS"):
             taken[e.data["level"]] = e.confirm_index
-    eq_ids = set()
+    eq_known_at = {}
     for e in log:
         if e.kind == "EQUAL_LEVELS":
-            eq_ids.add(e.data["first"])
-            eq_ids.add(e.data["second"])
+            for ref in (e.data["first"], e.data["second"]):
+                eq_known_at.setdefault(ref, e.confirm_index)
     idm_ids = {e.data["level_ref"]: e.confirm_index for e in log if e.kind == "INDUCEMENT"}
     groups = defaultdict(lambda: [0, 0])
     for e in log:
         if e.kind != "LIQ_LEVEL" or e.data["source"] != "PIVOT":
             continue
         c = e.confirm_index
-        dist = abs(bars[c].close - e.price) / atr[c]
-        dbin = "d<1" if dist < 1 else "d1-3" if dist < 3 else "d>=3"
         t = taken.get(e.ref)
-        hit = int(t is not None and t - c <= horizon)
-        for kk in (f"eq={e.ref in eq_ids}|{dbin}", f"all|{dbin}"):
-            groups[kk][0] += hit
-            groups[kk][1] += 1
+        reveal = eq_known_at.get(e.ref)
+        # A later EQ reveal starts a NEW risk set at that reveal. It cannot
+        # retrospectively turn the original ordinary level into an EQ signal.
+        exposures = [(c, reveal is not None and reveal <= c, True)]
+        if reveal is not None and reveal > c:
+            exposures.append((reveal, True, False))
+        for known, is_eq, original in exposures:
+            if known + horizon >= len(bars) or atr[known] <= 0 or (t is not None and t <= known):
+                continue
+            dist = abs(bars[known].close - e.price) / atr[known]
+            dbin = "d<1" if dist < 1 else "d1-3" if dist < 3 else "d>=3"
+            hit = int(t is not None and known < t <= known + horizon)
+            keys = [f"eq={is_eq}|{dbin}"] + ([f"all|{dbin}"] if original else [])
+            for kk in keys:
+                groups[kk][0] += hit
+                groups[kk][1] += 1
     # inducement : niveau pris dans l'horizon après le BOS qui le révèle, vs pivots de même côté
     for ref, ci in idm_ids.items():
+        if ci + horizon >= len(bars):
+            continue
         t = taken.get(ref)
         if t is not None and t <= ci:
             continue  # déjà pris avant d'être révélé (rare)
@@ -158,13 +171,23 @@ def month_paths(d1):
     by_month = defaultdict(list)
     for b in d1:
         t = b.t_open
-        key = (t.year + (t.month == 12), 1 if t.month == 12 else t.month + 1) if t.day >= 26 else (t.year, t.month)
-        by_month[key].append(b)
+        by_month[(t.year, t.month)].append(b)
+        if t.day >= 26:
+            key = (t.year + (t.month == 12), 1 if t.month == 12 else t.month + 1)
+            by_month[key].append(b)
     out = []
     for key, bs in sorted(by_month.items()):
+        y, m = key
+        py, pm = (y - 1, 12) if m == 1 else (y, m - 1)
+        ny, nm = (y + 1, 1) if m == 12 else (y, m + 1)
+        start = datetime(py, pm, 26, tzinfo=timezone.utc)
+        end = datetime(ny, nm, 1, tzinfo=timezone.utc)
+        if not d1 or d1[0].t_open > start or d1[-1].t_close < end:
+            continue  # neither truncated first/last month is a complete outcome
+        bs = sorted((b for b in bs if start <= b.t_open and b.t_close <= end), key=lambda b: b.t_open)
         if len(bs) < 18:
             continue
-        cut = next((i for i, b in enumerate(bs) if b.t_open.month == key[1] and b.t_open.day >= 10), None)
+        cut = next((i for i, b in enumerate(bs) if (b.t_open.year, b.t_open.month) == key and b.t_open.day >= 10), None)
         if cut is None or cut < 3:
             continue
         out.append((bs, cut))
@@ -184,6 +207,9 @@ def month_stats(paths):
         hold_h += all(b.high <= wh for b in bs[cut:])
         hold_l += all(b.low >= wl for b in bs[cut:])
     n = len(paths)
+    if n == 0:
+        return {"months": 0, "high_in_window": None, "low_in_window": None,
+                "either_in_window": None, "window_high_holds": None, "window_low_holds": None}
     return {"months": n, "high_in_window": round(high_in / n, 3), "low_in_window": round(low_in / n, 3),
             "either_in_window": round(either_in / n, 3), "window_high_holds": round(hold_h / n, 3),
             "window_low_holds": round(hold_l / n, 3)}
@@ -193,18 +219,14 @@ def month_null(paths, sims=200, seed=0):
     """Modèle nul : rendements journaliers permutés au hasard à l'intérieur de chaque segment
     (même volatilité, ordre aléatoire) ; reconstruction des plus hauts/bas par les écarts relatifs."""
     rng = random.Random(seed)
+    if not paths:
+        return month_stats([])
+    from study_nulls import shuffled
     acc = defaultdict(float)
     for _ in range(sims):
         fake = []
         for bs, cut in paths:
-            rets = [(b.close - b.open, b.high - max(b.open, b.close), min(b.open, b.close) - b.low) for b in bs]
-            rng.shuffle(rets)
-            p = bs[0].open
-            nb = []
-            for dc, uw, lw in rets:
-                o, c = p, p + dc
-                nb.append(type(bs[0])(0, bs[0].t_open, bs[0].t_close, o, max(o, c) + uw, min(o, c) - lw, c))
-                p = c
+            nb = shuffled(bs, rng.getrandbits(64))
             fake.append((nb, cut))
         s = month_stats(fake)
         for k, v in s.items():
@@ -254,7 +276,7 @@ def main():
         m15 = load(sym, "m15", "2019-01-01", "2021-01-01")
         r["structure_h1"] = {m: study_structure(h1, m) for m in ("A", "B")}
         r["structure_m15"] = {m: study_structure(m15, m) for m in ("A", "B")}
-        r["zones_h1_bosorigin_bm0.6"] = study_zones(h1, Config())
+        r["zones_h1_bosorigin_bm0.6"] = study_zones(h1, Config(bm_body_min=0.6))
         r["zones_h1_bosorigin_bm0.7"] = study_zones(h1, Config(bm_body_min=0.7))
         r["zones_h1_allpivots"] = study_zones(h1, Config(zones_on="all_pivots"))
         r["zones_m15_bosorigin"] = study_zones(m15, Config())

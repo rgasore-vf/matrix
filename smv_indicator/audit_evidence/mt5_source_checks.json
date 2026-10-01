@@ -1,0 +1,66 @@
+{
+  "scope": "delimiter check only; not compilation or native parity",
+  "compiler_available": false,
+  "files": [
+    {
+      "file": "mt5/Include/SMV/Config.mqh",
+      "balanced_delimiters": true
+    },
+    {
+      "file": "mt5/Include/SMV/Context.mqh",
+      "balanced_delimiters": true
+    },
+    {
+      "file": "mt5/Include/SMV/Draw.mqh",
+      "balanced_delimiters": true
+    },
+    {
+      "file": "mt5/Include/SMV/Engine.mqh",
+      "balanced_delimiters": true
+    },
+    {
+      "file": "mt5/Include/SMV/Liquidity.mqh",
+      "balanced_delimiters": true
+    },
+    {
+      "file": "mt5/Include/SMV/Pivots.mqh",
+      "balanced_delimiters": true
+    },
+    {
+      "file": "mt5/Include/SMV/Ranges.mqh",
+      "balanced_delimiters": true
+    },
+    {
+      "file": "mt5/Include/SMV/Setups.mqh",
+      "balanced_delimiters": true
+    },
+    {
+      "file": "mt5/Include/SMV/Structure.mqh",
+      "balanced_delimiters": true
+    },
+    {
+      "file": "mt5/Include/SMV/Timing.mqh",
+      "balanced_delimiters": true
+    },
+    {
+      "file": "mt5/Include/SMV/Types.mqh",
+      "balanced_delimiters": true
+    },
+    {
+      "file": "mt5/Include/SMV/Zones.mqh",
+      "balanced_delimiters": true
+    },
+    {
+      "file": "mt5/Indicators/SMV/SMV_Indicator.mq5",
+      "balanced_delimiters": true
+    },
+    {
+      "file": "mt5/Scripts/SMV/SMV_GptAuditCheck.mq5",
+      "balanced_delimiters": true
+    },
+    {
+      "file": "mt5/Scripts/SMV/SMV_ServerTimeCheck.mq5",
+      "balanced_delimiters": true
+    }
+  ]
+}

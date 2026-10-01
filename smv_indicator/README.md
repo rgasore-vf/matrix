@@ -1,5 +1,13 @@
 # smv_indicator
 
+**Audit indépendant du 1 octobre 2026 :** lire d'abord [GPT_AUDIT.md](GPT_AUDIT.md),
+[GPT_STRATEGY_REVIEW.md](GPT_STRATEGY_REVIEW.md), [GPT_RESEARCH.md](GPT_RESEARCH.md)
+et [GPT_TEST_REPORT.md](GPT_TEST_REPORT.md). Des contre-exemples ont conduit à des corrections.
+Les chiffres `research/results_*.json` et les conclusions de calibrage ci-dessous sont conservés
+comme état antérieur et doivent être recalculés. La formation originale `../Strategie/` n'est pas
+dans l'archive reçue ; la fidélité à SMV reste non vérifiée. Le portage MT5 corrigé reste à compiler
+et à comparer avec un export natif. L'historique MT5 est désormais complet par défaut (`InpMaxBars=0`).
+
 Reconstruction formelle, calibrage et implémentation de référence de la stratégie « Smart Money Vision » (UltraFX) décrite dans `../Strategie/`, avec un portage pour MetaTrader 5.
 
 **État : v0.2.**

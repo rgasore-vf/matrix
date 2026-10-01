@@ -84,9 +84,9 @@ public:
          for(int a = nint - 1; a >= 0; a--)
            {
             int m = intact[a];
+            if(newp[k].index - lv[m].anchor > cfg.eq_max_gap) continue;
             if(lv[m].side == newp[k].side && lv[m].source == "PIVOT" && lv[m].anchor < newp[k].index)
                if(MathAbs(lv[m].price - newp[k].price) <= tol) { match = m; break; }
-            if(newp[k].index - lv[m].anchor > cfg.eq_max_gap) break;
            }
          AddLevel(PivotRef(newp[k]), newp[k].side, newp[k].price, newp[k].index, i, "PIVOT", log);
          if(match >= 0)

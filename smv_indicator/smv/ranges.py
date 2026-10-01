@@ -61,33 +61,34 @@ class RangeTracker:
         bar = self.ctx.bars[i]
         out: list[Event] = []
         beyond = BULL if bar.close > r.high else BEAR if bar.close < r.low else NONE
+        resolved_side = None
         if r.pending is not None:
             d, start, ext = r.pending
             if beyond == d:
                 ext = max(ext, bar.high) if d == BULL else min(ext, bar.low)
                 r.pending = (d, start, ext)
-                if i - start + 1 >= self.cfg.range_accept_bars:
-                    return out + self._exit(r, i, d, start)
-                return out
-            # retour dans la fourchette (ou sortie opposée) : l'excursion était une prise
-            r.pending = None
-            side = "H" if d == BULL else "L"
-            if not r.outside[side]:
-                out += self._sweep(r, i, side, start, ext)
-            r.outside[side] = False
-            if beyond == NONE:
-                return out + self._check_complete(r, i)
-        if beyond != NONE:
+            else:
+                # Recovered close excursion. Keep the wick episode status so
+                # its same-side continuation is not counted a second time.
+                r.pending = None
+                resolved_side = "H" if d == BULL else "L"
+                if not r.outside[resolved_side]:
+                    out += self._sweep(r, i, resolved_side, start, ext)
+                r.outside[resolved_side] = bar.high > r.high if d == BULL else bar.low < r.low
+        if beyond != NONE and r.pending is None:
             r.pending = (beyond, i, bar.high if beyond == BULL else bar.low)
-            if self.cfg.range_accept_bars == 1:
-                return out + self._exit(r, i, beyond, i)
-            return out
         # Une prise = un épisode : on compte la première bougie qui dépasse la borne en mèche ;
         # les bougies suivantes qui dépassent encore appartiennent au même épisode.
         for side, crossed in (("H", bar.high > r.high), ("L", bar.low < r.low)):
+            if side == resolved_side or (r.pending is not None and side == ("H" if beyond == BULL else "L")):
+                continue
             if crossed and not r.outside[side]:
                 out += self._sweep(r, i, side, i, bar.high if side == "H" else bar.low)
             r.outside[side] = crossed
+        if r.pending is not None:
+            d, start, _ = r.pending
+            if i - start + 1 >= self.cfg.range_accept_bars:
+                return out + self._exit(r, i, d, start)
         out += self._check_complete(r, i)
         return out
 

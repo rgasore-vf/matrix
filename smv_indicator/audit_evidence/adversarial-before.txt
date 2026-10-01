@@ -1,0 +1,409 @@
+FFFFFFFFFFFFFFFFFFFFFFFFFFF                                              [100%]
+=================================== FAILURES ===================================
+_____________ test_bos_and_old_protected_sweep_are_both_observable _____________
+
+    def test_bos_and_old_protected_sweep_are_both_observable():
+        # Before bar 11: trend UP, protected 10, reference 13. This outside bar
+        # takes 10 in its wick and closes above 13. Neither fact cancels the other.
+        rows = [(b.open, b.high, b.low, b.close) for b in from_closes(BASE)]
+        rows += [(12, 14, 9, 14)]
+        log = Engine(Config(pivot_left=1, pivot_right=1)).run(from_ohlc(rows))
+        assert any(e.kind == Kind.BOS_CONTINUATION and e.confirm_index == 11 for e in log)
+>       assert any(e.kind == Kind.PROTECTED_SWEEP and e.confirm_index == 11 and e.price == 10 for e in log)
+E       assert False
+E        +  where False = any(<generator object test_bos_and_old_protected_sweep_are_both_observable.<locals>.<genexpr> at 0x7ff6084b39f0>)
+
+tests/test_gpt_adversarial.py:34: AssertionError
+__________________ test_first_lower_high_after_bos_is_a_fail ___________________
+
+    def test_first_lower_high_after_bos_is_a_fail():
+        # Wick high 20 is confirmed on the same close as BOS 12. The new leg
+        # starts at bar 12 (low 11), excluding that old pivot. High 18 at bar 13
+        # is nevertheless an LH against 20 and must confirm a FAIL at bar 14.
+        rows = [(b.open, b.high, b.low, b.close) for b in from_closes(BASE)]
+        rows += [(12, 20, 11.8, 12.5), (12.5, 14, 11, 14),
+                 (14, 18, 12, 17), (17, 17.5, 12, 16)]
+        log = Engine(Config(pivot_left=1, pivot_right=1)).run(from_ohlc(rows))
+        assert any(e.kind == Kind.PIVOT_HIGH and e.anchor_index == 13 and e.data['label'] == 'LH' for e in log)
+>       assert any(e.kind == Kind.FAIL and (e.anchor_index, e.confirm_index) == (13, 14) for e in log)
+E       assert False
+E        +  where False = any(<generator object test_first_lower_high_after_bos_is_a_fail.<locals>.<genexpr> at 0x7ff6084b3440>)
+
+tests/test_gpt_adversarial.py:46: AssertionError
+______________________ test_equal_highs_obey_maximum_age _______________________
+
+    def test_equal_highs_obey_maximum_age():
+        highs = [3, 5, 4, 4, 4, 4, 4, 4, 4, 4.999, 4]
+        # Strictly decreasing lows prevent unrelated low pivots from masking the bug.
+        bars = from_ohlc([(3, h, 2.5 - i * .1, 3) for i, h in enumerate(highs)])
+        log = Engine(Config(pivot_left=1, pivot_right=1, eq_max_gap=3)).run(bars)
+>       assert not [e for e in log if e.kind == Kind.EQUAL_LEVELS]
+E       AssertionError: assert not [Event(kind='EQUAL_LEVELS', confirm_index=10, anchor_index=1, direction=0, price=5, ref='EQH:1:9', data={'side': 'H', 'first': 'PH:1', 'second': 'PH:9', 'tolerance': 0.20499})]
+
+tests/test_gpt_adversarial.py:54: AssertionError
+____ test_pending_range_excursion_does_not_hide_other_side[rows0-expected0] ____
+
+rows = [(10, 10.5, 9.5, 10), (10, 12, 8, 11.5), (11.5, 11.5, 9.5, 10)]
+expected = [(1, 'L'), (2, 'H')]
+
+    @pytest.mark.parametrize('rows,expected', [
+        ([(10, 10.5, 9.5, 10), (10, 12, 8, 11.5), (11.5, 11.5, 9.5, 10)], [(1, 'L'), (2, 'H')]),
+        ([(10, 10.5, 9.5, 10), (10, 12, 9.5, 11.5), (11.5, 11.5, 8, 10)], [(2, 'H'), (2, 'L')]),
+    ])
+    def test_pending_range_excursion_does_not_hide_other_side(rows, expected):
+        ctx = Context(14)
+        tracker = RangeTracker(Config(), ctx)
+        tracker.current = Range('R:0', BEAR, 9, 11, 0, 'PL:0')
+        events = []
+        for b in from_ohlc(rows):
+            ctx.append(b)
+            events += tracker.update(b.index)
+>       assert [(e.confirm_index, e.data['side']) for e in events if e.kind == Kind.RANGE_SWEEP] == expected
+E       AssertionError: assert [(2, 'H')] == [(1, 'L'), (2, 'H')]
+E         
+E         At index 0 diff: (2, 'H') != (1, 'L')
+E         Right contains one more item: (2, 'H')
+E         Use -v to get more diff
+
+tests/test_gpt_adversarial.py:69: AssertionError
+____ test_pending_range_excursion_does_not_hide_other_side[rows1-expected1] ____
+
+rows = [(10, 10.5, 9.5, 10), (10, 12, 9.5, 11.5), (11.5, 11.5, 8, 10)]
+expected = [(2, 'H'), (2, 'L')]
+
+    @pytest.mark.parametrize('rows,expected', [
+        ([(10, 10.5, 9.5, 10), (10, 12, 8, 11.5), (11.5, 11.5, 9.5, 10)], [(1, 'L'), (2, 'H')]),
+        ([(10, 10.5, 9.5, 10), (10, 12, 9.5, 11.5), (11.5, 11.5, 8, 10)], [(2, 'H'), (2, 'L')]),
+    ])
+    def test_pending_range_excursion_does_not_hide_other_side(rows, expected):
+        ctx = Context(14)
+        tracker = RangeTracker(Config(), ctx)
+        tracker.current = Range('R:0', BEAR, 9, 11, 0, 'PL:0')
+        events = []
+        for b in from_ohlc(rows):
+            ctx.append(b)
+            events += tracker.update(b.index)
+>       assert [(e.confirm_index, e.data['side']) for e in events if e.kind == Kind.RANGE_SWEEP] == expected
+E       AssertionError: assert [(2, 'H')] == [(2, 'H'), (2, 'L')]
+E         
+E         Right contains one more item: (2, 'L')
+E         Use -v to get more diff
+
+tests/test_gpt_adversarial.py:69: AssertionError
+________ test_resample_rejects_a_bar_that_contains_future_of_its_bucket ________
+
+    def test_resample_rejects_a_bar_that_contains_future_of_its_bucket():
+        # A 15-minute candle cannot disclose its high at minute 7.
+        bars = from_ohlc([(10, 99, 9, 11)], timeframe_minutes=15)
+>       with pytest.raises(ValueError):
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+E       Failed: DID NOT RAISE ValueError
+
+tests/test_gpt_adversarial.py:75: Failed
+_____________ test_resample_omits_missing_start_and_missing_middle _____________
+
+    def test_resample_omits_missing_start_and_missing_middle():
+        bars = from_ohlc([(10, 11, 9, 10)] * 8, timeframe_minutes=15)
+>       assert resample(bars[1:4], 60) == []  # the hour's opening is unknown
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       assert [Bar(index=0,..., volume=0.0)] == []
+E         
+E         Left contains one more item: Bar(index=0, t_open=datetime.datetime(2025, 1, 6, 0, 0, tzinfo=datetime.timezone.utc), t_close=datetime.datetime(2025, 1, 6, 1, 0, tzinfo=datetime.timezone.utc), open=10, high=11, low=9, close=10, volume=0.0)
+E         Use -v to get more diff
+
+tests/test_gpt_adversarial.py:81: AssertionError
+_______ test_nonfinite_price_rejected_before_context_mutation[open-nan] ________
+
+field = 'open', value = nan
+
+    @pytest.mark.parametrize('field,value', [('open', math.nan), ('high', math.inf), ('low', -math.inf)])
+    def test_nonfinite_price_rejected_before_context_mutation(field, value):
+        ctx = Context(14)
+        b = replace(from_ohlc([(10, 11, 9, 10)])[0], **{field: value})
+>       with pytest.raises(ValueError):
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+E       Failed: DID NOT RAISE ValueError
+
+tests/test_gpt_adversarial.py:90: Failed
+_______ test_nonfinite_price_rejected_before_context_mutation[high-inf] ________
+
+field = 'high', value = inf
+
+    @pytest.mark.parametrize('field,value', [('open', math.nan), ('high', math.inf), ('low', -math.inf)])
+    def test_nonfinite_price_rejected_before_context_mutation(field, value):
+        ctx = Context(14)
+        b = replace(from_ohlc([(10, 11, 9, 10)])[0], **{field: value})
+>       with pytest.raises(ValueError):
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+E       Failed: DID NOT RAISE ValueError
+
+tests/test_gpt_adversarial.py:90: Failed
+_______ test_nonfinite_price_rejected_before_context_mutation[low--inf] ________
+
+field = 'low', value = -inf
+
+    @pytest.mark.parametrize('field,value', [('open', math.nan), ('high', math.inf), ('low', -math.inf)])
+    def test_nonfinite_price_rejected_before_context_mutation(field, value):
+        ctx = Context(14)
+        b = replace(from_ohlc([(10, 11, 9, 10)])[0], **{field: value})
+>       with pytest.raises(ValueError):
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+E       Failed: DID NOT RAISE ValueError
+
+tests/test_gpt_adversarial.py:90: Failed
+_________________ test_duplicate_and_overlapping_bars_rejected _________________
+
+    def test_duplicate_and_overlapping_bars_rejected():
+        b = from_ohlc([(10, 11, 9, 10)])[0]
+        ctx = Context(14)
+        ctx.append(b)
+>       with pytest.raises(ValueError):
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+E       Failed: DID NOT RAISE ValueError
+
+tests/test_gpt_adversarial.py:99: Failed
+___________________ test_invalid_configuration_rejected[kw0] ___________________
+
+kw = {'pivot_left': 1.5}
+
+    @pytest.mark.parametrize('kw', [{'pivot_left': 1.5}, {'bos_eps': -.1}, {'bos_eps': math.nan},
+                                   {'eq_tol_atr': math.nan}, {'eq_max_gap': -1}, {'bm_search_back': -1},
+                                   {'odf_min_len': 0}, {'session_window_min': 0}, {'sl_max_atr': math.inf}])
+    def test_invalid_configuration_rejected(kw):
+>       with pytest.raises(ValueError):
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+E       Failed: DID NOT RAISE ValueError
+
+tests/test_gpt_adversarial.py:109: Failed
+___________________ test_invalid_configuration_rejected[kw1] ___________________
+
+kw = {'bos_eps': -0.1}
+
+    @pytest.mark.parametrize('kw', [{'pivot_left': 1.5}, {'bos_eps': -.1}, {'bos_eps': math.nan},
+                                   {'eq_tol_atr': math.nan}, {'eq_max_gap': -1}, {'bm_search_back': -1},
+                                   {'odf_min_len': 0}, {'session_window_min': 0}, {'sl_max_atr': math.inf}])
+    def test_invalid_configuration_rejected(kw):
+>       with pytest.raises(ValueError):
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+E       Failed: DID NOT RAISE ValueError
+
+tests/test_gpt_adversarial.py:109: Failed
+___________________ test_invalid_configuration_rejected[kw2] ___________________
+
+kw = {'bos_eps': nan}
+
+    @pytest.mark.parametrize('kw', [{'pivot_left': 1.5}, {'bos_eps': -.1}, {'bos_eps': math.nan},
+                                   {'eq_tol_atr': math.nan}, {'eq_max_gap': -1}, {'bm_search_back': -1},
+                                   {'odf_min_len': 0}, {'session_window_min': 0}, {'sl_max_atr': math.inf}])
+    def test_invalid_configuration_rejected(kw):
+>       with pytest.raises(ValueError):
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+E       Failed: DID NOT RAISE ValueError
+
+tests/test_gpt_adversarial.py:109: Failed
+___________________ test_invalid_configuration_rejected[kw3] ___________________
+
+kw = {'eq_tol_atr': nan}
+
+    @pytest.mark.parametrize('kw', [{'pivot_left': 1.5}, {'bos_eps': -.1}, {'bos_eps': math.nan},
+                                   {'eq_tol_atr': math.nan}, {'eq_max_gap': -1}, {'bm_search_back': -1},
+                                   {'odf_min_len': 0}, {'session_window_min': 0}, {'sl_max_atr': math.inf}])
+    def test_invalid_configuration_rejected(kw):
+>       with pytest.raises(ValueError):
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+E       Failed: DID NOT RAISE ValueError
+
+tests/test_gpt_adversarial.py:109: Failed
+___________________ test_invalid_configuration_rejected[kw4] ___________________
+
+kw = {'eq_max_gap': -1}
+
+    @pytest.mark.parametrize('kw', [{'pivot_left': 1.5}, {'bos_eps': -.1}, {'bos_eps': math.nan},
+                                   {'eq_tol_atr': math.nan}, {'eq_max_gap': -1}, {'bm_search_back': -1},
+                                   {'odf_min_len': 0}, {'session_window_min': 0}, {'sl_max_atr': math.inf}])
+    def test_invalid_configuration_rejected(kw):
+>       with pytest.raises(ValueError):
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+E       Failed: DID NOT RAISE ValueError
+
+tests/test_gpt_adversarial.py:109: Failed
+___________________ test_invalid_configuration_rejected[kw5] ___________________
+
+kw = {'bm_search_back': -1}
+
+    @pytest.mark.parametrize('kw', [{'pivot_left': 1.5}, {'bos_eps': -.1}, {'bos_eps': math.nan},
+                                   {'eq_tol_atr': math.nan}, {'eq_max_gap': -1}, {'bm_search_back': -1},
+                                   {'odf_min_len': 0}, {'session_window_min': 0}, {'sl_max_atr': math.inf}])
+    def test_invalid_configuration_rejected(kw):
+>       with pytest.raises(ValueError):
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+E       Failed: DID NOT RAISE ValueError
+
+tests/test_gpt_adversarial.py:109: Failed
+___________________ test_invalid_configuration_rejected[kw6] ___________________
+
+kw = {'odf_min_len': 0}
+
+    @pytest.mark.parametrize('kw', [{'pivot_left': 1.5}, {'bos_eps': -.1}, {'bos_eps': math.nan},
+                                   {'eq_tol_atr': math.nan}, {'eq_max_gap': -1}, {'bm_search_back': -1},
+                                   {'odf_min_len': 0}, {'session_window_min': 0}, {'sl_max_atr': math.inf}])
+    def test_invalid_configuration_rejected(kw):
+>       with pytest.raises(ValueError):
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+E       Failed: DID NOT RAISE ValueError
+
+tests/test_gpt_adversarial.py:109: Failed
+___________________ test_invalid_configuration_rejected[kw7] ___________________
+
+kw = {'session_window_min': 0}
+
+    @pytest.mark.parametrize('kw', [{'pivot_left': 1.5}, {'bos_eps': -.1}, {'bos_eps': math.nan},
+                                   {'eq_tol_atr': math.nan}, {'eq_max_gap': -1}, {'bm_search_back': -1},
+                                   {'odf_min_len': 0}, {'session_window_min': 0}, {'sl_max_atr': math.inf}])
+    def test_invalid_configuration_rejected(kw):
+>       with pytest.raises(ValueError):
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+E       Failed: DID NOT RAISE ValueError
+
+tests/test_gpt_adversarial.py:109: Failed
+___________________ test_invalid_configuration_rejected[kw8] ___________________
+
+kw = {'sl_max_atr': inf}
+
+    @pytest.mark.parametrize('kw', [{'pivot_left': 1.5}, {'bos_eps': -.1}, {'bos_eps': math.nan},
+                                   {'eq_tol_atr': math.nan}, {'eq_max_gap': -1}, {'bm_search_back': -1},
+                                   {'odf_min_len': 0}, {'session_window_min': 0}, {'sl_max_atr': math.inf}])
+    def test_invalid_configuration_rejected(kw):
+>       with pytest.raises(ValueError):
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+E       Failed: DID NOT RAISE ValueError
+
+tests/test_gpt_adversarial.py:109: Failed
+_______________ test_event_payload_cannot_change_after_emission ________________
+
+    def test_event_payload_cannot_change_after_emission():
+        payload = {'targets': [11, 12]}
+        e = Event(Kind.SETUP, 1, 0, BULL, 10, 'S', payload)
+        payload['targets'].append(13)
+>       assert e.data['targets'] == [11, 12]
+E       assert [11, 12, 13] == [11, 12]
+E         
+E         Left contains one more item: 13
+E         Use -v to get more diff
+
+tests/test_gpt_adversarial.py:117: AssertionError
+___________ test_stop_gap_is_not_reported_as_guaranteed_minus_one_r ____________
+
+    def test_stop_gap_is_not_reported_as_guaranteed_minus_one_r():
+        ctx = Context(14)
+        cfg = Config()
+        piv = PivotDetector(cfg, ctx)
+        t = SetupTracker(cfg, ctx, StructureTracker(cfg, ctx, piv), LiquidityBook(cfg, ctx), RangeTracker(cfg, ctx))
+        # A position already open at 10, stop 9, is still open when the next
+        # candle opens at 7. Reference execution at that open loses 3 R.
+        t.active.append(Setup('S', 'CONCEPT', BULL, 10, 9, [(12, 'H')], 0, 100, 'Z', 'IDM', triggered=1))
+        for b in from_ohlc([(10, 11, 9.5, 10), (10, 11, 9.5, 10), (7, 8, 6, 7)]):
+            ctx.append(b)
+        ev = t.update(2)
+>       assert len(ev) == 1 and ev[0].data['r'] == -3.0
+E       AssertionError: assert (1 == 1 and -1.0 == -3.0)
+E        +  where 1 = len([Event(kind='SETUP_CLOSED', confirm_index=2, anchor_index=0, direction=1, price=10, ref='SETUP_CLOSED:S', data={'setup': 'S', 'type': 'CONCEPT', 'reason': 'stop', 'r': -1.0, 'bars_in_trade': 1, 'mfe_r': 0.0})])
+
+tests/test_gpt_adversarial.py:135: AssertionError
+_____________ test_old_inducement_does_not_survive_a_trend_change ______________
+
+    def test_old_inducement_does_not_survive_a_trend_change():
+        ctx = Context(14)
+        cfg = Config()
+        st = StructureTracker(cfg, ctx, PivotDetector(cfg, ctx))
+        st.trend = BULL
+        t = SetupTracker(cfg, ctx, st, LiquidityBook(cfg, ctx), RangeTracker(cfg, ctx))
+        t.on_events(1, [Event(Kind.INDUCEMENT, 1, 0, 0, 9, 'IDM', {'level_ref': 'PL:0', 'trend': BULL})])
+        t.on_events(2, [Event(Kind.BOS_CHANGE, 2, 0, BEAR, 9, 'B1')])
+        t.on_events(3, [Event(Kind.BOS_CHANGE, 3, 0, BULL, 11, 'B2')])
+        t.on_events(4, [Event(Kind.LIQ_CLEAN, 4, 0, BEAR, 9, 'LC', {'level': 'PL:0'})])
+>       assert t.idm_taken_dir == 0
+E       assert 1 == 0
+E        +  where 1 = <smv.setups.SetupTracker object at 0x7ff608446690>.idm_taken_dir
+
+tests/test_gpt_adversarial.py:149: AssertionError
+_________________ test_render_asof_does_not_use_future_status __________________
+
+    def test_render_asof_does_not_use_future_status():
+        level = Event(Kind.LIQ_LEVEL, 1, 0, 0, 11, 'H', {'source': 'PIVOT'})
+        future = Event(Kind.LIQ_CLEAN, 10, 0, BULL, 11, 'LC', {'level': 'H'})
+        p = build([level, future], last_index=5)['segments'][0]
+>       assert p.style == 'liq_intact' and p.x1 == 5
+E       AssertionError: assert ('liq_clean' == 'liq_intact'
+E         
+E         - liq_intact
+E         + liq_clean)
+
+tests/test_gpt_adversarial.py:156: AssertionError
+_____________________ test_render_range_ends_when_replaced _____________________
+
+    def test_render_range_ends_when_replaced():
+        def r(i):
+            return Event(Kind.RANGE_OPEN, i, i, BULL, 11, f'R:{i}', {'low': 9, 'high': 11, 'context': 'accumulation?'})
+        boxes = build([r(1), r(4)], last_index=8)['boxes']
+>       assert boxes[0].x1 == 4 and boxes[0].meta['outcome'] == 'replaced'
+E       AssertionError: assert (8 == 4)
+E        +  where 8 = Box(x0=1, x1=8, y0=9, y1=11, style='range', label='accumulation?', visible_from=1, meta={'outcome': 'open'}).x1
+
+tests/test_gpt_adversarial.py:163: AssertionError
+_____________________ test_parity_rejects_nan_event_price ______________________
+
+    def test_parity_rejects_nan_event_price():
+        sys.path.insert(0, str(Path(__file__).parents[1] / 'tools'))
+        import mt5_parity
+        e = Event(Kind.TREND_INIT, 0, 0, BULL, 10, 'I')
+>       assert mt5_parity.compare([e], [(e.kind, 0, 0, BULL, math.nan, 'I', {})])
+E       AssertionError: assert []
+E        +  where [] = <function compare at 0x7ff6083b5800>([Event(kind='TREND_INIT', confirm_index=0, anchor_index=0, direction=1, price=10, ref='I', data={})], [('TREND_INIT', 0, 0, 1, nan, 'I', ...)])
+E        +    where <function compare at 0x7ff6083b5800> = <module 'mt5_parity' from '/workspace/scratch/f77684aeb4ba/audit-work/matrix-main/smv_indicator/tools/mt5_parity.py'>.compare
+
+tests/test_gpt_adversarial.py:170: AssertionError
+___________ test_month_window_does_not_take_extreme_after_window_end ___________
+
+    def test_month_window_does_not_take_extreme_after_window_end():
+        # Paris window ends at Jan 9, 23:00 UTC. The second candle straddles
+        # that boundary: its high 99 could have occurred AFTER the window.
+        a = datetime(2026, 1, 8, tzinfo=UTC)
+        bars = [Bar(0, a, a + timedelta(days=1), 1, 2, .5, 1),
+                Bar(1, a + timedelta(days=1), a + timedelta(days=2), 1, 99, .1, 1)]
+        log = Engine(Config(enable_sessions=True)).run(bars)
+        ev = next(e for e in log if e.kind == Kind.MONTH_WINDOW)
+>       assert ev.data['coverage'] == 'partial' and ev.data['high'] == 2
+               ^^^^^^^^^^^^^^^^^^^
+E       KeyError: 'coverage'
+
+tests/test_gpt_adversarial.py:181: KeyError
+=========================== short test summary info ============================
+FAILED tests/test_gpt_adversarial.py::test_bos_and_old_protected_sweep_are_both_observable
+FAILED tests/test_gpt_adversarial.py::test_first_lower_high_after_bos_is_a_fail
+FAILED tests/test_gpt_adversarial.py::test_equal_highs_obey_maximum_age - Ass...
+FAILED tests/test_gpt_adversarial.py::test_pending_range_excursion_does_not_hide_other_side[rows0-expected0]
+FAILED tests/test_gpt_adversarial.py::test_pending_range_excursion_does_not_hide_other_side[rows1-expected1]
+FAILED tests/test_gpt_adversarial.py::test_resample_rejects_a_bar_that_contains_future_of_its_bucket
+FAILED tests/test_gpt_adversarial.py::test_resample_omits_missing_start_and_missing_middle
+FAILED tests/test_gpt_adversarial.py::test_nonfinite_price_rejected_before_context_mutation[open-nan]
+FAILED tests/test_gpt_adversarial.py::test_nonfinite_price_rejected_before_context_mutation[high-inf]
+FAILED tests/test_gpt_adversarial.py::test_nonfinite_price_rejected_before_context_mutation[low--inf]
+FAILED tests/test_gpt_adversarial.py::test_duplicate_and_overlapping_bars_rejected
+FAILED tests/test_gpt_adversarial.py::test_invalid_configuration_rejected[kw0]
+FAILED tests/test_gpt_adversarial.py::test_invalid_configuration_rejected[kw1]
+FAILED tests/test_gpt_adversarial.py::test_invalid_configuration_rejected[kw2]
+FAILED tests/test_gpt_adversarial.py::test_invalid_configuration_rejected[kw3]
+FAILED tests/test_gpt_adversarial.py::test_invalid_configuration_rejected[kw4]
+FAILED tests/test_gpt_adversarial.py::test_invalid_configuration_rejected[kw5]
+FAILED tests/test_gpt_adversarial.py::test_invalid_configuration_rejected[kw6]
+FAILED tests/test_gpt_adversarial.py::test_invalid_configuration_rejected[kw7]
+FAILED tests/test_gpt_adversarial.py::test_invalid_configuration_rejected[kw8]
+FAILED tests/test_gpt_adversarial.py::test_event_payload_cannot_change_after_emission
+FAILED tests/test_gpt_adversarial.py::test_stop_gap_is_not_reported_as_guaranteed_minus_one_r
+FAILED tests/test_gpt_adversarial.py::test_old_inducement_does_not_survive_a_trend_change
+FAILED tests/test_gpt_adversarial.py::test_render_asof_does_not_use_future_status
+FAILED tests/test_gpt_adversarial.py::test_render_range_ends_when_replaced - ...
+FAILED tests/test_gpt_adversarial.py::test_parity_rejects_nan_event_price - A...
+FAILED tests/test_gpt_adversarial.py::test_month_window_does_not_take_extreme_after_window_end
+27 failed in 0.22s

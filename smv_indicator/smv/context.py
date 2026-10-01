@@ -5,11 +5,31 @@ indices <= dernier indice ajouté ; aucune fonction ne lit au-delà.
 """
 from __future__ import annotations
 
+from datetime import timezone
+from math import isfinite
+
 from .types import Bar
+
+
+def validate_bar(bar: Bar) -> None:
+    """Validate a closed interval before any state is changed (gaps are allowed)."""
+    for name in ("open", "high", "low", "close", "volume"):
+        v = getattr(bar, name)
+        if not isinstance(v, (int, float)) or not isfinite(v):
+            raise ValueError(f"bougie {bar.index}: {name} doit être fini")
+    if (bar.high < max(bar.open, bar.close) or bar.low > min(bar.open, bar.close)
+            or bar.high < bar.low or bar.volume < 0):
+        raise ValueError(f"bougie {bar.index} incohérente")
+    if bar.t_open.utcoffset() is None or bar.t_close.utcoffset() is None:
+        raise ValueError("les horodatages doivent porter un fuseau")
+    if bar.t_close.astimezone(timezone.utc) <= bar.t_open.astimezone(timezone.utc):
+        raise ValueError("t_close doit être strictement après t_open")
 
 
 class Context:
     def __init__(self, atr_len: int) -> None:
+        if type(atr_len) is not int or atr_len < 1:
+            raise ValueError("atr_len doit être un entier >= 1")
         self.atr_len = atr_len
         self.bars: list[Bar] = []
         self.tr: list[float] = []
@@ -20,12 +40,11 @@ class Context:
         return len(self.bars) - 1
 
     def append(self, bar: Bar) -> None:
+        validate_bar(bar)
         if bar.index != len(self.bars):
             raise ValueError(f"index attendu {len(self.bars)}, reçu {bar.index}")
-        if bar.high < max(bar.open, bar.close) or bar.low > min(bar.open, bar.close):
-            raise ValueError(f"bougie {bar.index} incohérente : {bar}")
-        if self.bars and bar.t_open < self.bars[-1].t_open:
-            raise ValueError(f"bougie {bar.index} non chronologique")
+        if self.bars and bar.t_open.astimezone(timezone.utc) < self.bars[-1].t_close.astimezone(timezone.utc):
+            raise ValueError(f"bougie {bar.index} dupliquée ou chevauchant la précédente")
         self.bars.append(bar)
         if len(self.bars) == 1:
             tr = bar.high - bar.low

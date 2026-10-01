@@ -1,0 +1,404 @@
+{
+  "audit_date": "2026-10-01",
+  "input_zip_sha256": "1310d5cb8d404574107636c96d860dc320829d8c1738979b74ea7ce430222bab",
+  "original_file_count": 66,
+  "git_commit": null,
+  "files": [
+    {
+      "path": ".gitignore",
+      "bytes": 33,
+      "sha256": "6ef588681942fdc1a74eac0265ee9420dc3436d20ffd4dd1cc9d4cbb332b9237",
+      "role": "Implémentation ou configuration"
+    },
+    {
+      "path": "README.md",
+      "bytes": 3672,
+      "sha256": "c2eaf562754a7eb640a075b32a1eb9c390b45034a12eefd2e1de44b02a3820cf",
+      "role": "Notice préexistante"
+    },
+    {
+      "path": "docs/ARCHITECTURE.md",
+      "bytes": 15002,
+      "sha256": "8374b8120276acb48a302448d2756dc0048775021636c870d38e5e59923300a5",
+      "role": "Document dérivé préexistant"
+    },
+    {
+      "path": "docs/CALIBRATION.md",
+      "bytes": 20373,
+      "sha256": "0065e05d6718e1f09dc29fbd43d12bb914d0f0d554e9dfd87c091778b6c8da4c",
+      "role": "Document dérivé préexistant"
+    },
+    {
+      "path": "docs/DECISIONS.md",
+      "bytes": 13029,
+      "sha256": "436bb0343b03e57fbd8e0d0e03d509c6d6a9ff40f327616d8039f0c65b21b999",
+      "role": "Document dérivé préexistant"
+    },
+    {
+      "path": "docs/RESEARCH.md",
+      "bytes": 31258,
+      "sha256": "5957d6f5c6dbd969a7367bad9470ec3ff6c68e537f9e3054427667d063f6f0d2",
+      "role": "Document dérivé préexistant"
+    },
+    {
+      "path": "docs/STRATEGY_SPEC.md",
+      "bytes": 51040,
+      "sha256": "a982b680cba384e0609be49fb50a6a357db36190499ce182080a5b66d32f2feb",
+      "role": "Document dérivé préexistant"
+    },
+    {
+      "path": "docs/img/demo_chart.svg",
+      "bytes": 48553,
+      "sha256": "5d34a55600a064f2405a4fb2886b0e87f7078c833305a01081ef7c6104da6222",
+      "role": "Graphique synthétique, source de formation non attestée"
+    },
+    {
+      "path": "mt5/Include/SMV/Config.mqh",
+      "bytes": 4566,
+      "sha256": "873095ca8b58356b11fc65e4a0a1cb3c9eb03480ca25ae7c7c2b553f1e9814a3",
+      "role": "Implémentation ou configuration"
+    },
+    {
+      "path": "mt5/Include/SMV/Context.mqh",
+      "bytes": 3168,
+      "sha256": "69066691a7d1edbd8962f31f778115ca99bec0106407f75e8d8fb4f640d40e0b",
+      "role": "Implémentation ou configuration"
+    },
+    {
+      "path": "mt5/Include/SMV/Draw.mqh",
+      "bytes": 13357,
+      "sha256": "e94316ac02600fa71d68c2e1e600d4d636458bca09c2e81a7f134c2fec244460",
+      "role": "Implémentation ou configuration"
+    },
+    {
+      "path": "mt5/Include/SMV/Engine.mqh",
+      "bytes": 3679,
+      "sha256": "135f59f3ab20ab7d1843db7b076217d344f845967c4ff600536fd1c4cccb8bc3",
+      "role": "Implémentation ou configuration"
+    },
+    {
+      "path": "mt5/Include/SMV/Liquidity.mqh",
+      "bytes": 6235,
+      "sha256": "7bbb3eca5649ee7f9e19280f6d0e29a05b1fa133630ab786d2137e8f6d1655f2",
+      "role": "Implémentation ou configuration"
+    },
+    {
+      "path": "mt5/Include/SMV/Pivots.mqh",
+      "bytes": 3236,
+      "sha256": "de5f172fe54f217c5d6563056c4aaf7377970b5b67f902fa27676af500ae476b",
+      "role": "Implémentation ou configuration"
+    },
+    {
+      "path": "mt5/Include/SMV/Ranges.mqh",
+      "bytes": 8612,
+      "sha256": "a8a463085b8e5afad376fd330b94beaee804d37fed3854315c112a492010105d",
+      "role": "Implémentation ou configuration"
+    },
+    {
+      "path": "mt5/Include/SMV/Setups.mqh",
+      "bytes": 10874,
+      "sha256": "8769a72247b848a1ca71d61426e29222f6d2b8ec6cb88716d4e899bc2ffb9f27",
+      "role": "Implémentation ou configuration"
+    },
+    {
+      "path": "mt5/Include/SMV/Structure.mqh",
+      "bytes": 8613,
+      "sha256": "88cc73e362090ec6a5f9fcca448797a42b4c1275f62e544a0907bbe90c17413a",
+      "role": "Implémentation ou configuration"
+    },
+    {
+      "path": "mt5/Include/SMV/Timing.mqh",
+      "bytes": 10474,
+      "sha256": "872333445ee21a1f06ee6ff2000caae23056d499b56079939fd97721fcb4b2f3",
+      "role": "Implémentation ou configuration"
+    },
+    {
+      "path": "mt5/Include/SMV/Types.mqh",
+      "bytes": 6587,
+      "sha256": "9c356722b6eb5c6fc2a2a2dfd06650fa510371295aad09cd6f279103422832cc",
+      "role": "Implémentation ou configuration"
+    },
+    {
+      "path": "mt5/Include/SMV/Zones.mqh",
+      "bytes": 11994,
+      "sha256": "a87d16c224a71ca6272eed2b4d9e6ca5746b3f54cd4d117b6990f8f0802ed5fd",
+      "role": "Implémentation ou configuration"
+    },
+    {
+      "path": "mt5/Indicators/SMV/SMV_Indicator.mq5",
+      "bytes": 20467,
+      "sha256": "f3bcc394fdce861bc13442845dc74fbad66ce61bda91b078adf2e9ff5acce29e",
+      "role": "Implémentation ou configuration"
+    },
+    {
+      "path": "mt5/README.md",
+      "bytes": 5369,
+      "sha256": "324f5688aa3f8275b2e50a251e64dc7acb2af544796d4911f6a2b60ee6b41e84",
+      "role": "Notice préexistante"
+    },
+    {
+      "path": "mt5/Scripts/SMV/SMV_ServerTimeCheck.mq5",
+      "bytes": 3000,
+      "sha256": "390360cad12bfc4c05356947de4088e0d1d42a7c358efbc90724ef538550b7cc",
+      "role": "Implémentation ou configuration"
+    },
+    {
+      "path": "render/__init__.py",
+      "bytes": 91,
+      "sha256": "b870bc90514c761a9e4d0e52f07436a31a40f1eb092b6b1b18eb7baeb2452107",
+      "role": "Implémentation ou configuration"
+    },
+    {
+      "path": "render/primitives.py",
+      "bytes": 4448,
+      "sha256": "50ba97e5c9403c0b4ead3374d3419c5c30724f28afe8e05ed23c0938e4a18982",
+      "role": "Implémentation ou configuration"
+    },
+    {
+      "path": "render/svg.py",
+      "bytes": 5912,
+      "sha256": "2a6ee25840d5500009226e2ce77ffb0463d35f427da5ae75c3ab5895bae76515",
+      "role": "Implémentation ou configuration"
+    },
+    {
+      "path": "research/marketdata.py",
+      "bytes": 2557,
+      "sha256": "41b42ee8fb7f908176a5e173a231915ed5ff5767bc3d357d7010bc4225311ded",
+      "role": "Script de recherche préexistant"
+    },
+    {
+      "path": "research/results_basic.json",
+      "bytes": 12795,
+      "sha256": "194980ba748c27de01bebbc084bb4668fb2873b53d741d468fee6a6748ee60b1",
+      "role": "Résultat dérivé, données brutes absentes"
+    },
+    {
+      "path": "research/results_nulls.json",
+      "bytes": 4558,
+      "sha256": "e75cf759a2131ef41fc7fc3ad2b228365549b6f6626453177ef39e40ff1c6e77",
+      "role": "Résultat dérivé, données brutes absentes"
+    },
+    {
+      "path": "research/results_outcomes.json",
+      "bytes": 20819,
+      "sha256": "9aad6814e6b9aac8c57b1a1c3b172066fdd99551bd09494caaf80bb63a5a7944",
+      "role": "Résultat dérivé, données brutes absentes"
+    },
+    {
+      "path": "research/results_sessions.json",
+      "bytes": 3345,
+      "sha256": "ba4ba8601cabf1d76c7a0ba8e8d3cac04343dc1ba604a5e90e2d9e580637b54c",
+      "role": "Résultat dérivé, données brutes absentes"
+    },
+    {
+      "path": "research/results_setups.json",
+      "bytes": 107501,
+      "sha256": "1d729df11e7a45709a9b8efbc899c5a0407083fd74ae654e0a6fddab968006ab",
+      "role": "Résultat dérivé, données brutes absentes"
+    },
+    {
+      "path": "research/study_basic.py",
+      "bytes": 5085,
+      "sha256": "b8ed18005a25ebd3d4d4af49f705815b3e727b0f4f877ca09057a0d21b1d7261",
+      "role": "Script de recherche préexistant"
+    },
+    {
+      "path": "research/study_nulls.py",
+      "bytes": 1988,
+      "sha256": "ee282ca8ece5cc55eb8940e76b731cc6ac5f24b65922bd0078ec7307f1254ad8",
+      "role": "Script de recherche préexistant"
+    },
+    {
+      "path": "research/study_outcomes.py",
+      "bytes": 11642,
+      "sha256": "2c94808138883a8be025000d189888f4f7bd61f8841575f67b1f01d814d0bd9c",
+      "role": "Script de recherche préexistant"
+    },
+    {
+      "path": "research/study_sessions.py",
+      "bytes": 1624,
+      "sha256": "f46c40896080163749f00683c0e45eab9514e2256c449ad83714112e740edb5b",
+      "role": "Script de recherche préexistant"
+    },
+    {
+      "path": "research/study_setups.py",
+      "bytes": 5086,
+      "sha256": "ad28ae57f17e236de5a3862e79bf74e43fba5c0273109a3a66509bab259925f8",
+      "role": "Script de recherche préexistant"
+    },
+    {
+      "path": "smv/__init__.py",
+      "bytes": 303,
+      "sha256": "263d900ebb220858c3dbdc4b9e420515950fc1989b392ee52067e6443b067ac5",
+      "role": "Implémentation ou configuration"
+    },
+    {
+      "path": "smv/candles.py",
+      "bytes": 2162,
+      "sha256": "630f3adf2919735b509b61ec57c692bc9cb876890361a6f808e6a3c2afe05d8b",
+      "role": "Implémentation ou configuration"
+    },
+    {
+      "path": "smv/config.py",
+      "bytes": 6641,
+      "sha256": "5757cee729b0704094224452d08c8944e5a30a19ac9decfff6496379bdad3ba2",
+      "role": "Implémentation ou configuration"
+    },
+    {
+      "path": "smv/context.py",
+      "bytes": 2381,
+      "sha256": "5f67c879bba3e99177bc86897832422219cc4005bf1d4551f4021dcaf2cf874e",
+      "role": "Implémentation ou configuration"
+    },
+    {
+      "path": "smv/data.py",
+      "bytes": 3447,
+      "sha256": "574a7461bf783adee4cdc0f685393a30d304e889c36ea371337f5cd296a14f0b",
+      "role": "Implémentation ou configuration"
+    },
+    {
+      "path": "smv/engine.py",
+      "bytes": 3858,
+      "sha256": "fab29d7edd1fbd739d593670755c1f4a77c03225fcec14bd1ea222b3effe8277",
+      "role": "Implémentation ou configuration"
+    },
+    {
+      "path": "smv/liquidity.py",
+      "bytes": 5244,
+      "sha256": "55ce929995fbf8e1adaefc7915256abfc37218808d5c8f0efd0cf83f7a009e69",
+      "role": "Implémentation ou configuration"
+    },
+    {
+      "path": "smv/mtf.py",
+      "bytes": 3487,
+      "sha256": "9eb57d956dd49ffb16c54302b1ab9d92c15118f22fcdd1ff5a2a757a8d7a0645",
+      "role": "Implémentation ou configuration"
+    },
+    {
+      "path": "smv/pivots.py",
+      "bytes": 2348,
+      "sha256": "a678bad4435da83ef0e0f1dcaece37cc239b5796d156aa99b94212a38d5c0dc3",
+      "role": "Implémentation ou configuration"
+    },
+    {
+      "path": "smv/ranges.py",
+      "bytes": 7448,
+      "sha256": "05a8151837e08bd1b572faabe4fd3825865cbf7c611990d07d762a4243a5809f",
+      "role": "Implémentation ou configuration"
+    },
+    {
+      "path": "smv/setups.py",
+      "bytes": 9122,
+      "sha256": "31a4531a374f00609cc66fa362101d3d366eeaaafd1b26fd71ca0ab8b1760110",
+      "role": "Implémentation ou configuration"
+    },
+    {
+      "path": "smv/structure.py",
+      "bytes": 8085,
+      "sha256": "712d208d179b31ca80fe4e7034ff609884873a171fef234d869611569f4cf32b",
+      "role": "Implémentation ou configuration"
+    },
+    {
+      "path": "smv/timing.py",
+      "bytes": 5972,
+      "sha256": "1c2059f200ed10ab432f4c2474d8bddcd0971e3b70db2f3f3f6d78125fe4b578",
+      "role": "Implémentation ou configuration"
+    },
+    {
+      "path": "smv/types.py",
+      "bytes": 4166,
+      "sha256": "4e08a700c29f449089d0616905b5a7dbc1f78e548614278fa23d6ab33d7c7244",
+      "role": "Implémentation ou configuration"
+    },
+    {
+      "path": "smv/zones.py",
+      "bytes": 9014,
+      "sha256": "8aba9d7dcb0093cf6388e4a763fae874d5495b1a6733e0111cebdb93111165eb",
+      "role": "Implémentation ou configuration"
+    },
+    {
+      "path": "tests/conftest.py",
+      "bytes": 88,
+      "sha256": "0916d0f7553f07836fb4aab59c82126e4230b65bec545cfa266cf5e370291cee",
+      "role": "Test préexistant"
+    },
+    {
+      "path": "tests/helpers.py",
+      "bytes": 509,
+      "sha256": "d5b754c338face3d677e05e7bcff56178945ff961fb4648f72012b09d83924b1",
+      "role": "Test préexistant"
+    },
+    {
+      "path": "tests/test_liquidity.py",
+      "bytes": 3294,
+      "sha256": "bb3aec66eb18ad1502d1e1bb5336db2e806ac3ec858d5fb9048c6801bace6901",
+      "role": "Test préexistant"
+    },
+    {
+      "path": "tests/test_mt5_parity.py",
+      "bytes": 3011,
+      "sha256": "78096d6387f8a708199ae7790d947c5ce1e9b2492df511fc6b370f92a66e4259",
+      "role": "Test préexistant"
+    },
+    {
+      "path": "tests/test_mtf.py",
+      "bytes": 1664,
+      "sha256": "343a43937837f59325efce334dd824a6030243f458012795128194258fa8752f",
+      "role": "Test préexistant"
+    },
+    {
+      "path": "tests/test_no_lookahead.py",
+      "bytes": 2050,
+      "sha256": "0f30aeed8741ec53f16d36dc9b5db766692f2a3e3290c491d8880ea9586d7fd7",
+      "role": "Test préexistant"
+    },
+    {
+      "path": "tests/test_pivots.py",
+      "bytes": 1181,
+      "sha256": "4ffd1ecd38447236918d9d642141441f3c3c2a251b4c714e58ac624edea2ea1c",
+      "role": "Test préexistant"
+    },
+    {
+      "path": "tests/test_ranges.py",
+      "bytes": 2949,
+      "sha256": "f04d4801ee2400aa3aceae893fa7c1f86ee5592d949a521b1c701a584a789ee0",
+      "role": "Test préexistant"
+    },
+    {
+      "path": "tests/test_setups.py",
+      "bytes": 7867,
+      "sha256": "138189cefed3c3a069e5ee5284619de760daae2e9212496065ae0f81c1271ea9",
+      "role": "Test préexistant"
+    },
+    {
+      "path": "tests/test_structure.py",
+      "bytes": 4097,
+      "sha256": "bbd4121f3215f88120f328facc9f99a901a9269ca3aa319188676ec7903dfe66",
+      "role": "Test préexistant"
+    },
+    {
+      "path": "tests/test_timing.py",
+      "bytes": 3333,
+      "sha256": "40939d5f814dc5081aa9c15c8d91510230b27a11ff907de6e4408c277242d578",
+      "role": "Test préexistant"
+    },
+    {
+      "path": "tests/test_zones.py",
+      "bytes": 4209,
+      "sha256": "99f1998f850c0ddc6aed549a617d4df4554a142ef98bce8255bd61bc29a705a9",
+      "role": "Test préexistant"
+    },
+    {
+      "path": "tools/mt5_parity.py",
+      "bytes": 7061,
+      "sha256": "cfcbcfa49162472730069ddeeb108b3fe8b2b7a1fd59add074fb521ae06e5d6e",
+      "role": "Implémentation ou configuration"
+    },
+    {
+      "path": "tools/run_smv.py",
+      "bytes": 2454,
+      "sha256": "055560a5ae592d54e1c4da23f41a11c593bd586ae4f6d316da3bcd7cb6c71065",
+      "role": "Implémentation ou configuration"
+    }
+  ]
+}

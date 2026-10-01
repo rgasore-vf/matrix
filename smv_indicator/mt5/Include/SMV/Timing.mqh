@@ -194,6 +194,11 @@ struct SmvMonthState
    double low;
    int    lo_idx;
    bool   done;
+   bool   has_data;
+   datetime first;
+   datetime last;
+   bool   continuous;
+   int    excluded;
   };
 
 class CSmvMonthWindow
@@ -213,6 +218,12 @@ public:
       int y = 0, m = 0;
       if(la.day >= 26) { y = la.mon == 12 ? la.year + 1 : la.year; m = la.mon == 12 ? 1 : la.mon + 1; }
       else if(la.day <= 9) { y = la.year; m = la.mon; }
+      if(m == 0)
+        {
+         TimeToStruct(bar.t_close - 1 + TzOffset(TZ_PARIS, bar.t_close - 1), la);
+         if(la.day >= 26) { y = la.mon == 12 ? la.year + 1 : la.year; m = la.mon == 12 ? 1 : la.mon + 1; }
+         else if(la.day <= 9) { y = la.year; m = la.mon; }
+        }
       if(m > 0)
         {
          int k = Find(y, m);
@@ -221,17 +232,27 @@ public:
             ArrayResize(st, ns + 1, 64);
             k = ns++;
             st[k].year = y; st[k].mon = m; st[k].done = false;
-            st[k].high = bar.high; st[k].hi_idx = i; st[k].low = bar.low; st[k].lo_idx = i;
+            st[k].has_data = false; st[k].first = 0; st[k].last = 0;
+            st[k].continuous = true; st[k].excluded = 0;
+            st[k].high = 0; st[k].low = 0; st[k].hi_idx = 0; st[k].lo_idx = 0;
            }
-         else
+         if(!st[k].done)
            {
-            if(bar.high > st[k].high) { st[k].high = bar.high; st[k].hi_idx = i; }
-            if(bar.low < st[k].low)   { st[k].low = bar.low; st[k].lo_idx = i; }
+            if(bar.t_open < WindowStart(y, m) || bar.t_close > WindowEnd(y, m)) st[k].excluded++;
+            else
+              {
+               if(!st[k].has_data) st[k].first = bar.t_open;
+               else if(st[k].last != bar.t_open) st[k].continuous = false;
+               st[k].last = bar.t_close;
+               if(!st[k].has_data || bar.high > st[k].high) { st[k].high = bar.high; st[k].hi_idx = i; }
+               if(!st[k].has_data || bar.low < st[k].low) { st[k].low = bar.low; st[k].lo_idx = i; }
+               st[k].has_data = true;
+              }
            }
         }
       for(int k = 0; k < ns; k++)
         {
-         if(st[k].done || bar.t_close < WindowEnd(st[k].year, st[k].mon)) continue;
+         if(st[k].done || !st[k].has_data || bar.t_close < WindowEnd(st[k].year, st[k].mon)) continue;
          st[k].done = true;
          string month = StringFormat("%d-%02d", st[k].year, st[k].mon);
          string s = "";
@@ -240,6 +261,10 @@ public:
          KvI(s, "high_index", st[k].hi_idx);
          KvD(s, "low", st[k].low);
          KvI(s, "low_index", st[k].lo_idx);
+         bool complete = st[k].first == WindowStart(st[k].year, st[k].mon) &&
+                         st[k].last == WindowEnd(st[k].year, st[k].mon) && st[k].continuous && st[k].excluded == 0;
+         KvS(s, "coverage", complete ? "complete" : "partial");
+         KvI(s, "excluded_boundary_bars", st[k].excluded);
          log.Add(K_MONTH_WINDOW, i, (st[k].hi_idx < st[k].lo_idx ? st[k].hi_idx : st[k].lo_idx), SMV_NONE, st[k].high, "MW:" + month, s);
         }
      }
@@ -254,6 +279,12 @@ private:
      {
       MqlDateTime t; ZeroMemory(t);
       t.year = y; t.mon = m; t.day = 10;
+      return LocalToUtc(StructToTime(t), TZ_PARIS);
+     }
+   datetime          WindowStart(const int y, const int m) const
+     {
+      MqlDateTime t; ZeroMemory(t);
+      t.year = m == 1 ? y - 1 : y; t.mon = m == 1 ? 12 : m - 1; t.day = 26;
       return LocalToUtc(StructToTime(t), TZ_PARIS);
      }
   };

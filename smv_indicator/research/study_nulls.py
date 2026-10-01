@@ -22,13 +22,21 @@ from study_outcomes import study_structure, study_zones  # noqa: E402
 
 def shuffled(bars, seed):
     rng = random.Random(seed)
-    parts = [(b.close - b.open, b.high - max(b.open, b.close), min(b.open, b.close) - b.low) for b in bars]
+    if not bars:
+        return []
+    # Keep the first candle as the initial condition. Permute every subsequent
+    # opening gap together with its body, wicks and volume; this preserves TR.
+    parts = [(b.open - bars[i - 1].close, b.close - b.open,
+              b.high - max(b.open, b.close), min(b.open, b.close) - b.low, b.volume)
+             for i, b in enumerate(bars) if i > 0]
     rng.shuffle(parts)
-    out = []
-    p = bars[0].open
-    for i, (dc, uw, lw) in enumerate(parts):
-        o, c = p, p + dc
-        out.append(Bar(i, bars[i].t_open, bars[i].t_close, o, max(o, c) + uw, min(o, c) - lw, c))
+    b = bars[0]
+    out = [Bar(0, b.t_open, b.t_close, b.open, b.high, b.low, b.close, b.volume)]
+    p = b.close
+    for i, (gap, dc, uw, lw, volume) in enumerate(parts, 1):
+        o = p + gap
+        c = o + dc
+        out.append(Bar(i, bars[i].t_open, bars[i].t_close, o, max(o, c) + uw, min(o, c) - lw, c, volume))
         p = c
     return out
 

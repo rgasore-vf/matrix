@@ -9,6 +9,8 @@ Chaque paramètre indique sa provenance :
 from __future__ import annotations
 
 from dataclasses import dataclass, field, fields
+from math import isfinite
+from zoneinfo import ZoneInfo, ZoneInfoNotFoundError
 
 PROVENANCE = {
     "pivot_left": ("RECHERCHE+MESURE", "R-ST-02", "fractal de Williams ; distribution des jambes identique de M15 à D1 (Q-16)"),
@@ -89,8 +91,28 @@ class Config:
     sessions: tuple = field(default=SESSIONS_REPO)
 
     def __post_init__(self) -> None:
-        if self.pivot_left < 1 or self.pivot_right < 1:
-            raise ValueError("pivot_left et pivot_right doivent être >= 1")
+        for name in ("pivot_left", "pivot_right", "range_accept_bars", "test_max_bars",
+                     "setup_expiry_bars", "atr_len", "odf_min_len", "session_window_min"):
+            v = getattr(self, name)
+            if type(v) is not int or v < 1:
+                raise ValueError(f"{name} doit être un entier >= 1")
+        for name in ("bm_search_back", "doji_window", "eq_max_gap"):
+            v = getattr(self, name)
+            if type(v) is not int or v < 0:
+                raise ValueError(f"{name} doit être un entier >= 0")
+        if type(self.rotation_legs) is not int or self.rotation_legs < 2:
+            raise ValueError("rotation_legs doit être un entier >= 2")
+        for name in ("bos_eps", "eq_tol_atr", "sl_max_atr", "bm_body_min",
+                     "doji_body_max", "liqsig_wick_min"):
+            v = getattr(self, name)
+            if isinstance(v, bool) or not isinstance(v, (int, float)) or not isfinite(v):
+                raise ValueError(f"{name} doit être un nombre fini")
+        if self.bos_eps < 0 or self.eq_tol_atr < 0:
+            raise ValueError("bos_eps et eq_tol_atr doivent être >= 0")
+        if self.bm_range_atr is not None and (isinstance(self.bm_range_atr, bool) or
+                not isinstance(self.bm_range_atr, (int, float)) or
+                not isfinite(self.bm_range_atr) or self.bm_range_atr <= 0):
+            raise ValueError("bm_range_atr doit être None ou un nombre fini > 0")
         if self.major_mode not in ("A", "B"):
             raise ValueError("major_mode doit valoir 'A' ou 'B'")
         if self.zone_proximal not in ("body", "wick"):
@@ -103,13 +125,19 @@ class Config:
             v = getattr(self, name)
             if not 0.0 <= v <= 1.0:
                 raise ValueError(f"{name} doit être dans [0, 1]")
-        for name in ("range_accept_bars", "test_max_bars", "setup_expiry_bars", "atr_len"):
-            if getattr(self, name) < 1:
-                raise ValueError(f"{name} doit être >= 1")
-        if self.rotation_legs < 2:
-            raise ValueError("rotation_legs doit être >= 2")
         if self.sl_max_atr <= 0:
             raise ValueError("sl_max_atr doit être > 0")
+        for name in ("enable_setups", "enable_imbalance", "enable_sessions"):
+            if type(getattr(self, name)) is not bool:
+                raise ValueError(f"{name} doit être booléen")
+        try:
+            ZoneInfo(self.timezone)
+        except (ZoneInfoNotFoundError, TypeError, ValueError) as exc:
+            raise ValueError("timezone doit être un fuseau IANA valide") from exc
+        for session in self.sessions:
+            if (len(session) != 3 or not isinstance(session[0], str) or
+                    any(type(h) is not int or not 0 <= h <= 23 for h in session[1:])):
+                raise ValueError("sessions exige (nom, heure_hiver, heure_été), heures dans [0, 23]")
 
     def describe(self) -> list[tuple[str, object, str, str, str]]:
         """(nom, valeur, provenance, règle, note) pour chaque paramètre documenté."""

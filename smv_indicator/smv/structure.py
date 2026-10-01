@@ -106,19 +106,34 @@ class StructureTracker:
             )
             self._start_leg(-d, prot=new_prot, start=new_prot[1], i=i)
             return [ev]
+        # The old protected wick and a continuation break are independent facts.
+        events: list[Event] = []
+        wick = bar.low if d == BULL else bar.high
+        crossed = wick < self.prot[0] if d == BULL else wick > self.prot[0]
+        if crossed and self.prot_swept_at is None:
+            self.prot_swept_at = i
+            events.append(Event(Kind.PROTECTED_SWEEP, i, self.prot[1], -d, self.prot[0],
+                                f"PSW:{i}", {"trend": d}))
         # BOS de continuation : clôture au-delà du dernier extrême fixé.
         if self.ref is not None and self._beyond(bar.close, self.ref[0], d):
             ref = self.ref
             origin = self._ext(-d, ref[1], i)
-            events = [Event(
+            events.append(Event(
                 Kind.BOS_CONTINUATION, i, ref[1], d, ref[0], f"BOS:{i}",
                 {"origin_index": origin[1], "origin_price": origin[0],
                  "major_mode": self.cfg.major_mode},
-            )]
+            ))
             # R-LQ-05 : pivots du retracement qui n'ont pas donné le BOS.
             side = "L" if d == BULL else "H"
             plist = self.pivots.lows if side == "L" else self.pivots.highs
-            in_retr = [p for p in plist if ref[1] < p.index <= i and p.confirm_index <= i]
+            # Pivots are ordered by anchor: stop once the retracement is left.
+            in_retr = []
+            for p in reversed(plist):
+                if p.index <= ref[1]:
+                    break
+                if p.index <= i and p.confirm_index <= i:
+                    in_retr.append(p)
+            in_retr.reverse()
             if self.cfg.major_mode == "A":
                 idm = [p for p in in_retr if p.index != origin[1]]
                 new_prot = origin
@@ -138,16 +153,7 @@ class StructureTracker:
             self.prot_swept_at = None
             self._last_leg_pivot = None
             return events
-        # Prise de liquidité du niveau protégé sans clôture au-delà (R-ST-05).
-        wick = bar.low if d == BULL else bar.high
-        crossed = wick < self.prot[0] if d == BULL else wick > self.prot[0]
-        if crossed and self.prot_swept_at is None:
-            self.prot_swept_at = i
-            return [Event(
-                Kind.PROTECTED_SWEEP, i, self.prot[1], -d, self.prot[0], f"PSW:{i}",
-                {"trend": d},
-            )]
-        return []
+        return events
 
     def _integrate_pivot(self, i: int, pv: Pivot) -> list[Event]:
         d = self.trend
@@ -160,9 +166,8 @@ class StructureTracker:
         if is_extreme:
             self.ref = (pv.price, pv.index)
         # R-ST-07 : premier sommet plus bas (resp. creux plus haut) de la jambe.
-        prev = self._last_leg_pivot
-        if prev is not None and not self.fail_done:
-            failed = pv.price < prev.price if d == BULL else pv.price > prev.price
+        if not self.fail_done:
+            failed = pv.label == ("LH" if d == BULL else "HL")
             if failed:
                 self.fail_done = True
                 climax = self._ext(d, self.leg_start, pv.index)        # BC (hausse) / SC (baisse)

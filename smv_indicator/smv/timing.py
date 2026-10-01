@@ -5,7 +5,7 @@ Les bougies doivent porter des horodatages avec fuseau (UTC recommandé).
 """
 from __future__ import annotations
 
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, timezone
 from zoneinfo import ZoneInfo
 
 from .config import SESSIONS_MEASURED, Config
@@ -49,13 +49,14 @@ class SessionMarker:
         bar = self.ctx.bars[i]
         if bar.t_open.tzinfo is None:
             raise ValueError("les sessions exigent des horodatages avec fuseau")
-        a, b = bar.t_open, bar.t_close
+        a, b = bar.t_open.astimezone(timezone.utc), bar.t_close.astimezone(timezone.utc)
         out: list[Event] = []
         day = (a - timedelta(days=1)).date()
         while day <= (b + timedelta(days=1)).date():
             for name, start in self._starts(day):
-                if a <= start < b:
-                    end = start + timedelta(minutes=self.cfg.session_window_min)
+                known = start.astimezone(timezone.utc)
+                if a <= known < b:
+                    end = known + timedelta(minutes=self.cfg.session_window_min)
                     loc = start.astimezone(self.tz)
                     out.append(Event(
                         Kind.SESSION, i, i, NONE, bar.open, f"SES:{name}:{start.isoformat()}",
@@ -92,28 +93,48 @@ class MonthWindow:
     def _end(self, key: tuple[int, int]) -> datetime:
         return datetime(key[0], key[1], 10, 0, tzinfo=self.tz)
 
+    def _start(self, key: tuple[int, int]) -> datetime:
+        y, m = (key[0] - 1, 12) if key[1] == 1 else (key[0], key[1] - 1)
+        return datetime(y, m, 26, 0, tzinfo=self.tz)
+
     def update(self, i: int) -> list[Event]:
         bar = self.ctx.bars[i]
         if bar.t_open.tzinfo is None:
             raise ValueError("la fenêtre mensuelle exige des horodatages avec fuseau")
-        a = bar.t_open.astimezone(self.tz)
-        b = bar.t_close.astimezone(self.tz)
+        a = bar.t_open.astimezone(timezone.utc)
+        b = bar.t_close.astimezone(timezone.utc)
         out: list[Event] = []
-        key = self._window_for(a)
+        key = self._window_for(a.astimezone(self.tz)) or self._window_for(
+            (b - timedelta(microseconds=1)).astimezone(self.tz))
         if key is not None:
-            st = self.state.setdefault(key, {"high": None, "low": None, "done": False})
-            if st["high"] is None or bar.high > st["high"][0]:
-                st["high"] = (bar.high, i)
-            if st["low"] is None or bar.low < st["low"][0]:
-                st["low"] = (bar.low, i)
+            st = self.state.setdefault(key, {"high": None, "low": None, "done": False,
+                                            "first": None, "last": None, "continuous": True,
+                                            "excluded": 0})
+            if not st["done"]:
+                if a < self._start(key).astimezone(timezone.utc) or b > self._end(key).astimezone(timezone.utc):
+                    # OHLC cannot locate an extreme inside a partial candle.
+                    st["excluded"] += 1
+                else:
+                    if st["first"] is None:
+                        st["first"] = a
+                    elif st["last"] != a:
+                        st["continuous"] = False
+                    st["last"] = b
+                    if st["high"] is None or bar.high > st["high"][0]:
+                        st["high"] = (bar.high, i)
+                    if st["low"] is None or bar.low < st["low"][0]:
+                        st["low"] = (bar.low, i)
         for k, st in self.state.items():
-            if not st["done"] and st["high"] is not None and b >= self._end(k):
+            if not st["done"] and st["high"] is not None and b >= self._end(k).astimezone(timezone.utc):
                 st["done"] = True
                 out.append(Event(
                     Kind.MONTH_WINDOW, i, min(st["high"][1], st["low"][1]), NONE, st["high"][0],
                     f"MW:{k[0]}-{k[1]:02d}",
                     {"month": f"{k[0]}-{k[1]:02d}", "high": st["high"][0], "high_index": st["high"][1],
-                     "low": st["low"][0], "low_index": st["low"][1]},
+                     "low": st["low"][0], "low_index": st["low"][1],
+                     "coverage": "complete" if (st["first"] == self._start(k).astimezone(timezone.utc) and
+                         st["last"] == self._end(k).astimezone(timezone.utc) and st["continuous"] and st["excluded"] == 0) else "partial",
+                     "excluded_boundary_bars": st["excluded"]},
                 ))
         return out
 

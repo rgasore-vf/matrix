@@ -19,6 +19,7 @@ Code de sortie 0 si les journaux sont identiques, 1 sinon.
 from __future__ import annotations
 
 import argparse
+import math
 import os
 import sys
 from dataclasses import fields
@@ -123,6 +124,8 @@ def same_value(key: str, py, mt: str) -> bool:
             m = float(mt)
         except ValueError:
             return False
+        if not math.isfinite(m) or not math.isfinite(py):
+            return False
         tol = ROUNDED_TOL.get(key)
         if tol is not None:
             return abs(m - py) <= tol * 0.51 + 1e-12
@@ -137,7 +140,8 @@ def compare(py_log: list[Event], mt_rows: list[tuple], max_report: int = 20) -> 
         e = py_log[k]
         kind, confirm, anchor, d, price, ref, data = mt_rows[k]
         head = (e.kind, e.confirm_index, e.anchor_index, e.direction, e.ref)
-        if head != (kind, confirm, anchor, d, ref) or abs(e.price - price) > 1e-9 * max(1.0, abs(e.price)):
+        if (head != (kind, confirm, anchor, d, ref) or not math.isfinite(price) or
+                not math.isfinite(e.price) or abs(e.price - price) > 1e-9 * max(1.0, abs(e.price))):
             errs.append(f"#{k}: python={head + (e.price,)} mt5={(kind, confirm, anchor, d, ref, price)}")
         else:
             keys = set(e.data) | set(data)
