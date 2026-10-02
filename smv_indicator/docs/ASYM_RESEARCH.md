@@ -122,3 +122,26 @@ La queue droite est épaisse, comme dans un suivi de tendance. Un tel profil ne 
    - sorties suiveuses qui laissent courir la queue droite (MFE > 8 R dans 10 % des cas de B) ;
    - évaluation au niveau du portefeuille.
 3. **Données :** des cotations avec écart réel (ticks) pour mesurer les coûts au lieu de les supposer.
+
+## 9. Protocole du coffre-fort et critères pré-enregistrés
+
+Rédigé le 2 octobre 2026, **avant toute lecture des données postérieures à mars 2022**. Ces critères ne seront pas modifiés après réception des résultats.
+
+**Outil.** EA `mt5/Experts/ASYM/ASYM_Vault.mq5` : règles figées, sans paramètre de stratégie réglable. Il produit deux mesures :
+- **shadow** : simulation bougie par bougie avec exactement les règles de la recherche. Le rejeu Python (`research/asym/vault_replay.py check`) reproduit à l'identique la matrice de recherche, avec zéro écart sur B (EURUSD, XAUUSD) et sur C (EURUSD, GBPJPY). Le code MQL5 suit ce rejeu ligne à ligne ;
+- **exécution réelle** du testeur : écart, glissement, commission et swap réels.
+
+Le rejeu de parité (`vault_replay.py parity`) recalcule les signaux à partir des bougies exportées par l'EA et vérifie que le shadow MT5 est identique.
+
+**Mesure principale.** Espérance shadow au TP figé (3 R pour B et C), nette du coût nominal de la recherche. Elle porte sur tous les instruments regroupés, pour les signaux du 1er mars 2022 à la fin des données.
+
+| Verdict | Condition |
+|---|---|
+| REJETÉ | espérance nette ≤ 0 |
+| EXPLORATOIRE (inchangé) | espérance nette > 0, sans remplir les conditions suivantes |
+| PROMETTEUR | espérance nette > 0 ; au moins 7 instruments sur 12 positifs ; au moins 3 années sur 5 positives (2022 partielle à 2026 partielle) ; espérance de l'exécution réelle (R monétaire, tous frais) > 0 |
+| ROBUSTE | PROMETTEUR, et borne basse de l'IC 95 % (rééchantillonnage de jours) > 0, et espérance nette > 0 avec coûts doublés |
+
+**Puissance attendue (estimation).** Environ 400 signaux par an pour B, soit 1 800 environ sur le coffre-fort. L'écart-type d'un trade à 3 R est d'environ 1,8 R, d'où une erreur standard d'environ 0,04 R. Seul un effet au moins égal à celui du développement (+0,09 R) pourrait donc atteindre ROBUSTE. Pour C (environ 450 signaux), l'erreur standard est d'environ 0,09 R : C ne peut guère dépasser PROMETTEUR, même s'il est réel.
+
+**Interdit après ouverture.** Ne pas modifier les règles, ne pas filtrer les instruments ou les heures, ne pas choisir le TP a posteriori. Les R pour TP 1 à 4 sont journalisés à titre descriptif seulement.

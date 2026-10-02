@@ -89,3 +89,48 @@ Points sensibles à vérifier en priorité en cas d'écart : ordre des événeme
 Configuration étudiée dans `docs/CALIBRATION.md` §7 : `InpGoldenSchemaOnly = true`, `InpFilterPD = true`, `InpHtf = PERIOD_H4`, M15. Les tampons 2 à 5 ne portent alors que les setups qui passent les deux filtres ; les setups dessinés sur le graphique ne sont pas filtrés par le premium/discount.
 
 Différences attendues avec l'étude Python : les bougies H4 du courtier sont alignées sur l'heure serveur, alors que l'étude agrège des H4 alignées sur UTC ; les coûts et l'exécution sont ceux du testeur. Pour une validation honnête, utiliser de préférence la période **postérieure à mars 2022**, jamais utilisée dans l'étude, et fixer les réglages avant de lancer le test.
+
+## 8. EA du coffre-fort : `Experts/ASYM/ASYM_Vault.mq5`
+
+Il teste les candidats figés A, B et C de `docs/ASYM_RESEARCH.md` sans aucun réglage de stratégie. Les critères de verdict sont fixés d'avance (§9 du même document).
+
+> **Non compilé ici** (MetaEditor indisponible). Compiler avec F7 et signaler toute erreur avec son message exact.
+
+**Installation.**
+- Copier `Experts/ASYM/ASYM_Vault.mq5` vers `MQL5/Experts/ASYM/`.
+- Copier `Include/SMV/*.mqh` vers `MQL5/Include/SMV/`. L'EA utilise l'ATR de Wilder et la structure du moteur SMV.
+
+**Réglages du testeur (identiques pour tous les tests).**
+
+| Réglage | Valeur |
+|---|---|
+| Expert | `ASYM\ASYM_Vault` |
+| Symbole, période | le symbole testé ; période du graphique indifférente (l'EA lit H4 pour A/B, D1 pour C) |
+| Dates | du **01/01/2021** à aujourd'hui. Avant `InpTradeFrom` = 01/03/2022, l'EA ne fait que chauffer l'ATR et la structure. |
+| Modélisation | **Chaque tick basé sur des ticks réels** (écarts réels). À défaut : « Tous les ticks », en le signalant. |
+| Dépôt | 10 000 USD, risque 1 %. Avec 500 $, le lot minimal fausse la taille sur l'or ; les R du journal n'en dépendent pas. |
+| Compte | **hedging** (positions simultanées, comme dans la recherche). En netting, l'EA ignore en réel les signaux qui se chevauchent ; le shadow les garde. |
+| Agents | **locaux uniquement** : les journaux sont écrits dans le dossier commun de la machine, pas sur le réseau MQL5 Cloud. |
+
+**Douze instruments en une fois.** Graphique EURUSD, onglet *Paramètres* :
+- `InpSymbolIdx` de 0 à 11, pas de 1 ;
+- optimisation « Algorithme complet », sans forward.
+
+`InpSymbolSuffix` ajoute le suffixe du courtier (par exemple `.m`). Faire une passe pour `InpStrategy = B`, puis une pour `C`. A est inclus dans le shadow de B (colonne `r_2`).
+
+**Journaux** : `…/MetaQuotes/Terminal/Common/Files/ASYM/` (*Fichier > Ouvrir le dossier des données*, remonter d'un niveau, puis `Common/Files`).
+
+| Fichier | Contenu |
+|---|---|
+| `*_shadow.csv` | un signal par ligne : R pour TP 1 à 4 selon les règles de la recherche, MFE, MAE, temps du stop, coût de recherche et écart au signal en R |
+| `*_trades.csv` | exécution réelle : prix prévu et prix obtenu, glissement en R, écart, raison de sortie (sl, tp, timeout), R prix, R monétaire après commission et swap, MFE, MAE |
+| `*_signals.csv` | contexte de chaque signal et action prise (ouvert, ignoré, erreur) |
+| `*_bars.csv` | bougies transmises au moteur (contrôle de parité avec Python) |
+| `*_log.csv` | paramètres, caractéristiques du symbole et du compte, avertissements, résumé final |
+
+**Retour.** Envoyer tout le dossier `ASYM` compressé, avec si possible le rapport HTML du testeur. Analyse :
+
+```bash
+python research/asym/vault_report.py dossier_ASYM resultats.json
+python research/asym/vault_replay.py parity B dossier_ASYM/B_..._EURUSD_..._bars.csv dossier_ASYM/B_..._EURUSD_..._shadow.csv
+```
