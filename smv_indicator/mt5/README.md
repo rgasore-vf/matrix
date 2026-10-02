@@ -94,7 +94,7 @@ Différences attendues avec l'étude Python : les bougies H4 du courtier sont al
 
 Il teste les candidats figés A, B et C de `docs/ASYM_RESEARCH.md` sans aucun réglage de stratégie. Les critères de verdict sont fixés d'avance (§9 du même document).
 
-> **Non compilé ici** (MetaEditor indisponible). Compiler avec F7 et signaler toute erreur avec son message exact.
+> v1.10 : compilé et exécuté par l'utilisateur (MetaTester build 6231). La v1.00 provoquait une violation d'accès au 13/05/2025 dans le moteur SMV complet ; la v1.10 n'en garde que l'ATR, les pivots et la structure.
 
 **Installation.**
 - Copier `Experts/ASYM/ASYM_Vault.mq5` vers `MQL5/Experts/ASYM/`.
@@ -105,9 +105,9 @@ Il teste les candidats figés A, B et C de `docs/ASYM_RESEARCH.md` sans aucun r�
 | Réglage | Valeur |
 |---|---|
 | Expert | `ASYM\ASYM_Vault` |
-| Symbole, période | le symbole testé ; période du graphique indifférente (l'EA lit H4 pour A/B, D1 pour C) |
+| Symbole, période | le symbole testé ; graphique **H4** pour A et B, **D1** pour C (une période de graphique supérieure à celle de la stratégie est refusée, surtout en mode « prix d'ouverture ») |
 | Dates | du **01/01/2021** à aujourd'hui. Avant `InpTradeFrom` = 01/03/2022, l'EA ne fait que chauffer l'ATR et la structure. |
-| Modélisation | **Chaque tick basé sur des ticks réels** (écarts réels). À défaut : « Tous les ticks », en le signalant. |
+| Modélisation | **Chaque tick basé sur des ticks réels** (écarts réels). À défaut, « 1 minute OHLC ». Le shadow ne dépend pas de ce choix ; l'exécution réelle, si. |
 | Dépôt | 10 000 USD, risque 1 %. Avec 500 $, le lot minimal fausse la taille sur l'or ; les R du journal n'en dépendent pas. |
 | Compte | **hedging** (positions simultanées, comme dans la recherche). En netting, l'EA ignore en réel les signaux qui se chevauchent ; le shadow les garde. |
 | Agents | **locaux uniquement** : les journaux sont écrits dans le dossier commun de la machine, pas sur le réseau MQL5 Cloud. |

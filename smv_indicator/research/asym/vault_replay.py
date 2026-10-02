@@ -24,7 +24,30 @@ sys.path.insert(0, os.path.join(HERE, ".."))
 sys.path.insert(0, os.path.join(HERE, "..", ".."))
 
 from smv import Config, Engine  # noqa: E402
+from smv.context import Context  # noqa: E402
+from smv.pivots import PivotDetector  # noqa: E402
+from smv.structure import StructureTracker  # noqa: E402
 from smv.types import Bar  # noqa: E402
+
+
+class Core:
+    """Noyau minimal de l'EA v1.10 : contexte (ATR), pivots, structure. Les BOS de la structure
+    ne dépendent que du contexte et des pivots ; le contrôle « check » le vérifie contre la
+    matrice construite avec le moteur complet."""
+
+    def __init__(self, cfg, with_structure):
+        self.cfg = cfg
+        self.ctx = Context(cfg.atr_len)
+        self.pivots = PivotDetector(cfg, self.ctx)
+        self.structure = StructureTracker(cfg, self.ctx, self.pivots)
+        self.ws = with_structure
+
+    def on_bar(self, b):
+        self.ctx.append(b)
+        if not self.ws:
+            return []
+        newp, pev = self.pivots.update(b.index)
+        return pev + self.structure.update(b.index, newp)
 
 TPS = (1.0, 1.5, 2.0, 2.5, 3.0, 4.0)
 STRAT = {"A": ("h4", 96, 600, 2.0), "B": ("h4", 96, 600, 3.0), "C": ("d1", 20, 120, 3.0)}
@@ -69,12 +92,11 @@ class Shadow:
 def replay(bars, strat, start_index=0):
     """Renvoie la liste des shadows terminés (signaux à partir de start_index)."""
     tf, H, warm, _ = STRAT[strat]
-    eng = Engine(Config(zones_on="bos_origin"))
+    eng = Core(Config(zones_on="bos_origin"), tf == "d1")
     sh = []
     for b in bars:
         i = b.index
         evs = eng.on_bar(b)
-        eng.log.clear()
         for s in sh:
             s.update(i, b, H)
         if i < warm or i < start_index:

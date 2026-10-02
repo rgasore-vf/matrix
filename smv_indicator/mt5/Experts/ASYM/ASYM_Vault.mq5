@@ -23,11 +23,53 @@
 //| Fichiers : MQL5/Files (dossier commun) /ASYM/*.csv               |
 //+------------------------------------------------------------------+
 #property copyright   "smv_indicator"
-#property version     "1.00"
+#property version     "1.10"
 #property description "Coffre-fort ASYM : candidats figés A, B, C avec journal CSV (shadow + exécution réelle)."
 
 #include <Trade/Trade.mqh>
-#include <SMV/Engine.mqh>
+#include <SMV/Structure.mqh>
+
+//+------------------------------------------------------------------+
+//| Noyau minimal : ATR de Wilder, pivots et structure seulement.    |
+//| La structure SMV ne dépend que du contexte et des pivots (même   |
+//| chose dans smv/structure.py) : les BOS sont identiques à ceux du |
+//| moteur complet. v1.10 : le moteur complet (zones, liquidités,    |
+//| consolidations, signatures) provoquait une violation d'accès en  |
+//| testeur et n'est d'aucune utilité pour A, B et C.                |
+//+------------------------------------------------------------------+
+class CAsymCore
+  {
+public:
+   SmvConfig         cfg;
+   CSmvContext       ctx;
+   CSmvPivots        pivots;
+   CSmvStructure     structure;
+   CSmvLog           log;            // événements de la DERNIÈRE bougie seulement
+   bool              with_structure;
+
+   void              Init(const SmvConfig &c, const bool ws)
+     {
+      cfg = c;
+      ctx.Init(cfg.atr_len);
+      pivots.Reset();
+      structure.Reset();
+      log.Reset();
+      with_structure = ws;
+     }
+
+   int               Count(void) const { return ctx.n; }
+
+   bool              OnBar(const SmvBar &bar)
+     {
+      if(!ctx.Append(bar)) return false;
+      log.Reset();
+      if(!with_structure) return true;
+      SmvPivot newp[];
+      int nnew = pivots.Update(bar.index, cfg, ctx, log, newp);
+      structure.Update(bar.index, newp, nnew, cfg, ctx, pivots, log);
+      return true;
+     }
+  };
 
 enum ENUM_ASYM_STRAT
   {
@@ -108,7 +150,7 @@ struct AsymTrade
    bool     timeout_sent;
   };
 
-CSmvEngine     g_eng;
+CAsymCore      g_eng;
 SmvConfig      g_cfg;
 CTrade         g_trade;
 AsymShadow     g_sh[];
@@ -214,6 +256,13 @@ int OnInit()
       case ASYM_A_H4_EXPANSION_2R: g_name = "A_H4_EXPANSION_2R"; g_tf = PERIOD_H4; g_H = 96; g_warm = 600; g_tp = 2.0; break;
       default:                     g_name = "B_H4_EXPANSION_3R"; g_tf = PERIOD_H4; g_H = 96; g_warm = 600; g_tp = 3.0; break;
      }
+   if(PeriodSeconds(_Period) > PeriodSeconds(g_tf))
+     {
+      // en mode « prix d'ouverture », le testeur refuse les UT inférieures à celle du graphique
+      PrintFormat("ASYM: lancer %s sur un graphique %s ou inférieur (graphique actuel : %s)",
+                  g_name, EnumToString(g_tf), EnumToString(_Period));
+      return INIT_PARAMETERS_INCORRECT;
+     }
    if(InpHistoryBars < g_warm + 1)
      {
       PrintFormat("ASYM: InpHistoryBars doit dépasser %d", g_warm);
@@ -228,7 +277,7 @@ int OnInit()
       Print("ASYM: configuration SMV invalide : ", err);
       return INIT_PARAMETERS_INCORRECT;
      }
-   g_eng.Init(g_cfg);
+   g_eng.Init(g_cfg, g_tf == PERIOD_D1);   // structure seulement pour C
    g_hedging = (ENUM_ACCOUNT_MARGIN_MODE)AccountInfoInteger(ACCOUNT_MARGIN_MODE) == ACCOUNT_MARGIN_MODE_RETAIL_HEDGING;
    g_research_cost = ResearchCost(g_sym);
 
@@ -378,7 +427,7 @@ void OnClosedBar(const int i)
      }
    else
      {
-      for(int k = g_eng.bar_from; k < g_eng.log.count; k++)
+      for(int k = 0; k < g_eng.log.count; k++)
         {
          string kind = g_eng.log.ev[k].kind;
          int d = g_eng.log.ev[k].dir;

@@ -145,3 +145,12 @@ Le rejeu de parité (`vault_replay.py parity`) recalcule les signaux à partir d
 **Puissance attendue (estimation).** Environ 400 signaux par an pour B, soit 1 800 environ sur le coffre-fort. L'écart-type d'un trade à 3 R est d'environ 1,8 R, d'où une erreur standard d'environ 0,04 R. Seul un effet au moins égal à celui du développement (+0,09 R) pourrait donc atteindre ROBUSTE. Pour C (environ 450 signaux), l'erreur standard est d'environ 0,09 R : C ne peut guère dépasser PROMETTEUR, même s'il est réel.
 
 **Interdit après ouverture.** Ne pas modifier les règles, ne pas filtrer les instruments ou les heures, ne pas choisir le TP a posteriori. Les R pour TP 1 à 4 sont journalisés à titre descriptif seulement.
+
+## 10. Journal du coffre-fort
+
+**2 octobre 2026, essai technique (pas un verdict).** B sur EURUSD seulement, compte Deriv-Demo, mode « prix d'ouverture ». L'EA v1.00 s'est arrêté le 13/05/2025 sur une violation d'accès dans le moteur SMV complet ; il a été corrigé en v1.10. Les 137 trades exécutés du 29/03/2022 au 09/05/2025, relus dans le journal du testeur, donnent :
+- 29,9 % de réussite pour un seuil de 25 % ;
+- **+0,20 R** par trade (R prix, écart inclus, swap exclu) ;
+- par année : 2022 +0,22 ; 2023 +0,03 ; 2024 +0,31 ; 2025 (partielle) +0,23.
+
+À titre de comparaison, EURUSD valait +0,13 R en développement (n = 274). Un seul instrument, avec n = 137, donne une erreur standard d'environ 0,16 R. Ce résultat va dans le bon sens mais ne permet aucune conclusion. Le verdict de §9 exige les 12 instruments et le shadow.
