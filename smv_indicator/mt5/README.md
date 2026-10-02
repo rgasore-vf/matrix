@@ -94,7 +94,7 @@ Différences attendues avec l'étude Python : les bougies H4 du courtier sont al
 
 Il teste les candidats figés A, B et C de `docs/ASYM_RESEARCH.md` sans aucun réglage de stratégie. Les critères de verdict sont fixés d'avance (§9 du même document).
 
-> v1.10 : compilé et exécuté par l'utilisateur (MetaTester build 6231). La v1.00 provoquait une violation d'accès au 13/05/2025 dans le moteur SMV complet ; la v1.10 n'en garde que l'ATR, les pivots et la structure.
+> La v1.00 a compilé et tourné chez l'utilisateur (MetaTester build 6231), mais provoquait une violation d'accès au 13/05/2025 dans le moteur SMV complet ; la v1.10 n'en garde que l'ATR, les pivots et la structure. La v1.10 n'a pas encore été compilée sur terminal.
 
 **Installation.**
 - Copier `Experts/ASYM/ASYM_Vault.mq5` vers `MQL5/Experts/ASYM/`.
