@@ -10,6 +10,7 @@ Reconstruction formelle, calibrage et implémentation de référence de la strat
 - Ajustement de la stratégie fondé sur les pertes, avec validation sur dix paires jamais vues (`docs/CALIBRATION.md` §7) : pertes réduites de -0,21 à -0,09 R par trade, sans espérance positive démontrée.
 - Chaque concept des modules testé séparément sur 12 instruments (`docs/MODULES_TEST.md`) : suivre une cassure est contredit par les données en M15 ; seuls les retours sur zone décisionnelle, le STB et la signature de liquidité montrent un effet faible.
 - Recherche composite sur 1,54 million d'opportunités (`docs/COMPOSITE_RESEARCH.md`) : maximum robuste hors échantillon 64-67 % (±1 ATR), uniquement en fin de séance américaine, rentable seulement si les coûts réels restent proches du nominal ; aucune région à 70-80 % honnête ; séquence SMV rejetée au test.
+- Recherche asymétrique RR ≥ 2 (`docs/ASYM_RESEARCH.md`) : 11 familles de déclencheurs, M15 à D1, LightGBM, walk-forward et instruments jamais vus ; aucune stratégie robuste ; B (expansion H4, 1:3) et C (BOS D1 lu à l'envers, 1:3) restent exploratoires, à départager sur le coffre-fort mars 2022 → aujourd'hui.
 - **Aucune performance n'est revendiquée** : le backtest des setups ne montre pas d'espérance positive après coûts (`docs/CALIBRATION.md` §4).
 
 ## Lire dans cet ordre

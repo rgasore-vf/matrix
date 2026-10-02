@@ -1,0 +1,1523 @@
+{
+ "A H4 expansion >=2 ATR, SL 1 ATR, TP 2R": {
+  "dev_by_year": {
+   "2013": {
+    "n": 344,
+    "win": 0.3692,
+    "breakeven_win": 0.3333,
+    "exp_gross": 0.1076,
+    "exp_net": 0.0608,
+    "exp_net_ci95": [
+     -0.1065,
+     0.2268
+    ],
+    "pf_net": 1.092,
+    "max_dd_R": 14.6,
+    "symbols_pos": "6/12",
+    "years_pos": "1/1",
+    "cost_R_med": 0.037,
+    "risk_atr_med": 1.0,
+    "mfe_med": 1.31,
+    "mae_med": 4.15,
+    "p_mfe_ge_1.5": 0.445,
+    "p_mfe_ge_3": 0.311
+   },
+   "2014": {
+    "n": 507,
+    "win": 0.3748,
+    "breakeven_win": 0.3333,
+    "exp_gross": 0.1237,
+    "exp_net": 0.053,
+    "exp_net_ci95": [
+     -0.0792,
+     0.2068
+    ],
+    "pf_net": 1.079,
+    "max_dd_R": 23.1,
+    "symbols_pos": "9/12",
+    "years_pos": "1/1",
+    "cost_R_med": 0.056,
+    "risk_atr_med": 1.0,
+    "mfe_med": 1.27,
+    "mae_med": 4.58,
+    "p_mfe_ge_1.5": 0.462,
+    "p_mfe_ge_3": 0.274
+   },
+   "2015": {
+    "n": 450,
+    "win": 0.34,
+    "breakeven_win": 0.3333,
+    "exp_gross": 0.0199,
+    "exp_net": -0.0208,
+    "exp_net_ci95": [
+     -0.1761,
+     0.1323
+    ],
+    "pf_net": 0.97,
+    "max_dd_R": 30.1,
+    "symbols_pos": "6/12",
+    "years_pos": "0/1",
+    "cost_R_med": 0.037,
+    "risk_atr_med": 1.0,
+    "mfe_med": 1.09,
+    "mae_med": 3.83,
+    "p_mfe_ge_1.5": 0.42,
+    "p_mfe_ge_3": 0.276
+   },
+   "2016": {
+    "n": 404,
+    "win": 0.4059,
+    "breakeven_win": 0.3333,
+    "exp_gross": 0.217,
+    "exp_net": 0.1766,
+    "exp_net_ci95": [
+     0.004,
+     0.3662
+    ],
+    "pf_net": 1.285,
+    "max_dd_R": 17.0,
+    "symbols_pos": "8/12",
+    "years_pos": "1/1",
+    "cost_R_med": 0.035,
+    "risk_atr_med": 1.0,
+    "mfe_med": 1.31,
+    "mae_med": 3.79,
+    "p_mfe_ge_1.5": 0.465,
+    "p_mfe_ge_3": 0.319
+   },
+   "2017": {
+    "n": 381,
+    "win": 0.3333,
+    "breakeven_win": 0.3333,
+    "exp_gross": -0.0022,
+    "exp_net": -0.0539,
+    "exp_net_ci95": [
+     -0.207,
+     0.1008
+    ],
+    "pf_net": 0.923,
+    "max_dd_R": 43.1,
+    "symbols_pos": "5/12",
+    "years_pos": "0/1",
+    "cost_R_med": 0.047,
+    "risk_atr_med": 1.0,
+    "mfe_med": 1.1,
+    "mae_med": 3.95,
+    "p_mfe_ge_1.5": 0.412,
+    "p_mfe_ge_3": 0.278
+   },
+   "2018": {
+    "n": 394,
+    "win": 0.3325,
+    "breakeven_win": 0.3333,
+    "exp_gross": -0.0043,
+    "exp_net": -0.0568,
+    "exp_net_ci95": [
+     -0.2419,
+     0.1175
+    ],
+    "pf_net": 0.919,
+    "max_dd_R": 52.4,
+    "symbols_pos": "5/12",
+    "years_pos": "0/1",
+    "cost_R_med": 0.048,
+    "risk_atr_med": 1.0,
+    "mfe_med": 0.94,
+    "mae_med": 4.15,
+    "p_mfe_ge_1.5": 0.398,
+    "p_mfe_ge_3": 0.264
+   },
+   "2019": {
+    "n": 400,
+    "win": 0.3675,
+    "breakeven_win": 0.3333,
+    "exp_gross": 0.0971,
+    "exp_net": 0.0365,
+    "exp_net_ci95": [
+     -0.1719,
+     0.249
+    ],
+    "pf_net": 1.054,
+    "max_dd_R": 17.1,
+    "symbols_pos": "6/12",
+    "years_pos": "1/1",
+    "cost_R_med": 0.057,
+    "risk_atr_med": 1.0,
+    "mfe_med": 1.23,
+    "mae_med": 4.68,
+    "p_mfe_ge_1.5": 0.425,
+    "p_mfe_ge_3": 0.275
+   }
+  },
+  "dev_by_symbol": {
+   "AUDJPY": {
+    "n": 165,
+    "win": 0.3697,
+    "breakeven_win": 0.3333,
+    "exp_gross": 0.1086,
+    "exp_net": 0.0499,
+    "exp_net_ci95": [
+     -0.1712,
+     0.2411
+    ],
+    "pf_net": 1.075,
+    "max_dd_R": 19.0,
+    "symbols_pos": "1/1",
+    "years_pos": "2/7",
+    "cost_R_med": 0.056,
+    "risk_atr_med": 1.0,
+    "mfe_med": 1.02,
+    "mae_med": 4.04,
+    "p_mfe_ge_1.5": 0.424,
+    "p_mfe_ge_3": 0.291
+   },
+   "AUDUSD": {
+    "n": 202,
+    "win": 0.3614,
+    "breakeven_win": 0.3333,
+    "exp_gross": 0.0826,
+    "exp_net": 0.0398,
+    "exp_net_ci95": [
+     -0.1446,
+     0.2392
+    ],
+    "pf_net": 1.06,
+    "max_dd_R": 19.7,
+    "symbols_pos": "1/1",
+    "years_pos": "5/7",
+    "cost_R_med": 0.041,
+    "risk_atr_med": 1.0,
+    "mfe_med": 1.23,
+    "mae_med": 4.44,
+    "p_mfe_ge_1.5": 0.455,
+    "p_mfe_ge_3": 0.252
+   },
+   "EURCHF": {
+    "n": 226,
+    "win": 0.2743,
+    "breakeven_win": 0.3333,
+    "exp_gross": -0.1804,
+    "exp_net": -0.2934,
+    "exp_net_ci95": [
+     -0.4636,
+     -0.1185
+    ],
+    "pf_net": 0.637,
+    "max_dd_R": 70.2,
+    "symbols_pos": "0/1",
+    "years_pos": "0/7",
+    "cost_R_med": 0.097,
+    "risk_atr_med": 1.0,
+    "mfe_med": 0.89,
+    "mae_med": 3.83,
+    "p_mfe_ge_1.5": 0.327,
+    "p_mfe_ge_3": 0.212
+   },
+   "EURGBP": {
+    "n": 267,
+    "win": 0.3446,
+    "breakeven_win": 0.3333,
+    "exp_gross": 0.0297,
+    "exp_net": -0.0385,
+    "exp_net_ci95": [
+     -0.2214,
+     0.1646
+    ],
+    "pf_net": 0.945,
+    "max_dd_R": 29.8,
+    "symbols_pos": "0/1",
+    "years_pos": "3/7",
+    "cost_R_med": 0.065,
+    "risk_atr_med": 1.0,
+    "mfe_med": 1.21,
+    "mae_med": 4.21,
+    "p_mfe_ge_1.5": 0.438,
+    "p_mfe_ge_3": 0.266
+   },
+   "EURJPY": {
+    "n": 208,
+    "win": 0.3558,
+    "breakeven_win": 0.3333,
+    "exp_gross": 0.0664,
+    "exp_net": 0.029,
+    "exp_net_ci95": [
+     -0.1367,
+     0.2014
+    ],
+    "pf_net": 1.043,
+    "max_dd_R": 23.2,
+    "symbols_pos": "1/1",
+    "years_pos": "4/7",
+    "cost_R_med": 0.036,
+    "risk_atr_med": 1.0,
+    "mfe_med": 1.23,
+    "mae_med": 4.24,
+    "p_mfe_ge_1.5": 0.452,
+    "p_mfe_ge_3": 0.269
+   },
+   "EURUSD": {
+    "n": 274,
+    "win": 0.365,
+    "breakeven_win": 0.3333,
+    "exp_gross": 0.0943,
+    "exp_net": 0.0607,
+    "exp_net_ci95": [
+     -0.1201,
+     0.2531
+    ],
+    "pf_net": 1.093,
+    "max_dd_R": 12.5,
+    "symbols_pos": "1/1",
+    "years_pos": "6/7",
+    "cost_R_med": 0.032,
+    "risk_atr_med": 1.0,
+    "mfe_med": 1.32,
+    "mae_med": 4.76,
+    "p_mfe_ge_1.5": 0.456,
+    "p_mfe_ge_3": 0.292
+   },
+   "GBPJPY": {
+    "n": 217,
+    "win": 0.3825,
+    "breakeven_win": 0.3333,
+    "exp_gross": 0.1445,
+    "exp_net": 0.0987,
+    "exp_net_ci95": [
+     -0.107,
+     0.2861
+    ],
+    "pf_net": 1.152,
+    "max_dd_R": 16.3,
+    "symbols_pos": "1/1",
+    "years_pos": "5/7",
+    "cost_R_med": 0.044,
+    "risk_atr_med": 1.0,
+    "mfe_med": 1.07,
+    "mae_med": 3.59,
+    "p_mfe_ge_1.5": 0.452,
+    "p_mfe_ge_3": 0.309
+   },
+   "GBPUSD": {
+    "n": 267,
+    "win": 0.382,
+    "breakeven_win": 0.3333,
+    "exp_gross": 0.1451,
+    "exp_net": 0.1154,
+    "exp_net_ci95": [
+     -0.0961,
+     0.3115
+    ],
+    "pf_net": 1.181,
+    "max_dd_R": 23.5,
+    "symbols_pos": "1/1",
+    "years_pos": "4/7",
+    "cost_R_med": 0.029,
+    "risk_atr_med": 1.0,
+    "mfe_med": 1.21,
+    "mae_med": 4.25,
+    "p_mfe_ge_1.5": 0.453,
+    "p_mfe_ge_3": 0.303
+   },
+   "USDCAD": {
+    "n": 301,
+    "win": 0.3887,
+    "breakeven_win": 0.3333,
+    "exp_gross": 0.1661,
+    "exp_net": 0.1198,
+    "exp_net_ci95": [
+     -0.0343,
+     0.2706
+    ],
+    "pf_net": 1.187,
+    "max_dd_R": 26.3,
+    "symbols_pos": "1/1",
+    "years_pos": "4/7",
+    "cost_R_med": 0.043,
+    "risk_atr_med": 1.0,
+    "mfe_med": 1.13,
+    "mae_med": 4.09,
+    "p_mfe_ge_1.5": 0.449,
+    "p_mfe_ge_3": 0.322
+   },
+   "USDCHF": {
+    "n": 269,
+    "win": 0.3829,
+    "breakeven_win": 0.3333,
+    "exp_gross": 0.1487,
+    "exp_net": 0.0911,
+    "exp_net_ci95": [
+     -0.101,
+     0.2396
+    ],
+    "pf_net": 1.14,
+    "max_dd_R": 29.0,
+    "symbols_pos": "1/1",
+    "years_pos": "5/7",
+    "cost_R_med": 0.055,
+    "risk_atr_med": 1.0,
+    "mfe_med": 1.27,
+    "mae_med": 4.39,
+    "p_mfe_ge_1.5": 0.442,
+    "p_mfe_ge_3": 0.305
+   },
+   "USDJPY": {
+    "n": 215,
+    "win": 0.3814,
+    "breakeven_win": 0.3333,
+    "exp_gross": 0.141,
+    "exp_net": 0.0992,
+    "exp_net_ci95": [
+     -0.0909,
+     0.2779
+    ],
+    "pf_net": 1.153,
+    "max_dd_R": 17.2,
+    "symbols_pos": "1/1",
+    "years_pos": "4/7",
+    "cost_R_med": 0.039,
+    "risk_atr_med": 1.0,
+    "mfe_med": 1.31,
+    "mae_med": 4.15,
+    "p_mfe_ge_1.5": 0.451,
+    "p_mfe_ge_3": 0.293
+   },
+   "XAUUSD": {
+    "n": 269,
+    "win": 0.3346,
+    "breakeven_win": 0.3333,
+    "exp_gross": 0.0031,
+    "exp_net": -0.056,
+    "exp_net_ci95": [
+     -0.2052,
+     0.0998
+    ],
+    "pf_net": 0.921,
+    "max_dd_R": 27.8,
+    "symbols_pos": "0/1",
+    "years_pos": "3/7",
+    "cost_R_med": 0.06,
+    "risk_atr_med": 1.0,
+    "mfe_med": 1.18,
+    "mae_med": 3.99,
+    "p_mfe_ge_1.5": 0.394,
+    "p_mfe_ge_3": 0.279
+   }
+  },
+  "train_2012_2016": {
+   "n": 1705,
+   "win": 0.3718,
+   "breakeven_win": 0.3333,
+   "exp_gross": 0.1151,
+   "exp_net": 0.0644,
+   "exp_net_ci95": [
+    -0.0221,
+    0.139
+   ],
+   "pf_net": 1.097,
+   "max_dd_R": 55.2,
+   "symbols_pos": "9/12",
+   "years_pos": "3/4",
+   "cost_R_med": 0.041,
+   "risk_atr_med": 1.0,
+   "mfe_med": 1.24,
+   "mae_med": 4.1,
+   "p_mfe_ge_1.5": 0.448,
+   "p_mfe_ge_3": 0.293
+  },
+  "val_2017_2019": {
+   "n": 1175,
+   "win": 0.3447,
+   "breakeven_win": 0.3333,
+   "exp_gross": 0.0309,
+   "exp_net": -0.0241,
+   "exp_net_ci95": [
+    -0.1259,
+    0.0663
+   ],
+   "pf_net": 0.965,
+   "max_dd_R": 73.1,
+   "symbols_pos": "4/12",
+   "years_pos": "1/3",
+   "cost_R_med": 0.051,
+   "risk_atr_med": 1.0,
+   "mfe_med": 1.07,
+   "mae_med": 4.24,
+   "p_mfe_ge_1.5": 0.412,
+   "p_mfe_ge_3": 0.272
+  },
+  "dev_cost_x1.5": {
+   "n": 2880,
+   "win": 0.3608,
+   "breakeven_win": 0.3333,
+   "exp_gross": 0.0808,
+   "exp_net": 0.002,
+   "exp_net_ci95": [
+    -0.0639,
+    0.064
+   ],
+   "pf_net": 1.003,
+   "max_dd_R": 117.3,
+   "symbols_pos": "9/12",
+   "years_pos": "4/7",
+   "cost_R_med": 0.046,
+   "risk_atr_med": 1.0,
+   "mfe_med": 1.16,
+   "mae_med": 4.15,
+   "p_mfe_ge_1.5": 0.433,
+   "p_mfe_ge_3": 0.284
+  },
+  "dev_cost_x2": {
+   "n": 2880,
+   "win": 0.3608,
+   "breakeven_win": 0.3333,
+   "exp_gross": 0.0808,
+   "exp_net": -0.0242,
+   "exp_net_ci95": [
+    -0.0905,
+    0.038
+   ],
+   "pf_net": 0.966,
+   "max_dd_R": 146.9,
+   "symbols_pos": "6/12",
+   "years_pos": "2/7",
+   "cost_R_med": 0.046,
+   "risk_atr_med": 1.0,
+   "mfe_med": 1.16,
+   "mae_med": 4.15,
+   "p_mfe_ge_1.5": 0.433,
+   "p_mfe_ge_3": 0.284
+  },
+  "dev_R_distribution": {
+   "-1.0": 0.632,
+   "2.0": 0.361
+  },
+  "dev_R_timeout_share": 0.0,
+  "dev_MFE_quantiles": {
+   "0.25": 0.41,
+   "0.5": 1.16,
+   "0.75": 3.54,
+   "0.9": 8.42
+  },
+  "dev_P_MFE": {
+   "1": 0.541,
+   "1.5": 0.433,
+   "2": 0.366,
+   "3": 0.284,
+   "4": 0.226
+  }
+ },
+ "B H4 expansion >=2 ATR, SL 1 ATR, TP 3R": {
+  "dev_by_year": {
+   "2013": {
+    "n": 344,
+    "win": 0.311,
+    "breakeven_win": 0.25,
+    "exp_gross": 0.2442,
+    "exp_net": 0.1974,
+    "exp_net_ci95": [
+     -0.0491,
+     0.4333
+    ],
+    "pf_net": 1.274,
+    "max_dd_R": 17.6,
+    "symbols_pos": "8/12",
+    "years_pos": "1/1",
+    "cost_R_med": 0.037,
+    "risk_atr_med": 1.0,
+    "mfe_med": 1.31,
+    "mae_med": 4.15,
+    "p_mfe_ge_1.5": 0.445,
+    "p_mfe_ge_3": 0.311
+   },
+   "2014": {
+    "n": 507,
+    "win": 0.2742,
+    "breakeven_win": 0.25,
+    "exp_gross": 0.0937,
+    "exp_net": 0.023,
+    "exp_net_ci95": [
+     -0.141,
+     0.2043
+    ],
+    "pf_net": 1.029,
+    "max_dd_R": 39.5,
+    "symbols_pos": "7/12",
+    "years_pos": "1/1",
+    "cost_R_med": 0.056,
+    "risk_atr_med": 1.0,
+    "mfe_med": 1.27,
+    "mae_med": 4.58,
+    "p_mfe_ge_1.5": 0.462,
+    "p_mfe_ge_3": 0.274
+   },
+   "2015": {
+    "n": 450,
+    "win": 0.2756,
+    "breakeven_win": 0.25,
+    "exp_gross": 0.1021,
+    "exp_net": 0.0614,
+    "exp_net_ci95": [
+     -0.1172,
+     0.2516
+    ],
+    "pf_net": 1.081,
+    "max_dd_R": 28.0,
+    "symbols_pos": "7/12",
+    "years_pos": "1/1",
+    "cost_R_med": 0.037,
+    "risk_atr_med": 1.0,
+    "mfe_med": 1.09,
+    "mae_med": 3.83,
+    "p_mfe_ge_1.5": 0.42,
+    "p_mfe_ge_3": 0.276
+   },
+   "2016": {
+    "n": 404,
+    "win": 0.3267,
+    "breakeven_win": 0.25,
+    "exp_gross": 0.2912,
+    "exp_net": 0.2507,
+    "exp_net_ci95": [
+     0.0223,
+     0.4992
+    ],
+    "pf_net": 1.357,
+    "max_dd_R": 23.5,
+    "symbols_pos": "7/12",
+    "years_pos": "1/1",
+    "cost_R_med": 0.035,
+    "risk_atr_med": 1.0,
+    "mfe_med": 1.31,
+    "mae_med": 3.79,
+    "p_mfe_ge_1.5": 0.465,
+    "p_mfe_ge_3": 0.319
+   },
+   "2017": {
+    "n": 381,
+    "win": 0.2782,
+    "breakeven_win": 0.25,
+    "exp_gross": 0.1107,
+    "exp_net": 0.0589,
+    "exp_net_ci95": [
+     -0.1463,
+     0.2893
+    ],
+    "pf_net": 1.077,
+    "max_dd_R": 35.4,
+    "symbols_pos": "6/12",
+    "years_pos": "1/1",
+    "cost_R_med": 0.047,
+    "risk_atr_med": 1.0,
+    "mfe_med": 1.1,
+    "mae_med": 3.95,
+    "p_mfe_ge_1.5": 0.412,
+    "p_mfe_ge_3": 0.278
+   },
+   "2018": {
+    "n": 394,
+    "win": 0.269,
+    "breakeven_win": 0.25,
+    "exp_gross": 0.0671,
+    "exp_net": 0.0146,
+    "exp_net_ci95": [
+     -0.2093,
+     0.2219
+    ],
+    "pf_net": 1.019,
+    "max_dd_R": 37.4,
+    "symbols_pos": "6/12",
+    "years_pos": "1/1",
+    "cost_R_med": 0.048,
+    "risk_atr_med": 1.0,
+    "mfe_med": 0.94,
+    "mae_med": 4.15,
+    "p_mfe_ge_1.5": 0.398,
+    "p_mfe_ge_3": 0.264
+   },
+   "2019": {
+    "n": 400,
+    "win": 0.275,
+    "breakeven_win": 0.25,
+    "exp_gross": 0.0946,
+    "exp_net": 0.034,
+    "exp_net_ci95": [
+     -0.205,
+     0.2932
+    ],
+    "pf_net": 1.044,
+    "max_dd_R": 27.8,
+    "symbols_pos": "6/12",
+    "years_pos": "1/1",
+    "cost_R_med": 0.057,
+    "risk_atr_med": 1.0,
+    "mfe_med": 1.23,
+    "mae_med": 4.68,
+    "p_mfe_ge_1.5": 0.425,
+    "p_mfe_ge_3": 0.275
+   }
+  },
+  "dev_by_symbol": {
+   "AUDJPY": {
+    "n": 165,
+    "win": 0.2909,
+    "breakeven_win": 0.25,
+    "exp_gross": 0.1632,
+    "exp_net": 0.1044,
+    "exp_net_ci95": [
+     -0.1854,
+     0.3375
+    ],
+    "pf_net": 1.139,
+    "max_dd_R": 16.5,
+    "symbols_pos": "1/1",
+    "years_pos": "4/7",
+    "cost_R_med": 0.056,
+    "risk_atr_med": 1.0,
+    "mfe_med": 1.02,
+    "mae_med": 4.04,
+    "p_mfe_ge_1.5": 0.424,
+    "p_mfe_ge_3": 0.291
+   },
+   "AUDUSD": {
+    "n": 202,
+    "win": 0.2525,
+    "breakeven_win": 0.25,
+    "exp_gross": 0.0084,
+    "exp_net": -0.0344,
+    "exp_net_ci95": [
+     -0.2546,
+     0.193
+    ],
+    "pf_net": 0.956,
+    "max_dd_R": 33.7,
+    "symbols_pos": "0/1",
+    "years_pos": "2/7",
+    "cost_R_med": 0.041,
+    "risk_atr_med": 1.0,
+    "mfe_med": 1.23,
+    "mae_med": 4.44,
+    "p_mfe_ge_1.5": 0.455,
+    "p_mfe_ge_3": 0.252
+   },
+   "EURCHF": {
+    "n": 226,
+    "win": 0.2124,
+    "breakeven_win": 0.25,
+    "exp_gross": -0.1538,
+    "exp_net": -0.2668,
+    "exp_net_ci95": [
+     -0.456,
+     -0.0568
+    ],
+    "pf_net": 0.697,
+    "max_dd_R": 75.6,
+    "symbols_pos": "0/1",
+    "years_pos": "1/7",
+    "cost_R_med": 0.097,
+    "risk_atr_med": 1.0,
+    "mfe_med": 0.89,
+    "mae_med": 3.83,
+    "p_mfe_ge_1.5": 0.327,
+    "p_mfe_ge_3": 0.212
+   },
+   "EURGBP": {
+    "n": 267,
+    "win": 0.2697,
+    "breakeven_win": 0.25,
+    "exp_gross": 0.0711,
+    "exp_net": 0.003,
+    "exp_net_ci95": [
+     -0.2071,
+     0.2328
+    ],
+    "pf_net": 1.004,
+    "max_dd_R": 38.7,
+    "symbols_pos": "1/1",
+    "years_pos": "4/7",
+    "cost_R_med": 0.065,
+    "risk_atr_med": 1.0,
+    "mfe_med": 1.21,
+    "mae_med": 4.21,
+    "p_mfe_ge_1.5": 0.438,
+    "p_mfe_ge_3": 0.266
+   },
+   "EURJPY": {
+    "n": 208,
+    "win": 0.274,
+    "breakeven_win": 0.25,
+    "exp_gross": 0.0846,
+    "exp_net": 0.0472,
+    "exp_net_ci95": [
+     -0.1828,
+     0.2615
+    ],
+    "pf_net": 1.063,
+    "max_dd_R": 16.7,
+    "symbols_pos": "1/1",
+    "years_pos": "4/7",
+    "cost_R_med": 0.036,
+    "risk_atr_med": 1.0,
+    "mfe_med": 1.23,
+    "mae_med": 4.24,
+    "p_mfe_ge_1.5": 0.452,
+    "p_mfe_ge_3": 0.269
+   },
+   "EURUSD": {
+    "n": 274,
+    "win": 0.292,
+    "breakeven_win": 0.25,
+    "exp_gross": 0.1672,
+    "exp_net": 0.1337,
+    "exp_net_ci95": [
+     -0.102,
+     0.3516
+    ],
+    "pf_net": 1.183,
+    "max_dd_R": 16.3,
+    "symbols_pos": "1/1",
+    "years_pos": "5/7",
+    "cost_R_med": 0.032,
+    "risk_atr_med": 1.0,
+    "mfe_med": 1.32,
+    "mae_med": 4.76,
+    "p_mfe_ge_1.5": 0.456,
+    "p_mfe_ge_3": 0.292
+   },
+   "GBPJPY": {
+    "n": 217,
+    "win": 0.318,
+    "breakeven_win": 0.25,
+    "exp_gross": 0.2485,
+    "exp_net": 0.2027,
+    "exp_net_ci95": [
+     -0.0533,
+     0.4506
+    ],
+    "pf_net": 1.283,
+    "max_dd_R": 12.7,
+    "symbols_pos": "1/1",
+    "years_pos": "5/7",
+    "cost_R_med": 0.044,
+    "risk_atr_med": 1.0,
+    "mfe_med": 1.07,
+    "mae_med": 3.59,
+    "p_mfe_ge_1.5": 0.452,
+    "p_mfe_ge_3": 0.309
+   },
+   "GBPUSD": {
+    "n": 267,
+    "win": 0.3071,
+    "breakeven_win": 0.25,
+    "exp_gross": 0.2225,
+    "exp_net": 0.1928,
+    "exp_net_ci95": [
+     -0.0445,
+     0.4299
+    ],
+    "pf_net": 1.27,
+    "max_dd_R": 18.3,
+    "symbols_pos": "1/1",
+    "years_pos": "4/7",
+    "cost_R_med": 0.029,
+    "risk_atr_med": 1.0,
+    "mfe_med": 1.21,
+    "mae_med": 4.25,
+    "p_mfe_ge_1.5": 0.453,
+    "p_mfe_ge_3": 0.303
+   },
+   "USDCAD": {
+    "n": 301,
+    "win": 0.3223,
+    "breakeven_win": 0.25,
+    "exp_gross": 0.289,
+    "exp_net": 0.2427,
+    "exp_net_ci95": [
+     0.0277,
+     0.4569
+    ],
+    "pf_net": 1.342,
+    "max_dd_R": 28.7,
+    "symbols_pos": "1/1",
+    "years_pos": "5/7",
+    "cost_R_med": 0.043,
+    "risk_atr_med": 1.0,
+    "mfe_med": 1.13,
+    "mae_med": 4.09,
+    "p_mfe_ge_1.5": 0.449,
+    "p_mfe_ge_3": 0.322
+   },
+   "USDCHF": {
+    "n": 269,
+    "win": 0.3048,
+    "breakeven_win": 0.25,
+    "exp_gross": 0.2193,
+    "exp_net": 0.1618,
+    "exp_net_ci95": [
+     -0.085,
+     0.3649
+    ],
+    "pf_net": 1.22,
+    "max_dd_R": 27.8,
+    "symbols_pos": "1/1",
+    "years_pos": "6/7",
+    "cost_R_med": 0.055,
+    "risk_atr_med": 1.0,
+    "mfe_med": 1.27,
+    "mae_med": 4.39,
+    "p_mfe_ge_1.5": 0.442,
+    "p_mfe_ge_3": 0.305
+   },
+   "USDJPY": {
+    "n": 215,
+    "win": 0.293,
+    "breakeven_win": 0.25,
+    "exp_gross": 0.1633,
+    "exp_net": 0.1215,
+    "exp_net_ci95": [
+     -0.1068,
+     0.3565
+    ],
+    "pf_net": 1.163,
+    "max_dd_R": 24.1,
+    "symbols_pos": "1/1",
+    "years_pos": "4/7",
+    "cost_R_med": 0.039,
+    "risk_atr_med": 1.0,
+    "mfe_med": 1.31,
+    "mae_med": 4.15,
+    "p_mfe_ge_1.5": 0.451,
+    "p_mfe_ge_3": 0.293
+   },
+   "XAUUSD": {
+    "n": 269,
+    "win": 0.2788,
+    "breakeven_win": 0.25,
+    "exp_gross": 0.1146,
+    "exp_net": 0.0555,
+    "exp_net_ci95": [
+     -0.1585,
+     0.2546
+    ],
+    "pf_net": 1.073,
+    "max_dd_R": 20.7,
+    "symbols_pos": "1/1",
+    "years_pos": "3/7",
+    "cost_R_med": 0.06,
+    "risk_atr_med": 1.0,
+    "mfe_med": 1.18,
+    "mae_med": 3.99,
+    "p_mfe_ge_1.5": 0.394,
+    "p_mfe_ge_3": 0.279
+   }
+  },
+  "train_2012_2016": {
+   "n": 1705,
+   "win": 0.2944,
+   "breakeven_win": 0.25,
+   "exp_gross": 0.1731,
+   "exp_net": 0.1223,
+   "exp_net_ci95": [
+    0.0121,
+    0.2171
+   ],
+   "pf_net": 1.165,
+   "max_dd_R": 85.5,
+   "symbols_pos": "10/12",
+   "years_pos": "4/4",
+   "cost_R_med": 0.041,
+   "risk_atr_med": 1.0,
+   "mfe_med": 1.24,
+   "mae_med": 4.1,
+   "p_mfe_ge_1.5": 0.448,
+   "p_mfe_ge_3": 0.293
+  },
+  "val_2017_2019": {
+   "n": 1175,
+   "win": 0.274,
+   "breakeven_win": 0.25,
+   "exp_gross": 0.0906,
+   "exp_net": 0.0356,
+   "exp_net_ci95": [
+    -0.1004,
+    0.142
+   ],
+   "pf_net": 1.046,
+   "max_dd_R": 61.9,
+   "symbols_pos": "9/12",
+   "years_pos": "3/3",
+   "cost_R_med": 0.051,
+   "risk_atr_med": 1.0,
+   "mfe_med": 1.07,
+   "mae_med": 4.24,
+   "p_mfe_ge_1.5": 0.412,
+   "p_mfe_ge_3": 0.272
+  },
+  "dev_cost_x1.5": {
+   "n": 2880,
+   "win": 0.2861,
+   "breakeven_win": 0.25,
+   "exp_gross": 0.1394,
+   "exp_net": 0.0607,
+   "exp_net_ci95": [
+    -0.02,
+    0.1417
+   ],
+   "pf_net": 1.079,
+   "max_dd_R": 102.4,
+   "symbols_pos": "9/12",
+   "years_pos": "5/7",
+   "cost_R_med": 0.046,
+   "risk_atr_med": 1.0,
+   "mfe_med": 1.16,
+   "mae_med": 4.15,
+   "p_mfe_ge_1.5": 0.433,
+   "p_mfe_ge_3": 0.284
+  },
+  "dev_cost_x2": {
+   "n": 2880,
+   "win": 0.2861,
+   "breakeven_win": 0.25,
+   "exp_gross": 0.1394,
+   "exp_net": 0.0344,
+   "exp_net_ci95": [
+    -0.0463,
+    0.1159
+   ],
+   "pf_net": 1.043,
+   "max_dd_R": 130.9,
+   "symbols_pos": "8/12",
+   "years_pos": "4/7",
+   "cost_R_med": 0.046,
+   "risk_atr_med": 1.0,
+   "mfe_med": 1.16,
+   "mae_med": 4.15,
+   "p_mfe_ge_1.5": 0.433,
+   "p_mfe_ge_3": 0.284
+  },
+  "dev_R_distribution": {
+   "-1.0": 0.706,
+   "3.0": 0.284
+  },
+  "dev_R_timeout_share": 0.002,
+  "dev_MFE_quantiles": {
+   "0.25": 0.41,
+   "0.5": 1.16,
+   "0.75": 3.54,
+   "0.9": 8.42
+  },
+  "dev_P_MFE": {
+   "1": 0.541,
+   "1.5": 0.433,
+   "2": 0.366,
+   "3": 0.284,
+   "4": 0.226
+  }
+ },
+ "C D1 BOS lu à l'envers, SL 1 ATR, TP 3R": {
+  "dev_by_year": {
+   "2013": {
+    "n": 110,
+    "win": 0.3455,
+    "breakeven_win": 0.25,
+    "exp_gross": 0.2562,
+    "exp_net": 0.2403,
+    "exp_net_ci95": [
+     -0.119,
+     0.6351
+    ],
+    "pf_net": 1.369,
+    "max_dd_R": 12.7,
+    "symbols_pos": "8/12",
+    "years_pos": "1/1",
+    "cost_R_med": 0.014,
+    "risk_atr_med": 1.0,
+    "mfe_med": 1.39,
+    "mae_med": 1.62,
+    "p_mfe_ge_1.5": 0.473,
+    "p_mfe_ge_3": 0.255
+   },
+   "2014": {
+    "n": 154,
+    "win": 0.2727,
+    "breakeven_win": 0.25,
+    "exp_gross": -0.1005,
+    "exp_net": -0.1231,
+    "exp_net_ci95": [
+     -0.3879,
+     0.1454
+    ],
+    "pf_net": 0.834,
+    "max_dd_R": 28.2,
+    "symbols_pos": "4/12",
+    "years_pos": "0/1",
+    "cost_R_med": 0.019,
+    "risk_atr_med": 1.0,
+    "mfe_med": 1.1,
+    "mae_med": 2.0,
+    "p_mfe_ge_1.5": 0.422,
+    "p_mfe_ge_3": 0.182
+   },
+   "2015": {
+    "n": 103,
+    "win": 0.301,
+    "breakeven_win": 0.25,
+    "exp_gross": 0.1077,
+    "exp_net": 0.0931,
+    "exp_net_ci95": [
+     -0.3003,
+     0.43
+    ],
+    "pf_net": 1.131,
+    "max_dd_R": 13.4,
+    "symbols_pos": "5/12",
+    "years_pos": "1/1",
+    "cost_R_med": 0.013,
+    "risk_atr_med": 1.0,
+    "mfe_med": 0.85,
+    "mae_med": 1.89,
+    "p_mfe_ge_1.5": 0.388,
+    "p_mfe_ge_3": 0.252
+   },
+   "2016": {
+    "n": 104,
+    "win": 0.3077,
+    "breakeven_win": 0.25,
+    "exp_gross": 0.0779,
+    "exp_net": 0.0643,
+    "exp_net_ci95": [
+     -0.2818,
+     0.4222
+    ],
+    "pf_net": 1.094,
+    "max_dd_R": 15.5,
+    "symbols_pos": "6/10",
+    "years_pos": "1/1",
+    "cost_R_med": 0.013,
+    "risk_atr_med": 1.0,
+    "mfe_med": 1.01,
+    "mae_med": 1.74,
+    "p_mfe_ge_1.5": 0.404,
+    "p_mfe_ge_3": 0.231
+   },
+   "2017": {
+    "n": 83,
+    "win": 0.3133,
+    "breakeven_win": 0.25,
+    "exp_gross": 0.0799,
+    "exp_net": 0.0603,
+    "exp_net_ci95": [
+     -0.2997,
+     0.435
+    ],
+    "pf_net": 1.086,
+    "max_dd_R": 16.3,
+    "symbols_pos": "5/9",
+    "years_pos": "1/1",
+    "cost_R_med": 0.018,
+    "risk_atr_med": 1.0,
+    "mfe_med": 0.86,
+    "mae_med": 1.71,
+    "p_mfe_ge_1.5": 0.373,
+    "p_mfe_ge_3": 0.205
+   },
+   "2018": {
+    "n": 95,
+    "win": 0.3158,
+    "breakeven_win": 0.25,
+    "exp_gross": 0.0947,
+    "exp_net": 0.0749,
+    "exp_net_ci95": [
+     -0.2481,
+     0.3689
+    ],
+    "pf_net": 1.106,
+    "max_dd_R": 19.1,
+    "symbols_pos": "4/9",
+    "years_pos": "1/1",
+    "cost_R_med": 0.019,
+    "risk_atr_med": 1.0,
+    "mfe_med": 0.95,
+    "mae_med": 1.74,
+    "p_mfe_ge_1.5": 0.432,
+    "p_mfe_ge_3": 0.221
+   },
+   "2019": {
+    "n": 74,
+    "win": 0.4324,
+    "breakeven_win": 0.25,
+    "exp_gross": 0.4348,
+    "exp_net": 0.4144,
+    "exp_net_ci95": [
+     -0.0102,
+     0.8094
+    ],
+    "pf_net": 1.749,
+    "max_dd_R": 6.1,
+    "symbols_pos": "5/8",
+    "years_pos": "1/1",
+    "cost_R_med": 0.019,
+    "risk_atr_med": 1.0,
+    "mfe_med": 1.89,
+    "mae_med": 1.47,
+    "p_mfe_ge_1.5": 0.527,
+    "p_mfe_ge_3": 0.27
+   }
+  },
+  "dev_by_symbol": {
+   "AUDJPY": {
+    "n": 66,
+    "win": 0.3333,
+    "breakeven_win": 0.25,
+    "exp_gross": 0.1954,
+    "exp_net": 0.1742,
+    "exp_net_ci95": [
+     -0.2448,
+     0.5734
+    ],
+    "pf_net": 1.26,
+    "max_dd_R": 8.9,
+    "symbols_pos": "1/1",
+    "years_pos": "3/6",
+    "cost_R_med": 0.021,
+    "risk_atr_med": 1.0,
+    "mfe_med": 1.39,
+    "mae_med": 1.96,
+    "p_mfe_ge_1.5": 0.485,
+    "p_mfe_ge_3": 0.242
+   },
+   "AUDUSD": {
+    "n": 106,
+    "win": 0.3113,
+    "breakeven_win": 0.25,
+    "exp_gross": 0.0548,
+    "exp_net": 0.0381,
+    "exp_net_ci95": [
+     -0.2335,
+     0.3443
+    ],
+    "pf_net": 1.055,
+    "max_dd_R": 15.4,
+    "symbols_pos": "1/1",
+    "years_pos": "5/7",
+    "cost_R_med": 0.017,
+    "risk_atr_med": 1.0,
+    "mfe_med": 1.33,
+    "mae_med": 1.55,
+    "p_mfe_ge_1.5": 0.472,
+    "p_mfe_ge_3": 0.189
+   },
+   "EURCHF": {
+    "n": 6,
+    "win": 0.3333,
+    "breakeven_win": 0.25,
+    "exp_gross": 0.3333,
+    "exp_net": 0.2534,
+    "exp_net_ci95": [
+     -1.1027,
+     1.6041
+    ],
+    "pf_net": 1.348,
+    "max_dd_R": 2.2,
+    "symbols_pos": "1/1",
+    "years_pos": "1/3",
+    "cost_R_med": 0.101,
+    "risk_atr_med": 1.0,
+    "mfe_med": 0.84,
+    "mae_med": 1.9,
+    "p_mfe_ge_1.5": 0.333,
+    "p_mfe_ge_3": 0.333
+   },
+   "EURGBP": {
+    "n": 58,
+    "win": 0.2414,
+    "breakeven_win": 0.25,
+    "exp_gross": -0.0885,
+    "exp_net": -0.1153,
+    "exp_net_ci95": [
+     -0.4708,
+     0.288
+    ],
+    "pf_net": 0.849,
+    "max_dd_R": 16.9,
+    "symbols_pos": "0/1",
+    "years_pos": "2/5",
+    "cost_R_med": 0.023,
+    "risk_atr_med": 1.0,
+    "mfe_med": 0.84,
+    "mae_med": 2.02,
+    "p_mfe_ge_1.5": 0.362,
+    "p_mfe_ge_3": 0.207
+   },
+   "EURJPY": {
+    "n": 58,
+    "win": 0.3793,
+    "breakeven_win": 0.25,
+    "exp_gross": 0.318,
+    "exp_net": 0.3035,
+    "exp_net_ci95": [
+     -0.1496,
+     0.7515
+    ],
+    "pf_net": 1.48,
+    "max_dd_R": 9.3,
+    "symbols_pos": "1/1",
+    "years_pos": "4/7",
+    "cost_R_med": 0.014,
+    "risk_atr_med": 1.0,
+    "mfe_med": 1.26,
+    "mae_med": 1.65,
+    "p_mfe_ge_1.5": 0.431,
+    "p_mfe_ge_3": 0.276
+   },
+   "EURUSD": {
+    "n": 53,
+    "win": 0.3585,
+    "breakeven_win": 0.25,
+    "exp_gross": 0.3432,
+    "exp_net": 0.3308,
+    "exp_net_ci95": [
+     -0.1329,
+     0.9161
+    ],
+    "pf_net": 1.524,
+    "max_dd_R": 11.8,
+    "symbols_pos": "1/1",
+    "years_pos": "4/7",
+    "cost_R_med": 0.012,
+    "risk_atr_med": 1.0,
+    "mfe_med": 0.91,
+    "mae_med": 1.64,
+    "p_mfe_ge_1.5": 0.415,
+    "p_mfe_ge_3": 0.283
+   },
+   "GBPJPY": {
+    "n": 66,
+    "win": 0.2273,
+    "breakeven_win": 0.25,
+    "exp_gross": -0.2173,
+    "exp_net": -0.233,
+    "exp_net_ci95": [
+     -0.5442,
+     0.0976
+    ],
+    "pf_net": 0.7,
+    "max_dd_R": 17.7,
+    "symbols_pos": "0/1",
+    "years_pos": "1/7",
+    "cost_R_med": 0.015,
+    "risk_atr_med": 1.0,
+    "mfe_med": 0.63,
+    "mae_med": 2.33,
+    "p_mfe_ge_1.5": 0.333,
+    "p_mfe_ge_3": 0.167
+   },
+   "GBPUSD": {
+    "n": 68,
+    "win": 0.4118,
+    "breakeven_win": 0.25,
+    "exp_gross": 0.4279,
+    "exp_net": 0.4162,
+    "exp_net_ci95": [
+     -0.0151,
+     0.8316
+    ],
+    "pf_net": 1.695,
+    "max_dd_R": 12.0,
+    "symbols_pos": "1/1",
+    "years_pos": "5/7",
+    "cost_R_med": 0.011,
+    "risk_atr_med": 1.0,
+    "mfe_med": 1.77,
+    "mae_med": 1.71,
+    "p_mfe_ge_1.5": 0.515,
+    "p_mfe_ge_3": 0.324
+   },
+   "USDCAD": {
+    "n": 77,
+    "win": 0.3377,
+    "breakeven_win": 0.25,
+    "exp_gross": 0.1504,
+    "exp_net": 0.1327,
+    "exp_net_ci95": [
+     -0.1766,
+     0.4962
+    ],
+    "pf_net": 1.201,
+    "max_dd_R": 17.5,
+    "symbols_pos": "1/1",
+    "years_pos": "4/7",
+    "cost_R_med": 0.017,
+    "risk_atr_med": 1.0,
+    "mfe_med": 0.97,
+    "mae_med": 1.87,
+    "p_mfe_ge_1.5": 0.455,
+    "p_mfe_ge_3": 0.234
+   },
+   "USDCHF": {
+    "n": 29,
+    "win": 0.3448,
+    "breakeven_win": 0.25,
+    "exp_gross": 0.2481,
+    "exp_net": 0.2254,
+    "exp_net_ci95": [
+     -0.4833,
+     0.9381
+    ],
+    "pf_net": 1.336,
+    "max_dd_R": 8.2,
+    "symbols_pos": "1/1",
+    "years_pos": "2/3",
+    "cost_R_med": 0.021,
+    "risk_atr_med": 1.0,
+    "mfe_med": 1.61,
+    "mae_med": 1.63,
+    "p_mfe_ge_1.5": 0.517,
+    "p_mfe_ge_3": 0.276
+   },
+   "USDJPY": {
+    "n": 45,
+    "win": 0.3556,
+    "breakeven_win": 0.25,
+    "exp_gross": 0.2555,
+    "exp_net": 0.2422,
+    "exp_net_ci95": [
+     -0.2081,
+     0.7167
+    ],
+    "pf_net": 1.371,
+    "max_dd_R": 6.1,
+    "symbols_pos": "1/1",
+    "years_pos": "5/6",
+    "cost_R_med": 0.013,
+    "risk_atr_med": 1.0,
+    "mfe_med": 0.95,
+    "mae_med": 1.8,
+    "p_mfe_ge_1.5": 0.444,
+    "p_mfe_ge_3": 0.267
+   },
+   "XAUUSD": {
+    "n": 91,
+    "win": 0.2637,
+    "breakeven_win": 0.25,
+    "exp_gross": -0.1926,
+    "exp_net": -0.2147,
+    "exp_net_ci95": [
+     -0.4943,
+     0.0867
+    ],
+    "pf_net": 0.713,
+    "max_dd_R": 21.5,
+    "symbols_pos": "0/1",
+    "years_pos": "1/7",
+    "cost_R_med": 0.023,
+    "risk_atr_med": 1.0,
+    "mfe_med": 0.88,
+    "mae_med": 1.73,
+    "p_mfe_ge_1.5": 0.341,
+    "p_mfe_ge_3": 0.132
+   }
+  },
+  "train_2012_2016": {
+   "n": 471,
+   "win": 0.3036,
+   "breakeven_win": 0.25,
+   "exp_gross": 0.0677,
+   "exp_net": 0.0504,
+   "exp_net_ci95": [
+    -0.1129,
+    0.2093
+   ],
+   "pf_net": 1.072,
+   "max_dd_R": 30.5,
+   "symbols_pos": "7/12",
+   "years_pos": "3/4",
+   "cost_R_med": 0.015,
+   "risk_atr_med": 1.0,
+   "mfe_med": 1.03,
+   "mae_med": 1.86,
+   "p_mfe_ge_1.5": 0.423,
+   "p_mfe_ge_3": 0.225
+  },
+  "val_2017_2019": {
+   "n": 252,
+   "win": 0.3492,
+   "breakeven_win": 0.25,
+   "exp_gross": 0.1897,
+   "exp_net": 0.1698,
+   "exp_net_ci95": [
+    -0.0256,
+    0.4143
+   ],
+   "pf_net": 1.257,
+   "max_dd_R": 20.6,
+   "symbols_pos": "6/10",
+   "years_pos": "3/3",
+   "cost_R_med": 0.019,
+   "risk_atr_med": 1.0,
+   "mfe_med": 0.98,
+   "mae_med": 1.64,
+   "p_mfe_ge_1.5": 0.44,
+   "p_mfe_ge_3": 0.23
+  },
+  "dev_cost_x1.5": {
+   "n": 723,
+   "win": 0.3195,
+   "breakeven_win": 0.25,
+   "exp_gross": 0.1102,
+   "exp_net": 0.0829,
+   "exp_net_ci95": [
+    -0.0483,
+    0.2115
+   ],
+   "pf_net": 1.12,
+   "max_dd_R": 26.8,
+   "symbols_pos": "9/12",
+   "years_pos": "6/7",
+   "cost_R_med": 0.017,
+   "risk_atr_med": 1.0,
+   "mfe_med": 1.02,
+   "mae_med": 1.77,
+   "p_mfe_ge_1.5": 0.429,
+   "p_mfe_ge_3": 0.227
+  },
+  "dev_cost_x2": {
+   "n": 723,
+   "win": 0.3195,
+   "breakeven_win": 0.25,
+   "exp_gross": 0.1102,
+   "exp_net": 0.0738,
+   "exp_net_ci95": [
+    -0.0572,
+    0.2025
+   ],
+   "pf_net": 1.106,
+   "max_dd_R": 27.8,
+   "symbols_pos": "9/12",
+   "years_pos": "6/7",
+   "cost_R_med": 0.017,
+   "risk_atr_med": 1.0,
+   "mfe_med": 1.02,
+   "mae_med": 1.77,
+   "p_mfe_ge_1.5": 0.429,
+   "p_mfe_ge_3": 0.227
+  },
+  "dev_R_distribution": {
+   "-1.0": 0.653,
+   "3.0": 0.225
+  },
+  "dev_R_timeout_share": 0.107,
+  "dev_MFE_quantiles": {
+   "0.25": 0.39,
+   "0.5": 1.02,
+   "0.75": 2.84,
+   "0.9": 4.38
+  },
+  "dev_P_MFE": {
+   "1": 0.503,
+   "1.5": 0.429,
+   "2": 0.362,
+   "3": 0.227,
+   "4": 0.14
+  }
+ }
+}
