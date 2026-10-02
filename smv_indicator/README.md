@@ -9,6 +9,7 @@ Reconstruction formelle, calibrage et implémentation de référence de la strat
 - Indicateur MetaTrader 5 écrit (`mt5/`) mais **non compilé ici** ; outil de parité fourni.
 - Ajustement de la stratégie fondé sur les pertes, avec validation sur dix paires jamais vues (`docs/CALIBRATION.md` §7) : pertes réduites de -0,21 à -0,09 R par trade, sans espérance positive démontrée.
 - Chaque concept des modules testé séparément sur 12 instruments (`docs/MODULES_TEST.md`) : suivre une cassure est contredit par les données en M15 ; seuls les retours sur zone décisionnelle, le STB et la signature de liquidité montrent un effet faible.
+- Recherche composite sur 1,54 million d'opportunités (`docs/COMPOSITE_RESEARCH.md`) : maximum robuste hors échantillon 64-67 % (±1 ATR), uniquement en fin de séance américaine, rentable seulement si les coûts réels restent proches du nominal ; aucune région à 70-80 % honnête ; séquence SMV rejetée au test.
 - **Aucune performance n'est revendiquée** : le backtest des setups ne montre pas d'espérance positive après coûts (`docs/CALIBRATION.md` §4).
 
 ## Lire dans cet ordre
