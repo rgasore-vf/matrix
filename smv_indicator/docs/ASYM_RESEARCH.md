@@ -154,3 +154,27 @@ Le rejeu de parité (`vault_replay.py parity`) recalcule les signaux à partir d
 - par année : 2022 +0,22 ; 2023 +0,03 ; 2024 +0,31 ; 2025 (partielle) +0,23.
 
 À titre de comparaison, EURUSD valait +0,13 R en développement (n = 274). Un seul instrument, avec n = 137, donne une erreur standard d'environ 0,16 R. Ce résultat va dans le bon sens mais ne permet aucune conclusion. Le verdict de §9 exige les 12 instruments et le shadow.
+
+**3 octobre 2026, coffre-fort, verdict (critères de §9 appliqués sans modification).** Conditions du test :
+- compte Deriv-Demo (serveur GMT+0), ticks réels, signaux du 01/03/2022 au 01/10/2026, EA v1.10, 12 instruments ;
+- pour C, XAUUSD manque : la passe n'a pas démarré (journal vide) ;
+- parité : le shadow MT5 est identique au rejeu Python sur les bougies exportées (zéro écart de R sur 7 couples stratégie-instrument contrôlés).
+
+| | B : expansion H4, 1:3 | C : BOS D1 lu à l'envers, 1:3 |
+|---|---|---|
+| Trades shadow | 1 932 | 716 (11 instruments) |
+| Réussite (seuil 25 %) | 24,7 % | 29,5 % |
+| Espérance nette shadow | **-0,070 R** [-0,168 ; +0,023] | **+0,056 R** [-0,085 ; +0,204] |
+| Avec coûts doublés | -0,122 R | +0,034 R |
+| Instruments positifs | 3/12 | 8/11 |
+| Années positives | 1/5 (2022 +0,24 ; puis -0,07, -0,11, -0,21, -0,19) | 3/5 (2024 -0,13) |
+| Exécution réelle, R monétaire | -0,084 R (1 956 trades) | -0,041 R (677 trades) |
+| dont swap | -0,032 R | **-0,067 R** |
+| **Verdict** | **REJETÉ** | **EXPLORATOIRE** (exécution réelle négative) |
+
+**Analyse de sensibilité, non prévue dans §9.** Les bougies du dimanche de Deriv (absentes des données de recherche) ont été fusionnées dans la bougie suivante, puis le rejeu a été relancé : B donne -0,076 R (3/12) et C +0,059 R (6/11, 4/5 années). Les conclusions ne changent pas.
+
+**Enseignements.**
+1. B, positif sept années sur sept en développement, a échoué en 2020-2021, puis sur le coffre-fort à partir de 2023 : son avantage dépendait du régime de marché et a disparu. Il est rejeté.
+2. C conserve un petit avantage brut (+0,08 R), mais il n'est pas significatif. Le **swap** de positions tenues jusqu'à 20 jours (-0,07 R) l'efface entièrement. Le modèle de coût de la recherche ignorait le swap : c'est une contrainte cachée pour toute stratégie D1 à horizon long. Les entrées au premier tick du dimanche, refusées par le serveur (48 ordres), réduisent aussi le résultat réel.
+3. Aucune stratégie de la recherche asymétrique n'atteint PROMETTEUR.

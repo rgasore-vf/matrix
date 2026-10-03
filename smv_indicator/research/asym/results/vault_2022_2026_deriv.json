@@ -1,0 +1,211 @@
+{
+ "B_H4_EXPANSION_3R": {
+  "dev_exp_net": 0.09,
+  "shadow": {
+   "n": 1932,
+   "win": 0.2469,
+   "breakeven_win": 0.25,
+   "exp_gross": -0.0187,
+   "exp_net_research_cost": -0.0702,
+   "exp_net_ci95": [
+    -0.1676,
+    0.0234
+   ],
+   "exp_net_cost_x2": -0.1217,
+   "exp_net_spread_at_signal": -0.0552,
+   "symbols_pos": "3/12",
+   "years_pos": "1/5",
+   "by_symbol": {
+    "AUDJPY": 0.1099,
+    "AUDUSD": -0.2823,
+    "EURCHF": -0.0273,
+    "EURGBP": -0.0983,
+    "EURJPY": -0.0374,
+    "EURUSD": 0.0467,
+    "GBPJPY": -0.0176,
+    "GBPUSD": -0.1887,
+    "USDCAD": -0.1515,
+    "USDCHF": -0.1488,
+    "USDJPY": 0.0626,
+    "XAUUSD": -0.0305
+   },
+   "by_year": {
+    "2022": 0.2444,
+    "2023": -0.0744,
+    "2024": -0.1134,
+    "2025": -0.2054,
+    "2026": -0.1867
+   },
+   "n_by_symbol": {
+    "AUDJPY": 109,
+    "AUDUSD": 156,
+    "EURCHF": 158,
+    "EURGBP": 180,
+    "EURJPY": 130,
+    "EURUSD": 191,
+    "GBPJPY": 144,
+    "GBPUSD": 199,
+    "USDCAD": 173,
+    "USDCHF": 175,
+    "USDJPY": 176,
+    "XAUUSD": 141
+   },
+   "mfe_median": 1.081,
+   "p_mfe_ge": {
+    "1": 0.521,
+    "2": 0.345,
+    "3": 0.249,
+    "4": 0.198,
+    "8": 0.094
+   },
+   "exp_gross_by_tp": {
+    "1": -0.0139,
+    "1.5": -0.0004,
+    "2": 0.0137,
+    "2.5": -0.009,
+    "3": -0.0187,
+    "4": -0.0105
+   },
+   "max_dd_R": 248.9
+  },
+  "real": {
+   "n": 1956,
+   "exp_R_money": -0.0838,
+   "exp_R_price": -0.0526,
+   "win": 0.2403,
+   "net_money": -1606.29,
+   "exit_reasons": {
+    "sl": 1486,
+    "tp": 468,
+    "timeout": 2
+   },
+   "slip_R_mean": 0.0182,
+   "spread_pts_median": 11.0,
+   "by_symbol_R_money": {
+    "AUDJPY": 0.0965,
+    "AUDUSD": -0.2708,
+    "EURCHF": -0.0655,
+    "EURGBP": -0.0923,
+    "EURJPY": -0.1096,
+    "EURUSD": 0.0006,
+    "GBPJPY": -0.0693,
+    "GBPUSD": -0.2014,
+    "USDCAD": -0.1637,
+    "USDCHF": -0.127,
+    "USDJPY": 0.0635,
+    "XAUUSD": 0.0047
+   },
+   "by_year_R_money": {
+    "2022": 0.2162,
+    "2023": -0.0693,
+    "2024": -0.1091,
+    "2025": -0.2391,
+    "2026": -0.2075
+   }
+  },
+  "verdict": "REJETÉ"
+ },
+ "C_D1_BOSFADE_3R": {
+  "dev_exp_net": 0.1,
+  "shadow": {
+   "n": 716,
+   "win": 0.2947,
+   "breakeven_win": 0.25,
+   "exp_gross": 0.0777,
+   "exp_net_research_cost": 0.0558,
+   "exp_net_ci95": [
+    -0.0847,
+    0.2035
+   ],
+   "exp_net_cost_x2": 0.034,
+   "exp_net_spread_at_signal": 0.0337,
+   "symbols_pos": "8/11",
+   "years_pos": "3/5",
+   "by_symbol": {
+    "AUDJPY": 0.1354,
+    "AUDUSD": 0.0881,
+    "EURCHF": -0.0592,
+    "EURGBP": 0.4595,
+    "EURJPY": 0.4526,
+    "EURUSD": 0.0667,
+    "GBPJPY": -0.1433,
+    "GBPUSD": 0.0787,
+    "USDCAD": 0.1307,
+    "USDCHF": 0.0232,
+    "USDJPY": -0.3781
+   },
+   "by_year": {
+    "2022": 0.0659,
+    "2023": -0.0013,
+    "2024": -0.1301,
+    "2025": 0.2133,
+    "2026": 0.2197
+   },
+   "n_by_symbol": {
+    "AUDJPY": 39,
+    "AUDUSD": 92,
+    "EURCHF": 47,
+    "EURGBP": 57,
+    "EURJPY": 48,
+    "EURUSD": 71,
+    "GBPJPY": 54,
+    "GBPUSD": 97,
+    "USDCAD": 56,
+    "USDCHF": 70,
+    "USDJPY": 85
+   },
+   "mfe_median": 1.19,
+   "p_mfe_ge": {
+    "1": 0.529,
+    "2": 0.355,
+    "3": 0.232,
+    "4": 0.138,
+    "8": 0.014
+   },
+   "exp_gross_by_tp": {
+    "1": 0.0363,
+    "1.5": 0.0699,
+    "2": 0.0806,
+    "2.5": 0.0937,
+    "3": 0.0777,
+    "4": 0.0709
+   },
+   "max_dd_R": 45.8
+  },
+  "real": {
+   "n": 677,
+   "exp_R_money": -0.0408,
+   "exp_R_price": 0.0248,
+   "win": 0.2806,
+   "net_money": -321.64,
+   "exit_reasons": {
+    "sl": 474,
+    "tp": 147,
+    "timeout": 56
+   },
+   "slip_R_mean": 0.0146,
+   "spread_pts_median": 13.0,
+   "by_symbol_R_money": {
+    "AUDJPY": -0.0267,
+    "AUDUSD": 0.0173,
+    "EURCHF": -0.1103,
+    "EURGBP": 0.3642,
+    "EURJPY": 0.4201,
+    "EURUSD": -0.0649,
+    "GBPJPY": -0.1971,
+    "GBPUSD": -0.0338,
+    "USDCAD": 0.0301,
+    "USDCHF": -0.1432,
+    "USDJPY": -0.4233
+   },
+   "by_year_R_money": {
+    "2022": 0.0766,
+    "2023": -0.05,
+    "2024": -0.3299,
+    "2025": 0.0823,
+    "2026": 0.0722
+   }
+  },
+  "verdict": "EXPLORATOIRE"
+ }
+}
