@@ -36,3 +36,25 @@ L'avantage décroît avec le temps : positif jusqu'en 2017, faible en 2018-2019,
 1. Sur l'or, la tendance H4 a tenu un peu plus que le hasard, surtout quand le D1 va dans le même sens et que la volatilité est calme. L'effet est faible et il s'est effacé après 2019 dans ces données.
 2. Filtrer les entrées M15 par ce contexte n'améliore pas les entrées à stop serré : le scalping sur la structure M15 ne profite pas d'un avantage qui n'existe qu'à l'échelle H4.
 3. La période 2022-2026, absente de ces données, a connu une tendance haussière exceptionnelle sur l'or. La règle lisible est figée ici ; seul un test sur cette période (coffre-fort MT5, sans réglage) dira si l'effet revient quand le marché tend.
+
+## 5. Coffre-fort 2022 → aujourd'hui : EA et critères pré-enregistrés
+
+Rédigé le 5 octobre 2026, **avant tout test sur cette période**. La règle lisible de §1 est figée telle quelle dans `mt5/Experts/ASYM/XAU_Context.mq5` :
+- contexte H4 + D1 aligné, ATR H4 ≤ 0,95 x moyenne, 6 h-14 h (Paris), jour < 0,6 x amplitude moyenne ;
+- un signal par jour ; entrée à l'ouverture suivante ; stop 1 ATR H4 ; TP 2 ATR H4 ; sortie à 48 h.
+
+**Différences connues avec la recherche :**
+- l'EA évalue le contexte à chaque bougie M15 au lieu d'une sur deux (vérifié en Python : TP 2 ATR +0,11 / +0,07 / +0,04 R contre +0,11 / +0,04 / +0,01 R) ;
+- les bougies H4 et D1 sont celles du courtier de l'utilisateur (Deriv, serveur UTC+0) ;
+- la D1 est connue dès minuit serveur, au lieu de 2 à 3 h plus tard dans la recherche.
+
+**Mesure principale** : espérance shadow à TP 2 ATR, nette du coût de recherche (0,35 $), signaux à partir du 7 mars 2022.
+
+| Verdict | Condition |
+|---|---|
+| REJETÉ | espérance ≤ 0 |
+| EXPLORATOIRE | espérance > 0 sans remplir la ligne suivante |
+| PROMETTEUR | espérance > 0, au moins 60 % des années positives, exécution réelle (R monétaire, swap compris) > 0 |
+| ROBUSTE | PROMETTEUR, et borne basse de l'IC 95 % (rééchantillonnage de jours) > 0 |
+
+**Attente raisonnable** : environ 80 trades par an, soit environ 360 au total. L'erreur standard est d'environ 0,07 R ; seul un effet d'au moins +0,15 R pourrait atteindre ROBUSTE. Vu la tendance des données de recherche (+0,04 R en 2020-2022), REJETÉ ou EXPLORATOIRE est l'issue la plus probable. La hausse exceptionnelle de l'or depuis 2023 est la seule raison d'espérer mieux.

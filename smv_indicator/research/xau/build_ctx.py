@@ -41,6 +41,7 @@ from smv import Config, Engine  # noqa: E402
 from smv.mtf import resample  # noqa: E402
 
 PARIS = ZoneInfo("Europe/Paris")
+STEP = int(os.environ.get("CTX_STEP", "2"))   # 2 = recherche ; 1 = chaque bougie, comme l EA
 
 
 class Tf:
@@ -98,7 +99,7 @@ def main(out, sym="XAUUSD"):
                 ranges.append(dhi - dlo)
             day_key, dhi, dlo = loc.date(), b.high, b.low
         dhi, dlo = max(dhi, b.high), min(dlo, b.low)
-        if i < 4000 or i % 2 or h4.k < 120:
+        if i < 4000 or i % STEP or h4.k < 120:
             continue
         s = h4.eng.structure
         d = s.trend

@@ -134,3 +134,19 @@ Il teste les candidats figés A, B et C de `docs/ASYM_RESEARCH.md` sans aucun r�
 python research/asym/vault_report.py dossier_ASYM resultats.json
 python research/asym/vault_replay.py parity B dossier_ASYM/B_..._EURUSD_..._bars.csv dossier_ASYM/B_..._EURUSD_..._shadow.csv
 ```
+
+## 9. EA du coffre-fort or : `Experts/ASYM/XAU_Context.mq5`
+
+Règle figée de `docs/XAU_RESEARCH.md` §5 (contexte H4/D1, stop 1 ATR H4, TP 2 ATR H4, un trade par jour au maximum).
+
+| Réglage du testeur | Valeur |
+|---|---|
+| Symbole, période | **XAUUSD, M15** |
+| Dates | du **01/01/2021** à aujourd'hui (chauffe ; signaux à partir du 07/03/2022) |
+| Modélisation | chaque tick basé sur des ticks réels (à défaut : 1 minute OHLC) |
+| Dépôt, levier | 10 000 USD, 1:100 ; risque 1 % |
+| Compte | hedging |
+| `InpServerTz`, `InpServerFixedHours` | Deriv : `SMV_SRV_FIXED`, 0 (vérifier avec le script `SMV_ServerTimeCheck`) |
+| Optimisation | désactivée |
+
+Journaux : `Common/Files/XAUCTX/` (contexte à chaque bougie M15, shadow, trades, log). Analyse : `python research/xau/xau_vault_report.py dossier_XAUCTX`.
