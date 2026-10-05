@@ -44,7 +44,7 @@ H, EXPIRY = 96, 64
 
 def main(sym, y0, y1, out):
     bars = load(sym, "m15")
-    h4 = resample(bars, 240)
+    h4 = load(sym, "h4") if sym == "XAUUSD" else resample(bars, 240)   # or : pause quotidienne, H4 du courtier
     heng = Engine(Config(zones_on="bos_origin", enable_setups=False))
     eng = Engine(Config(zones_on="bos_origin", enable_setups=False))
     cost = COST[sym]
